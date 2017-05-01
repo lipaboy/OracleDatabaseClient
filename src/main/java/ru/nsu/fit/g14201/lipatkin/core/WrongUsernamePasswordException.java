@@ -1,6 +1,6 @@
-package ru.nsu.fit.g14201.lipatkin.network;
+package ru.nsu.fit.g14201.lipatkin.core;
 
-import ru.nsu.fit.g14201.lipatkin.OracleClientException;
+import ru.nsu.fit.g14201.lipatkin.core.OracleClientException;
 
 /**
  * Created by SPN on 01.05.2017.

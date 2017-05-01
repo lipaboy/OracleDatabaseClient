@@ -1,6 +1,7 @@
 package ru.nsu.fit.g14201.lipatkin.gui;
 
-import ru.nsu.fit.g14201.lipatkin.network.NetworkController;
+import ru.nsu.fit.g14201.lipatkin.core.DatabaseEnterable;
+import ru.nsu.fit.g14201.lipatkin.core.WrongUsernamePasswordException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +18,7 @@ public class LoginFrame extends JFrame {
     private JPasswordField passwordField1;
     private JButton enterButton;
 
-    private NetworkController networkController;
-
-    public LoginFrame() {
+    public LoginFrame(final DatabaseEnterable dbEnter) {
         super("Oracle Database Enter");
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,12 +29,15 @@ public class LoginFrame extends JFrame {
         int height = (int) screenSize.getHeight();
         setBounds((width - size.width) / 2, (height - size.height) / 2, size.width, size.height);
 
-        networkController = new NetworkController();
         final JFrame currentFrame = this;
         enterButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //JOptionPane.showMessageDialog(currentFrame, "Eggs are not supposed to be green.");
-                //Connection connection =
+                try {
+                    dbEnter.enter(textField1.getText(), new String(passwordField1.getPassword()));
+                } catch(WrongUsernamePasswordException exp) {
+                    JOptionPane.showMessageDialog(currentFrame,
+                            "You entered wrong username or password");
+                }
             }
         });
     }

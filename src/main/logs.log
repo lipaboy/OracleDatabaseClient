@@ -1,0 +1,9 @@
+2017-05-01 15:03:09 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-01 15:03:25 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-01 15:03:26 ERROR NetworkController:38 - Null user or password not supported in THIN driver
+2017-05-01 15:03:35 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-01 15:03:44 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-01 15:03:44 ERROR NetworkController:38 - ORA-28000: the account is locked
+
+2017-05-01 15:05:17 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-01 15:05:18 INFO  Controller:34 - Start session

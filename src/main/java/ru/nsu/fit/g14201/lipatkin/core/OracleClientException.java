@@ -1,4 +1,4 @@
-package ru.nsu.fit.g14201.lipatkin;
+package ru.nsu.fit.g14201.lipatkin.core;
 
 /**
  * Created by SPN on 01.05.2017.

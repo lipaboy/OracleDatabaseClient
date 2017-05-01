@@ -1,6 +1,7 @@
 package ru.nsu.fit.g14201.lipatkin.network;
 
 import org.apache.log4j.Logger;
+import ru.nsu.fit.g14201.lipatkin.core.WrongUsernamePasswordException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
