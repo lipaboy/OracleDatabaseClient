@@ -1,5 +1,6 @@
 package ru.nsu.fit.g14201.lipatkin.gui;
 
+import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
 
 import javax.swing.*;
@@ -34,24 +35,25 @@ public class ObjectBrowserFrame extends JFrame{
         List<String> tableNames = commander.getAllEntities();
         tableList.setListData(tableNames.toArray());
 
+        Entity entity = commander.getAllEntries("SALESORDERS");
         //DEMO_ORDERS
-        Map<String, String[]> entries = commander.getAllEntries("DEMO_ORDERS");
-        tableView.setModel(new AbstractTableModel() {
-            @Override
-            public int getRowCount() {
-                return entries.values().iterator().next().length;
-            }
-
-            @Override
-            public int getColumnCount() {
-                return entries.keySet().size();
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                return entries.get(entries.keySet().toArray()[columnIndex])[rowIndex];
-            }
-        });
+//        Map<String, String[]> entries = commander.getAllEntries("DEMO_ORDERS");
+//        tableView.setModel(new AbstractTableModel() {
+//            @Override
+//            public int getRowCount() {
+//                return entries.values().iterator().next().length;
+//            }
+//
+//            @Override
+//            public int getColumnCount() {
+//                return entries.keySet().size();
+//            }
+//
+//            @Override
+//            public Object getValueAt(int rowIndex, int columnIndex) {
+//                return entries.get(entries.keySet().toArray()[columnIndex])[rowIndex];
+//            }
+//        });
 
     }
 

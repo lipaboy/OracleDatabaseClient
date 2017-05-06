@@ -10,6 +10,6 @@ public interface SQLCommander {
     public List<String> getAllEntities();
     //Map<Column, valuse>
     public
-        Map<String, String[]>
+        Entity
             getAllEntries(String tableName);
 }

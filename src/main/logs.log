@@ -7,3 +7,33 @@
 
 2017-05-01 15:05:17 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
 2017-05-01 15:05:18 INFO  Controller:34 - Start session
+2017-05-06 20:45:32 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-06 20:45:33 INFO  Presenter:37 - Start session
+2017-05-06 20:45:35 ERROR SQLCommandExecuter:61 - ResultSet.next was not called
+2017-05-06 22:52:44 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-06 22:52:45 INFO  Presenter:37 - Start session
+2017-05-06 22:54:47 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-06 22:54:47 INFO  Presenter:37 - Start session
+2017-05-06 22:56:38 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-06 22:56:39 INFO  Presenter:37 - Start session
+2017-05-06 22:57:08 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-06 22:57:08 INFO  Presenter:37 - Start session
+2017-05-06 22:57:09 INFO  SQLCommandExecuter:64 - java.math.BigDecimal
+2017-05-06 22:57:09 INFO  SQLCommandExecuter:64 - java.math.BigDecimal
+2017-05-06 22:57:09 INFO  SQLCommandExecuter:64 - java.math.BigDecimal
+2017-05-06 22:57:09 INFO  SQLCommandExecuter:64 - java.sql.Timestamp
+2017-05-06 22:57:09 INFO  SQLCommandExecuter:64 - java.math.BigDecimal
+2017-05-06 23:13:39 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-06 23:13:40 INFO  Presenter:37 - Start session
+2017-05-06 23:13:40 INFO  SQLCommandExecuter:64 - java.math.BigDecimal
+2017-05-06 23:13:40 INFO  SQLCommandExecuter:64 - java.lang.String
+2017-05-06 23:13:40 INFO  SQLCommandExecuter:64 - java.math.BigDecimal
+2017-05-06 23:13:40 INFO  SQLCommandExecuter:64 - java.lang.String
+2017-05-06 23:13:40 INFO  SQLCommandExecuter:64 - java.sql.Timestamp
+2017-05-06 23:20:14 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-06 23:20:15 INFO  Presenter:37 - Start session
+2017-05-06 23:20:15 INFO  SQLCommandExecuter:65 - NUMBER
+2017-05-06 23:20:15 INFO  SQLCommandExecuter:65 - VARCHAR2
+2017-05-06 23:20:15 INFO  SQLCommandExecuter:65 - NUMBER
+2017-05-06 23:20:15 INFO  SQLCommandExecuter:65 - LONG
+2017-05-06 23:20:15 INFO  SQLCommandExecuter:65 - DATE
