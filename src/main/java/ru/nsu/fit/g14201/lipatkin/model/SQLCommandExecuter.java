@@ -4,10 +4,7 @@ import com.sun.istack.internal.NotNull;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by castiel on 02.05.2017.
@@ -21,8 +18,8 @@ public class SQLCommandExecuter implements SQLCommander {
     }
 
     @Override
-    public List<String> getAllEntities() {
-        List<String> entities = new ArrayList<String>();
+    public List<String> getAllEntityNames() {
+        List<String> entities = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             //in your table (Oracle XE) can be russian entries
@@ -43,7 +40,7 @@ public class SQLCommandExecuter implements SQLCommander {
     }
 
     @Override
-    public Entity getAllEntries(@NotNull String tableName) {
+    public Entity getEntity(@NotNull String tableName) {
         //Map<String, String[]> entries = new HashMap<>();
         Entity entity = null;
 
@@ -52,17 +49,27 @@ public class SQLCommandExecuter implements SQLCommander {
             //in your table (Oracle XE) can be russian entries
             ResultSet entrySet = statement.executeQuery("SELECT * FROM " + tableName);
 
-            entity = new Entity(entrySet.getMetaData());
+            entity = new Entity(tableName, entrySet.getMetaData());
             entity.setEntity(entrySet);
 
             statement.close();
         } catch(SQLException exp) {
             log.error(exp.getMessage());
-//        } catch(ClassNotFoundException exp) {
-//            log.error(exp.getMessage());
         }
 
         return entity;
+    }
+
+    public List<Entity> getAllEntities() {
+        List<Entity> entities = new ArrayList<>(); //I think that "find" operations will be more than "add" ones.
+
+        List<String> tableNames = getAllEntityNames();
+
+        for (String name : tableNames) {
+            entities.add(getEntity(name));
+        }
+
+        return entities;
     }
 
 }

@@ -1,16 +1,12 @@
 package ru.nsu.fit.g14201.lipatkin.gui;
 
-import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
+import ru.nsu.fit.g14201.lipatkin.view.DBPresenter;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.util.List;
-import java.util.Map;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by castiel on 02.05.2017.
@@ -19,14 +15,17 @@ public class ObjectBrowserFrame extends JFrame{
     private JPanel panel1;
     private JList tableList;
     private JTable tableView;
+    private JButton entryEditingButton;
+    private JButton tableEditingButton;
+    private JButton viewButton;
 
     private final SQLCommander commander;
 
-    public ObjectBrowserFrame(final SQLCommander commander1) {
+    public ObjectBrowserFrame(final SQLCommander sqlCommander) {
         super("Object Browser");
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        commander = commander1;
+        commander = sqlCommander;
 
         Dimension size = new Dimension(800, 500);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -37,42 +36,27 @@ public class ObjectBrowserFrame extends JFrame{
         /*---------------Panel components-------------------*/
 
         tableView.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        //tableView.setBounds();
 
-        List<String> tableNames = commander.getAllEntities();
-        tableList.setListData(tableNames.toArray());
-            //TODO: you need to load all entities for once because it is expensive to do query every once
-        tableList.addListSelectionListener(new ListSelectionListener() {
+
+        DBPresenter dbPresenter = new DBPresenter(sqlCommander, tableList, tableView);
+
+        /*-----------------Menu bar-------------------------*/
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+
+        JFrame currentFrame = this;
+        JMenuItem quitItem = new JMenuItem("Quit");
+        quitItem.addActionListener(new ActionListener() {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int selected = tableList.getSelectedIndex();
-                Entity entity = commander.getAllEntries(tableList.getModel().getElementAt(selected).toString());
-                //DEMO_ORDERS
-                tableView.setModel(new AbstractTableModel() {
-                    @Override
-                    public int getRowCount() {
-                        return entity.getRowCount();
-                    }
-
-                    @Override
-                    public int getColumnCount() {
-                        return entity.getColumnCount();
-                    }
-
-                    @Override
-                    public Object getValueAt(int rowIndex, int columnIndex) {
-                        return entity.get(rowIndex, columnIndex);
-                    }
-
-                    @Override
-                    public String getColumnName(int index) {
-                        return entity.getColumnName(index);
-                    }
-                });
+            public void actionPerformed(ActionEvent e) {
+                currentFrame.dispose();
             }
         });
+        fileMenu.add(quitItem);
 
-
+        this.setJMenuBar(menuBar);
 
 
     }

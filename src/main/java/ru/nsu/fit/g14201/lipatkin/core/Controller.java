@@ -12,11 +12,11 @@ import java.sql.Connection;
 /**
  * Created by SPN on 01.05.2017.
  */
-public class Presenter {
-    private static final Logger log = Logger.getLogger(Presenter.class);
+public class Controller {
+    private static final Logger log = Logger.getLogger(Controller.class);
 
 
-    public Presenter() {}
+    public Controller() {}
 
     public void login() {
         LoginFrame window = new LoginFrame(new DatabaseEnterable() {
@@ -25,9 +25,9 @@ public class Presenter {
                 NetworkController networkController = new NetworkController();
                 Connection connection = networkController.getConnection(username, password);
                     //if no exception then
-                //I don't want to use reference on Presenter (this) because
+                //I don't want to use reference on Controller (this) because
                 // I don't know which dependency it will cause to
-                new Presenter().startSession(connection);
+                new Controller().startSession(connection);
             }
         });
         window.setVisible(true);

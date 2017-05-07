@@ -8,11 +8,20 @@ import java.sql.SQLException;
  * Created by SPN on 06.05.2017.
  */
 public class Entity {
-    //public String[] fields;
-    //public String[][] entries;
     private Column[] columns;
+    private String name;
 
-    public Entity(ResultSetMetaData resultSetMetaData) throws SQLException {
+    {
+        name = null;
+        columns = null;
+    }
+
+    public Entity(String name1) {
+        name = name1;
+    }
+
+    public Entity(String name1, ResultSetMetaData resultSetMetaData) throws SQLException {
+        this(name1);
         int size = resultSetMetaData.getColumnCount();
         columns = new Column[size];
         for (int i = 0; i < size; i++) {
@@ -39,4 +48,6 @@ public class Entity {
     public int getColumnCount() { return columns.length; }
 
     public String getColumnName(int columnIndex) { return columns[columnIndex].getName(); }
+
+    public String getName() { return name; }
 }
