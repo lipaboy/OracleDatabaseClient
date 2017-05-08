@@ -42,20 +42,20 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="4e96c" class="javax.swing.JButton" binding="entryEditingButton" default-binding="true">
+          <component id="4e96c" class="javax.swing.JButton" binding="dataEditorButton" default-binding="true">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Entry editing"/>
+              <text value="Data Editor"/>
             </properties>
           </component>
-          <component id="99c13" class="javax.swing.JButton" binding="tableEditingButton" default-binding="true">
+          <component id="99c13" class="javax.swing.JButton" binding="constructorButton" default-binding="true">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Table Editing"/>
+              <text value="Constructor"/>
             </properties>
           </component>
           <component id="5eea8" class="javax.swing.JButton" binding="viewButton" default-binding="true">

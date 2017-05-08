@@ -10,9 +10,9 @@ import java.util.Set;
 public interface SQLCommander {
     public List<String> getAllEntityNames();
 
-    public
-        Entity
-            getEntity(String tableName);
+    public Entity getEntity(String tableName);
 
     public List<Entity> getAllEntities();
+
+    public void close();
 }

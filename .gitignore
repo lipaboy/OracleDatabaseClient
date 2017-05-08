@@ -4,4 +4,5 @@ OracleDatabaseClient.iml*
 target*
 target/*
 *.lnk
+*.log
 

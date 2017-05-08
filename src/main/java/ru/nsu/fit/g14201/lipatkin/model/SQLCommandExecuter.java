@@ -72,4 +72,12 @@ public class SQLCommandExecuter implements SQLCommander {
         return entities;
     }
 
+    public void close() {
+        try {
+            connection.close();
+        } catch(SQLException exp) {
+            log.error(exp.getMessage());
+        }
+    }
+
 }

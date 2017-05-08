@@ -3,9 +3,11 @@ package ru.nsu.fit.g14201.lipatkin.core;
 import org.apache.log4j.Logger;
 import ru.nsu.fit.g14201.lipatkin.gui.LoginFrame;
 import ru.nsu.fit.g14201.lipatkin.gui.ObjectBrowserFrame;
+import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
 import ru.nsu.fit.g14201.lipatkin.model.SQLCommandExecuter;
 import ru.nsu.fit.g14201.lipatkin.network.NetworkController;
+import ru.nsu.fit.g14201.lipatkin.view.EntityPresenter;
 
 import java.sql.Connection;
 
@@ -37,9 +39,14 @@ public class Controller {
         log.info("Start session");
 
         SQLCommander commander = new SQLCommandExecuter(connection);
+        DBManager dbManager = new DBManager(commander);
 
-        //TODO: when close the app you need to close the connection
-        ObjectBrowserFrame window = new ObjectBrowserFrame(commander);
+        ObjectBrowserFrame window = new ObjectBrowserFrame(dbManager, new BeforeQuitOperation() {
+            @Override
+            public void quit() {
+                commander.close();
+            }
+        });
         window.setVisible(true);
 
 

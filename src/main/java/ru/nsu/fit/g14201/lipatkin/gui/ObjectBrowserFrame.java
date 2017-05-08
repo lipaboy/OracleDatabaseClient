@@ -1,5 +1,7 @@
 package ru.nsu.fit.g14201.lipatkin.gui;
 
+import ru.nsu.fit.g14201.lipatkin.core.BeforeQuitOperation;
+import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
 import ru.nsu.fit.g14201.lipatkin.view.DBPresenter;
 
@@ -15,17 +17,14 @@ public class ObjectBrowserFrame extends JFrame{
     private JPanel panel1;
     private JList tableList;
     private JTable tableView;
-    private JButton entryEditingButton;
-    private JButton tableEditingButton;
+    private JButton dataEditorButton;
+    private JButton constructorButton;
     private JButton viewButton;
 
-    private final SQLCommander commander;
-
-    public ObjectBrowserFrame(final SQLCommander sqlCommander) {
+    public ObjectBrowserFrame(final DBManager dbManager, BeforeQuitOperation beforeQuitOperation) {
         super("Object Browser");
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        commander = sqlCommander;
 
         Dimension size = new Dimension(800, 500);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -38,7 +37,7 @@ public class ObjectBrowserFrame extends JFrame{
         tableView.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 
-        DBPresenter dbPresenter = new DBPresenter(sqlCommander, tableList, tableView);
+        DBPresenter dbPresenter = new DBPresenter(dbManager, tableList, tableView);
 
         /*-----------------Menu bar-------------------------*/
 
@@ -51,6 +50,7 @@ public class ObjectBrowserFrame extends JFrame{
         quitItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                beforeQuitOperation.quit();
                 currentFrame.dispose();
             }
         });

@@ -1,5 +1,6 @@
 package ru.nsu.fit.g14201.lipatkin.view;
 
+import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
 
@@ -14,16 +15,15 @@ import java.util.List;
  */
 public class DBPresenter {
     private JList tableList;
-    private SQLCommander commander;
+    private DBManager dbManager;
     private JTable tableView;
     private List<Entity> entities;
 
-    public DBPresenter(SQLCommander sqlCommander, JList list, JTable table) {
-        tableList = list;
-        commander = sqlCommander;
-        tableView = table;
 
-        entities = commander.getAllEntities();
+    public DBPresenter(DBManager manager, JList list, JTable table) {
+        tableList = list;
+        tableView = table;
+        dbManager = manager;
 
         tableList.setModel(new AbstractListModel() {
             @Override
