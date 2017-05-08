@@ -4,6 +4,7 @@ import ru.nsu.fit.g14201.lipatkin.core.BeforeQuitOperation;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
 import ru.nsu.fit.g14201.lipatkin.view.DBPresenter;
+import ru.nsu.fit.g14201.lipatkin.view.TableEditorState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,8 @@ public class ObjectBrowserFrame extends JFrame{
     private JButton dataEditorButton;
     private JButton constructorButton;
     private JButton viewButton;
+    private JButton addFieldButton;
+    private TableEditorState tableEditorState;
 
     public ObjectBrowserFrame(final DBManager dbManager, BeforeQuitOperation beforeQuitOperation) {
         super("Object Browser");
@@ -35,9 +38,30 @@ public class ObjectBrowserFrame extends JFrame{
         /*---------------Panel components-------------------*/
 
         tableView.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tableEditorState.set(TableEditorState.States.VIEW);
+            }
+        });
+        constructorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tableEditorState.set(TableEditorState.States.CONSTRUCTOR);
+            }
+        });
+        dataEditorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tableEditorState.set(TableEditorState.States.DATA_EDITOR);
+            }
+        });
 
+        /*---------------Presenter creation-------------------*/
 
         DBPresenter dbPresenter = new DBPresenter(dbManager, tableList, tableView);
+        tableEditorState = new TableEditorState(TableEditorState.States.VIEW);
+        tableEditorState.add(dbPresenter);
 
         /*-----------------Menu bar-------------------------*/
 
@@ -52,6 +76,7 @@ public class ObjectBrowserFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 beforeQuitOperation.quit();
                 currentFrame.dispose();
+
             }
         });
         fileMenu.add(quitItem);
@@ -60,6 +85,30 @@ public class ObjectBrowserFrame extends JFrame{
 
 
     }
+
+    //TODO: close connection in windowClosing event
+    // extends JFrame implements WindowListener,
+//    WindowFocusListener,
+//    WindowStateListener
+
+//    public void windowClosing(WindowEvent e) {
+//        displayMessage("WindowListener method called: windowClosing.");
+//        //A pause so user can see the message before
+//        //the window actually closes.
+//        ActionListener task = new ActionListener() {
+//            boolean alreadyDisposed = false;
+//            public void actionPerformed(ActionEvent e) {
+//                if (frame.isDisplayable()) {
+//                    alreadyDisposed = true;
+//                    frame.dispose();
+//                }
+//            }
+//        };
+//        Timer timer = new Timer(500, task); //fire every half second
+//        timer.setInitialDelay(2000);        //first delay 2 seconds
+//        timer.setRepeats(false);
+//        timer.start();
+//    }
 
 
 }

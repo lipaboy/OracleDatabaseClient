@@ -2,22 +2,21 @@ package ru.nsu.fit.g14201.lipatkin.view;
 
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
-import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by SPN on 07.05.2017.
  */
-public class DBPresenter {
+public class DBPresenter implements EditorStateChangedListener {
     private JList tableList;
     private DBManager dbManager;
     private JTable tableView;
-    private List<Entity> entities;
+    private List<EntityPresenter> entitiesPresenter;
 
 
     public DBPresenter(DBManager manager, JList list, JTable table) {
@@ -25,15 +24,20 @@ public class DBPresenter {
         tableView = table;
         dbManager = manager;
 
+        entitiesPresenter = new ArrayList<>();
+        for (Entity entity : dbManager.getEntities()) {
+            entitiesPresenter.add(new EntityPresenter(entity));
+        }
+
         tableList.setModel(new AbstractListModel() {
             @Override
             public int getSize() {
-                return entities.size();
+                return entitiesPresenter.size();
             }
 
             @Override
             public Object getElementAt(int index) {
-                return entities.get(index).getName();
+                return entitiesPresenter.get(index).getEntity().getName();
             }
         });
 
@@ -41,31 +45,16 @@ public class DBPresenter {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int selected = tableList.getSelectedIndex();
-                Entity entity = entities.get(selected);
+                EntityPresenter entity = entitiesPresenter.get(selected);
                 //TODO: I think it is bad that after every selection it will created new AbstractTableModel
                 //TODO: One of some solutions: for each table create one TableModel
-                tableView.setModel(new AbstractTableModel() {
-                    @Override
-                    public int getRowCount() {
-                        return entity.getRowCount();
-                    }
-
-                    @Override
-                    public int getColumnCount() {
-                        return entity.getColumnCount();
-                    }
-
-                    @Override
-                    public Object getValueAt(int rowIndex, int columnIndex) {
-                        return entity.get(rowIndex, columnIndex);
-                    }
-
-                    @Override
-                    public String getColumnName(int index) {
-                        return entity.getColumnName(index);
-                    }
-                });
+                tableView.setModel(entity.getViewEntity());
             }
         });
+    }
+
+    @Override
+    public void stateChanged(TableEditorState.States newState) {
+
     }
 }

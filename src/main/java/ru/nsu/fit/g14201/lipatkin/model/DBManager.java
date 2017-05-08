@@ -14,5 +14,7 @@ public class DBManager {
         entities = commander.getAllEntities();
     }
 
+    public List<Entity> getEntities() { return entities; }
+
     //here remove and add entity
 }

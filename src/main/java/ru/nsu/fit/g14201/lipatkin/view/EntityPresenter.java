@@ -11,7 +11,32 @@ public class EntityPresenter {
     private Entity entity;
     private AbstractTableModel viewEntity;
 
-    EntityPresenter(Entity en) {
+    public EntityPresenter(Entity en) {
         entity = en;
+        viewEntity = new AbstractTableModel() {
+            @Override
+            public int getRowCount() {
+                return entity.getRowCount();
+            }
+
+            @Override
+            public int getColumnCount() {
+                return entity.getColumnCount();
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                return entity.get(rowIndex, columnIndex);
+            }
+
+            @Override
+            public String getColumnName(int index) {
+                return entity.getColumnName(index);
+            }
+        };
     }
+
+    public AbstractTableModel getViewEntity() { return viewEntity; }
+
+    public Entity getEntity() { return entity; }
 }
