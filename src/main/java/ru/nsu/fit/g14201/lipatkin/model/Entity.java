@@ -29,7 +29,7 @@ public class Entity {
         }
     }
 
-    public void setEntity(ResultSet resultSet) throws SQLException {
+    public void fill(ResultSet resultSet) throws SQLException {
         while(resultSet.next()) {
             for (int i = 0; i < columns.length; i++) {
                 Column column = columns[i];

@@ -35,6 +35,16 @@ public class ObjectBrowserFrame extends JFrame{
         int height = (int) screenSize.getHeight();
         setBounds((width - size.width) / 2, (height - size.height) / 2, size.width, size.height);
 
+        /*---------------Presenter creation-------------------*/
+
+        //NICE: if you move 3 bottom lines through away Panel Componets which depend on tableEditorState
+        //then nothing will change.
+        //TODO: I think that would be better to incapsulate the ability to change TableEditorState directrly
+        //TODO: solution: may be use lambdas or like that
+        tableEditorState = new TableEditorState(TableEditorState.States.VIEW);
+        DBPresenter dbPresenter = new DBPresenter(dbManager, tableList, tableView, tableEditorState);
+        tableEditorState.add(dbPresenter);
+
         /*---------------Panel components-------------------*/
 
         tableView.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -57,11 +67,7 @@ public class ObjectBrowserFrame extends JFrame{
             }
         });
 
-        /*---------------Presenter creation-------------------*/
 
-        DBPresenter dbPresenter = new DBPresenter(dbManager, tableList, tableView);
-        tableEditorState = new TableEditorState(TableEditorState.States.VIEW);
-        tableEditorState.add(dbPresenter);
 
         /*-----------------Menu bar-------------------------*/
 

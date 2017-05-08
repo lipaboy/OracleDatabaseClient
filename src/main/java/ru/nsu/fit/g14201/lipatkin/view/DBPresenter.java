@@ -1,5 +1,6 @@
 package ru.nsu.fit.g14201.lipatkin.view;
 
+import javafx.scene.control.Tab;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
 
@@ -17,12 +18,14 @@ public class DBPresenter implements EditorStateChangedListener {
     private DBManager dbManager;
     private JTable tableView;
     private List<EntityPresenter> entitiesPresenter;
+    private int selected;
+    private TableEditorState tableEditorState;
 
-
-    public DBPresenter(DBManager manager, JList list, JTable table) {
+    public DBPresenter(DBManager manager, JList list, JTable table, TableEditorState editorState) {
         tableList = list;
         tableView = table;
         dbManager = manager;
+        tableEditorState = editorState;
 
         entitiesPresenter = new ArrayList<>();
         for (Entity entity : dbManager.getEntities()) {
@@ -44,17 +47,17 @@ public class DBPresenter implements EditorStateChangedListener {
         tableList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                int selected = tableList.getSelectedIndex();
+                selected = tableList.getSelectedIndex();
                 EntityPresenter entity = entitiesPresenter.get(selected);
                 //TODO: I think it is bad that after every selection it will created new AbstractTableModel
                 //TODO: One of some solutions: for each table create one TableModel
-                tableView.setModel(entity.getViewEntity());
+                tableView.setModel(entity.getEntityModel(tableEditorState.get()));
             }
         });
     }
 
     @Override
     public void stateChanged(TableEditorState.States newState) {
-
+        tableView.setModel(entitiesPresenter.get(selected).getEntityModel(newState));
     }
 }
