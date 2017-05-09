@@ -23,6 +23,8 @@
 	a) oracle.exe
 	b) TNSLSNR.exe		//important
 
+	6.2) If you don't see process "oracle.exe" than go to "All programs -> Oracle Database 11g Express Edition -> Start Database".
+
 7) Open Oracle DB XE (maybe you need to rewrite link "Get Started" -> change port on 8080)
 	- enter as "system" (like root)  (password you entry when setup the application)
 	- create account in "Application Express" tab (for example: 
@@ -110,6 +112,3 @@ public class App
         finally { System.out.println("All that happened"); }
     }
 }
-
-//connection = DriverManager.getConnection(
-  //      "jdbc:oracle:thin:@localhost:1521:xe", "system", "r4kxlktt");
