@@ -11,9 +11,7 @@ public interface SQLCommander {
 
     /*-----------------Setters----------------*/
 
-    public void update(Entity entity, int rowIndex, String columnName, String newValue)
-            //throws Business exception
-        ;
+    public void update(Entity entity, int rowIndex, String columnName, String newValue) throws UpdateException;
 
     /*-----------------Getters----------------*/
 

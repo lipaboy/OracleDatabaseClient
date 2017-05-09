@@ -20,11 +20,8 @@ public class SQLCommandExecuter implements SQLCommander {
         /*-----------------Setters----------------*/
 
     @Override
-    public void update(Entity entity, int rowIndex, String columnName, String newValue) {
+    public void update(Entity entity, int rowIndex, String columnName, String newValue) throws UpdateException {
         try {
-            //Statement statement = connection.createStatement();
-            //in your table (Oracle XE) can be russian entries
-            //ResultSet entrySet = statement.executeQuery(
             int primaryKeyNumber = entity.getPrimaryKeyColumnNumber(0);
             String primaryKeyColumn = entity.getColumnName(primaryKeyNumber - 1);   //offset
             String query =
@@ -41,6 +38,7 @@ public class SQLCommandExecuter implements SQLCommander {
             preStatement.close();
         } catch(SQLException exp) {
             log.error(exp.getMessage());
+            throw new UpdateException(exp.getMessage());
 //            JDBCTutorialUtilities.printSQLException(e);
 //            if (con != null) {
 //                try {

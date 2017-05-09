@@ -13,7 +13,7 @@ public class DBManager {
         commander = sqlCommander;
         entities = commander.getAllEntities();
 
-        commander.update(entities.get(0), 0, "DNAME", "12");
+        //commander.update(entities.get(0), 0, "DNAME", "12");
     }
 
     public List<Entity> getEntities() { return entities; }
