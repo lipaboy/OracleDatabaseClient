@@ -13,7 +13,7 @@ public class Column {
     private String className;
     private int number;     //from 1 to ... (number of column)
     //or public String className;
-    private ArrayList<String> elements;
+    private ArrayList<String> elements;         //ArrayList because our Entity can grow
 
     {
         elements = new ArrayList<>();
