@@ -27,30 +27,29 @@ public class SQLCommandExecuter implements SQLCommander {
             //ResultSet entrySet = statement.executeQuery(
             int primaryKeyNumber = entity.getPrimaryKeyColumnNumber(0);
             String primaryKeyColumn = entity.getColumnName(primaryKeyNumber - 1);   //offset
-            String str =
+            String query =
                 "UPDATE " + entity.getName()
                     + " SET " + columnName + " = " + newValue
                     + " WHERE " + primaryKeyColumn + " = "
-                        + entity.get(rowIndex, primaryKeyNumber - 1);
-//                + ";");
+                        + entity.get(rowIndex, primaryKeyNumber - 1);      //!!!! NO ';' NO ';' NO ';'
 
-            PreparedStatement preStatement = connection.prepareStatement(
-                    "UPDATE ? SET ? = ? WHERE ? = ?;"
-            );
-
-            preStatement.setString(1, entity.getName());
-            preStatement.setString(2, columnName);
-            preStatement.setString(3, newValue);
-            preStatement.setString(4, primaryKeyColumn);
-            preStatement.setString(5, entity.get(rowIndex, primaryKeyNumber - 1));
-
-            System.out.println(str);
-
+            System.out.println(query);
+            //connection.setAutoCommit(false);
+            PreparedStatement preStatement = connection.prepareStatement(query);
             preStatement.executeUpdate();
-            log.info("execute Update");
+            log.info("execute Update successful");
             preStatement.close();
         } catch(SQLException exp) {
             log.error(exp.getMessage());
+//            JDBCTutorialUtilities.printSQLException(e);
+//            if (con != null) {
+//                try {
+//                    System.err.print("Transaction is being rolled back");
+//                    con.rollback();
+//                } catch(SQLException excep) {
+//                    JDBCTutorialUtilities.printSQLException(excep);
+//                }
+//            }
         }
     }
 

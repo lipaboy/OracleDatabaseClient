@@ -1,0 +1,52 @@
+
+2017-05-09 19:43:38 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:43:38 INFO  Controller:39 - Start session
+2017-05-09 19:43:51 ERROR SQLCommandExecuter:57 - ORA-00911: invalid character
+
+2017-05-09 19:46:20 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:46:20 INFO  Controller:39 - Start session
+2017-05-09 19:46:20 INFO  SQLCommandExecuter:53 - execute Update
+2017-05-09 19:47:58 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:47:59 INFO  Controller:39 - Start session
+2017-05-09 19:47:59 ERROR SQLCommandExecuter:53 - ORA-00903: invalid table name
+
+2017-05-09 19:48:04 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:48:04 INFO  Controller:39 - Start session
+2017-05-09 19:48:04 ERROR SQLCommandExecuter:53 - ORA-00903: invalid table name
+
+2017-05-09 19:49:14 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:49:15 INFO  Controller:39 - Start session
+2017-05-09 19:49:15 ERROR SQLCommandExecuter:54 - Invalid column index
+2017-05-09 19:49:35 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:49:35 INFO  Controller:39 - Start session
+2017-05-09 19:49:35 INFO  SQLCommandExecuter:51 - execute Update successful
+2017-05-09 19:49:44 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:49:45 INFO  Controller:39 - Start session
+2017-05-09 19:49:45 INFO  SQLCommandExecuter:51 - execute Update successful
+2017-05-09 19:50:37 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:50:38 INFO  Controller:39 - Start session
+2017-05-09 19:50:38 ERROR SQLCommandExecuter:54 - Invalid column index
+2017-05-09 19:50:49 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:50:49 INFO  Controller:39 - Start session
+2017-05-09 19:50:49 ERROR SQLCommandExecuter:54 - Invalid column index
+2017-05-09 19:53:53 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:53:53 INFO  Controller:39 - Start session
+2017-05-09 19:53:53 ERROR SQLCommandExecuter:55 - ORA-00903: invalid table name
+
+2017-05-09 19:55:01 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:55:01 INFO  Controller:39 - Start session
+2017-05-09 19:55:01 ERROR SQLCommandExecuter:56 - Invalid column index
+2017-05-09 19:55:58 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:55:58 INFO  Controller:39 - Start session
+2017-05-09 19:55:58 ERROR SQLCommandExecuter:58 - Invalid column index
+2017-05-09 19:56:06 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:56:06 INFO  Controller:39 - Start session
+2017-05-09 19:56:06 ERROR SQLCommandExecuter:58 - ORA-00903: invalid table name
+
+2017-05-09 19:57:15 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 19:57:15 INFO  Controller:39 - Start session
+2017-05-09 19:57:15 ERROR SQLCommandExecuter:58 - ORA-01747: invalid user.table.column, table.column, or column specification
+
+2017-05-09 20:02:06 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-09 20:02:06 INFO  Controller:39 - Start session
+2017-05-09 20:02:06 INFO  SQLCommandExecuter:40 - execute Update successful
