@@ -1,53 +1,98 @@
 package ru.nsu.fit.g14201.lipatkin.model;
 
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by SPN on 06.05.2017.
  */
 public class Entity {
-    private Column[] columns;
+    //TODO: may be I need Map<String, Column>
+
+    private Map<String, Column> mapColumn;
+    private ArrayList<Column> columns;
+    private ArrayList<Integer> primaryKeys;     //column index (from 0.to.n-1)
     private String name;
 
     {
         name = null;
-        columns = null;
+        columns = new ArrayList<>();
+        mapColumn = new HashMap<>();    //TODO: may TreeMap?
+        primaryKeys = new ArrayList<>();
     }
+
+    //TODO:(advice) at table columns have numeration from 1.to.n but other objects (like Arrays) have from 0.to.n-1
+    //TODO:(advice) you need to use for first "number" name variables for indexing and "index" for second ones
 
     public Entity(String name1) {
         name = name1;
     }
 
-    public Entity(String name1, ResultSetMetaData resultSetMetaData) throws SQLException {
+    public Entity(String name1, ResultSetMetaData tableMetaData, DatabaseMetaData dbMetaData) throws SQLException {
         this(name1);
-        int size = resultSetMetaData.getColumnCount();
-        columns = new Column[size];
+        int size = tableMetaData.getColumnCount();
         for (int i = 0; i < size; i++) {
-            columns[i] = new Column(resultSetMetaData, i + 1);
+            Column column = new Column(tableMetaData, i + 1);
+            columns.add(column);
+            mapColumn.put(column.getName(), column);
         }
+
+        ResultSet primaryKeysSet = dbMetaData.getPrimaryKeys(null, null, name1);
+        while (primaryKeysSet.next()) {
+            primaryKeys.add(
+                    columns.indexOf(
+                            mapColumn.get(
+                                            primaryKeysSet.getString("COLUMN_NAME")     //for primary keys
+                                        )
+                                    )
+                            );
+        }
+        //for foreign keys use: PKCOLUMN_NAME
     }
 
     public void fill(ResultSet resultSet) throws SQLException {
         while(resultSet.next()) {
-            for (int i = 0; i < columns.length; i++) {
-                Column column = columns[i];
+            for (int i = 0; i < columns.size(); i++) {
+                Column column = columns.get(i);
                 column.add(resultSet);
             }
         }
     }
 
-    /*----------------Selectors---------------------*/
+    /*----------------Setters---------------------*/
 
-    public String get(int rowIndex, int columnIndex) { return columns[columnIndex].get(rowIndex); }
+    public void set(int rowIndex, int columnIndex) {
 
-    //Entity may be empty (it is normal)
-    public int getRowCount() { return (columns.length > 0) ? columns[0].size() : 0; }
+    }
 
-    public int getColumnCount() { return columns.length; }
+    /*----------------Getters---------------------*/
 
-    public String getColumnName(int columnIndex) { return columns[columnIndex].getName(); }
+    public String get(int rowIndex, int columnIndex) { return columns.get(columnIndex).get(rowIndex); }
+
+    public String getPrimaryKeyColumnName(int index) {
+        return columns.get(
+                    primaryKeys.get(index)
+                ).getName()
+            ;
+    }
+
+    public int getPrimaryKeyColumnNumber(int index) {
+        return 1 +
+                primaryKeys.get(index);
+    }
+
+    //1) Entity may be empty (it is normal)
+    //2) All the columns have the same size
+    public int getRowCount() { return (columns.size() > 0) ? columns.get(0).size() : 0; }
+
+    public int getColumnCount() { return columns.size(); }
+
+    public String getColumnName(int columnIndex) { return columns.get(columnIndex).getName(); }
 
     public String getName() { return name; }
 }

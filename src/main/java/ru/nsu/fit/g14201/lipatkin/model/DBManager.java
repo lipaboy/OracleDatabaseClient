@@ -7,11 +7,13 @@ import java.util.List;
  */
 public class DBManager {
     private SQLCommander commander;
-    private List<Entity> entities;
+    private List<Entity> entities;      //TODO: may be I need Map<String, Entity>
 
     public DBManager(SQLCommander sqlCommander) {
         commander = sqlCommander;
         entities = commander.getAllEntities();
+
+        commander.update(entities.get(0), 0, "DNAME", "11");
     }
 
     public List<Entity> getEntities() { return entities; }

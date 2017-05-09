@@ -8,6 +8,15 @@ import java.util.Set;
  * Created by castiel on 02.05.2017.
  */
 public interface SQLCommander {
+
+    /*-----------------Setters----------------*/
+
+    public void update(Entity entity, int rowIndex, String columnName, String newValue)
+            //throws Business exception
+        ;
+
+    /*-----------------Getters----------------*/
+
     public List<String> getAllEntityNames();
 
     public Entity getEntity(String tableName);

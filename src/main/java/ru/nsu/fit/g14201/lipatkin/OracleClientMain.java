@@ -12,6 +12,9 @@ public class OracleClientMain
     {
         Controller controller = new Controller();
         //controller.login();
-        controller.startSession(new NetworkController().getConnection("user1", "r4kxlktt"));
+        controller.startSession(new NetworkController().getConnection("user1",
+        //        "r4kxlktt"
+                "user"
+        ));
     }
 }
