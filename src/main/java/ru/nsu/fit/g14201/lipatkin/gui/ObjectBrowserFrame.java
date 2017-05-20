@@ -81,8 +81,7 @@ public class ObjectBrowserFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 beforeQuitOperation.quit();
-                currentFrame.dispose();
-
+                currentFrame.dispose(); //TODO: close this window and got to LoginFrame
             }
         });
         fileMenu.add(quitItem);

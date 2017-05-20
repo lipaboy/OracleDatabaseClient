@@ -21,5 +21,5 @@ public interface SQLCommander {
 
     public List<Entity> getAllEntities();
 
-    public void close();
+//    public void close();
 }

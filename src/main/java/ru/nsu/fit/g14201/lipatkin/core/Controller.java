@@ -10,6 +10,7 @@ import ru.nsu.fit.g14201.lipatkin.network.NetworkController;
 import ru.nsu.fit.g14201.lipatkin.view.EntityPresenter;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Created by SPN on 01.05.2017.
@@ -44,7 +45,11 @@ public class Controller {
         ObjectBrowserFrame window = new ObjectBrowserFrame(dbManager, new BeforeQuitOperation() {
             @Override
             public void quit() {
-                commander.close();
+                try {
+                    connection.close();
+                } catch(SQLException exp) {
+                    log.error(exp.getMessage());
+                }
             }
         });
         window.setVisible(true);

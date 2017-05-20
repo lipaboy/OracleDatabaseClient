@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by SPN on 06.05.2017.
@@ -22,7 +23,7 @@ public class Entity {
     {
         name = null;
         columns = new ArrayList<>();
-        mapColumn = new HashMap<>();    //TODO: may TreeMap?
+        mapColumn = new TreeMap<>();    //TODO: may TreeMap?
         primaryKeys = new ArrayList<>();
     }
 
@@ -33,7 +34,8 @@ public class Entity {
         name = name1;
     }
 
-    public Entity(String name1, ResultSetMetaData tableMetaData, DatabaseMetaData dbMetaData) throws SQLException {
+    public Entity(String name1, ResultSetMetaData tableMetaData, DatabaseMetaData dbMetaData)
+            throws SQLException {
         this(name1);
         int size = tableMetaData.getColumnCount();
         for (int i = 0; i < size; i++) {
@@ -47,12 +49,14 @@ public class Entity {
             primaryKeys.add(
                     columns.indexOf(
                             mapColumn.get(
-                                            primaryKeysSet.getString("COLUMN_NAME")     //for primary keys
+                                            primaryKeysSet.getString(
+                                                    "COLUMN_NAME" //label only for primary keys
+                                            )
                                         )
                                     )
                             );
         }
-        //for foreign keys use: PKCOLUMN_NAME
+        //for foreign keys use label: PKCOLUMN_NAME
     }
 
     public void fill(ResultSet resultSet) throws SQLException {
@@ -66,8 +70,9 @@ public class Entity {
 
     /*----------------Setters---------------------*/
 
-    public void set(int rowIndex, int columnIndex) {
-
+    //package availability modificator
+    void setValueAt(int rowIndex, int columnIndex, String value) {
+        columns.get(columnIndex).setValueAt(rowIndex, value);
     }
 
     /*----------------Getters---------------------*/
@@ -95,4 +100,7 @@ public class Entity {
     public String getColumnName(int columnIndex) { return columns.get(columnIndex).getName(); }
 
     public String getName() { return name; }
+
+    public Column getColumn(int index) { return columns.get(index); }
+    public Column getColumn(String columnName) { return mapColumn.get(columnName); }
 }

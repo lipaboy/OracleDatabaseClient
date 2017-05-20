@@ -29,7 +29,7 @@ public class DBPresenter implements EditorStateChangedListener {
 
         entitiesPresenter = new ArrayList<>();
         for (Entity entity : dbManager.getEntities()) {
-            entitiesPresenter.add(new EntityPresenter(entity));
+            entitiesPresenter.add(new EntityPresenter(entity, manager));
         }
 
         tableList.setModel(new AbstractListModel() {

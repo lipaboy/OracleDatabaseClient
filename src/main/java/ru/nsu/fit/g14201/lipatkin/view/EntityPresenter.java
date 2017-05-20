@@ -1,6 +1,8 @@
 package ru.nsu.fit.g14201.lipatkin.view;
 
+import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
+import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -9,11 +11,31 @@ import javax.swing.table.AbstractTableModel;
  */
 public class EntityPresenter {
     private Entity entity;
+    private DBManager dbManager;
     private AbstractTableModel viewEntity;
     private AbstractTableModel dataEditor;
+    private AbstractTableModel constructor;
 
-    public EntityPresenter(Entity en) {
+    public EntityPresenter(Entity en, DBManager manager) {
         entity = en;
+        dbManager = manager;
+
+        constructor = new AbstractTableModel() {
+            @Override
+            public int getRowCount() {
+                return 0;
+            }
+
+            @Override
+            public int getColumnCount() {
+                return 0;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                return null;
+            }
+        };
 
         dataEditor = new AbstractTableModel() {
             @Override
@@ -41,8 +63,11 @@ public class EntityPresenter {
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-
-
+                try {
+                    dbManager.setValueAt(entity, rowIndex, columnIndex, aValue.toString());
+                } catch (UpdateException exp) {
+                    System.out.println("oops");
+                }
             }
         };
 

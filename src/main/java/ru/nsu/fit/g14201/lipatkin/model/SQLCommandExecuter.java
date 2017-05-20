@@ -20,17 +20,33 @@ public class SQLCommandExecuter implements SQLCommander {
         /*-----------------Setters----------------*/
 
     @Override
-    public void update(Entity entity, int rowIndex, String columnName, String newValue) throws UpdateException {
+    public void update(Entity entity, int rowIndex, String columnName, String newValue)
+            throws UpdateException {
         try {
             int primaryKeyNumber = entity.getPrimaryKeyColumnNumber(0);
             String primaryKeyColumn = entity.getColumnName(primaryKeyNumber - 1);   //offset
+            String columnClassName = entity.getColumn(columnName).getClassName();
+            String newValueWrapper;
+            switch (columnClassName.toUpperCase()) {
+                case "NUMBER":
+                case "INTEGER":
+                case "BIGDECIMAL":
+                    newValueWrapper = newValue;
+                    break;
+                case "VARCHAR":
+                case "VARCHAR2":
+                case "STRING":
+                default:
+                    newValueWrapper = "'" + newValue + "'";
+            }
+
             String query =
                 "UPDATE " + entity.getName()
-                    + " SET " + columnName + " = " + newValue
+                    + " SET " + columnName + " = " + newValueWrapper
                     + " WHERE " + primaryKeyColumn + " = "
-                        + entity.get(rowIndex, primaryKeyNumber - 1);      //!!!! NO ';' NO ';' NO ';'
+                        + entity.get(rowIndex, primaryKeyNumber - 1);//!!!! NO ';' NO ';' NO ';'
 
-            System.out.println(query);
+            //System.out.println(query);
             //connection.setAutoCommit(false);
             PreparedStatement preStatement = connection.prepareStatement(query);
             preStatement.executeUpdate();
@@ -39,6 +55,7 @@ public class SQLCommandExecuter implements SQLCommander {
         } catch(SQLException exp) {
             log.error(exp.getMessage());
             throw new UpdateException(exp.getMessage());
+            //TODO: useful information for exception
 //            JDBCTutorialUtilities.printSQLException(e);
 //            if (con != null) {
 //                try {
@@ -85,6 +102,7 @@ public class SQLCommandExecuter implements SQLCommander {
             //in your table (Oracle XE) can be russian entries
             ResultSet entrySet = statement.executeQuery("SELECT * FROM " + tableName);
 
+            //TODO: difficult constructor (make easy)
             entity = new Entity(tableName, entrySet.getMetaData(), connection.getMetaData());
             entity.fill(entrySet);
 
@@ -112,13 +130,13 @@ public class SQLCommandExecuter implements SQLCommander {
         return entities;
     }
 
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch(SQLException exp) {
-            log.error(exp.getMessage());
-        }
-    }
+//    @Override
+//    public void close() {
+//        try {
+//            connection.close();
+//        } catch(SQLException exp) {
+//            log.error(exp.getMessage());
+//        }
+//    }
 
 }

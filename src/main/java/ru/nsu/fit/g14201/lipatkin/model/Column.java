@@ -25,8 +25,13 @@ public class Column {
         className = resultSetMetaData.getColumnClassName(columnNumber);
     }
 
-    public void add(ResultSet resultSet) throws SQLException {
+    //package availability modificator
+    void add(ResultSet resultSet) throws SQLException {
         elements.add(resultSet.getString(number));
+    }
+
+    void setValueAt(int rowIndex, String value) {
+        elements.set(rowIndex, value);
     }
 
     public int size() { return elements.size(); }
@@ -34,4 +39,6 @@ public class Column {
     public String get(int rowIndex) { return elements.get(rowIndex); }
 
     public String getName() { return name; }
+
+    public String getClassName() { return className; }
 }
