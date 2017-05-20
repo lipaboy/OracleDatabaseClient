@@ -4,6 +4,7 @@ import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -23,17 +24,52 @@ public class EntityPresenter {
         constructor = new AbstractTableModel() {
             @Override
             public int getRowCount() {
-                return 0;
+                return entity.getColumnCount();
             }
 
             @Override
             public int getColumnCount() {
-                return 0;
+                return 5;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                return null;
+
+                switch (columnIndex) {
+                    case 0: return entity.getColumnName(rowIndex);
+                    case 1: return entity.getColumn(rowIndex).getType();
+                    case 2: //return JCheckBox;
+                    case 3: return "Reference";
+                    case 4: return "Description";
+                    default:
+                }
+                return "";
+
+            }
+
+            @Override
+            public String getColumnName(int index) {
+                switch (index) {
+                    case 0: return "Column Name";
+                    case 1: return "Type";
+                    case 2: return "Is Primary Key";
+                    case 3: return "Reference";
+                    case 4: return "Description";
+                    default:
+                }
+                return "";
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) { return true; }
+
+            @Override
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                try {
+                    dbManager.setValueAt(entity, rowIndex, columnIndex, aValue.toString());
+                } catch (UpdateException exp) {
+                    System.out.println("oops");
+                }
             }
         };
 
@@ -110,9 +146,11 @@ public class EntityPresenter {
 
     public AbstractTableModel getDataEditor() { return dataEditor; }
 
+    public AbstractTableModel getConstructor() { return constructor; }
+
     public AbstractTableModel getEntityModel(TableEditorState.States state) {
         switch (state) {
-            case CONSTRUCTOR:
+            case CONSTRUCTOR: return getConstructor();
             case DATA_EDITOR: return getDataEditor();
             default:
                 case VIEW: return getViewEntity();

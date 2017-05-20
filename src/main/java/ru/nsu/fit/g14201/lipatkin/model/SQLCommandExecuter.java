@@ -23,19 +23,19 @@ public class SQLCommandExecuter implements SQLCommander {
     public void update(Entity entity, int rowIndex, String columnName, String newValue)
             throws UpdateException {
         try {
-            int primaryKeyNumber = entity.getPrimaryKeyColumnNumber(0);
-            String primaryKeyColumn = entity.getColumnName(primaryKeyNumber - 1);   //offset
-            String columnClassName = entity.getColumn(columnName).getClassName();
+            int primaryKeyIndex = entity.getPrimaryKeyColumnIndex(0);
+            String primaryKeyColumn = entity.getColumnName(primaryKeyIndex);
+            String columnTypeName = entity.getColumn(columnName).getType();
             String newValueWrapper;
-            switch (columnClassName.toUpperCase()) {
+            switch (columnTypeName.toUpperCase()) {
                 case "NUMBER":
                 case "INTEGER":
-                case "BIGDECIMAL":
                     newValueWrapper = newValue;
                     break;
                 case "VARCHAR":
                 case "VARCHAR2":
-                case "STRING":
+                case "LONG":
+                case "DATE":
                 default:
                     newValueWrapper = "'" + newValue + "'";
             }
@@ -44,7 +44,7 @@ public class SQLCommandExecuter implements SQLCommander {
                 "UPDATE " + entity.getName()
                     + " SET " + columnName + " = " + newValueWrapper
                     + " WHERE " + primaryKeyColumn + " = "
-                        + entity.get(rowIndex, primaryKeyNumber - 1);//!!!! NO ';' NO ';' NO ';'
+                        + entity.get(rowIndex, primaryKeyIndex);//!!!! NO ';' NO ';' NO ';'
 
             //System.out.println(query);
             //connection.setAutoCommit(false);
@@ -82,6 +82,7 @@ public class SQLCommandExecuter implements SQLCommander {
             while (entrySet.next()) {
                 String tableName = entrySet.getString(1);
                 if (!tableName.contains("APEX$"))
+                //if (tableName.toUpperCase() == "SALESORDERS")
                     entities.add(tableName);
             }
 

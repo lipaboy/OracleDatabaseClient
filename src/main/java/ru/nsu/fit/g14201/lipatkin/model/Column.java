@@ -9,9 +9,19 @@ import java.util.ArrayList;
  * Created by SPN on 06.05.2017.
  */
 public class Column {
-    private String name;
-    private String className;
     private int number;     //from 1 to ... (number of column)
+    private String name;
+    private String type;
+    private String className;
+//    public class Constraints {
+//        public boolean isPrimary = false;
+//        public boolean isForeign = false;
+//        public Entity tableRef = null;
+//        public Column columnRef = null;
+//    };
+//    private Constraints constraint;
+
+
     //or public String className;
     private ArrayList<String> elements;         //ArrayList because our Entity can grow
 
@@ -23,16 +33,24 @@ public class Column {
         number = columnNumber;
         name = resultSetMetaData.getColumnName(columnNumber);
         className = resultSetMetaData.getColumnClassName(columnNumber);
+        type = resultSetMetaData.getColumnTypeName(columnNumber);
     }
 
     //package availability modificator
     void add(ResultSet resultSet) throws SQLException {
-        elements.add(resultSet.getString(number));
+//        if (type.equals("LONG"))
+//            elements.add(resultSet.getClob());
+//        else
+        //LONG doesn't work
+            elements.add(resultSet.getString(number));
+        //resultSet.get
     }
 
     void setValueAt(int rowIndex, String value) {
         elements.set(rowIndex, value);
     }
+
+    //void setIsPrimaryKey(boolean value) { constraint.isPrimary = value; }
 
     public int size() { return elements.size(); }
 
@@ -41,4 +59,6 @@ public class Column {
     public String getName() { return name; }
 
     public String getClassName() { return className; }
+
+    public String getType() { return type; }
 }

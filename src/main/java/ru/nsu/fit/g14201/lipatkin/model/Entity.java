@@ -86,9 +86,8 @@ public class Entity {
             ;
     }
 
-    public int getPrimaryKeyColumnNumber(int index) {
-        return 1 +
-                primaryKeys.get(index);
+    public int getPrimaryKeyColumnIndex(int index) {
+        return primaryKeys.get(index);
     }
 
     //1) Entity may be empty (it is normal)
