@@ -4,10 +4,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by SPN on 06.05.2017.
@@ -17,7 +14,7 @@ public class Entity {
 
     private Map<String, Column> mapColumn;
     private ArrayList<Column> columns;
-    private ArrayList<Integer> primaryKeys;     //column index (from 0.to.n-1)
+    private ArrayList<Column> primaryKeys;     //column index (from 0.to.n-1)
     private String name;
 
     {
@@ -47,14 +44,12 @@ public class Entity {
         ResultSet primaryKeysSet = dbMetaData.getPrimaryKeys(null, null, name1);
         while (primaryKeysSet.next()) {
             primaryKeys.add(
-                    columns.indexOf(
-                            mapColumn.get(
-                                            primaryKeysSet.getString(
-                                                    "COLUMN_NAME" //label only for primary keys
-                                            )
-                                        )
-                                    )
-                            );
+                mapColumn.get(
+                                primaryKeysSet.getString(
+                                        "COLUMN_NAME" //label only for primary keys
+                                )
+                             )
+            );
         }
         //for foreign keys use label: PKCOLUMN_NAME
     }
@@ -78,17 +73,20 @@ public class Entity {
     /*----------------Getters---------------------*/
 
     public String get(int rowIndex, int columnIndex) { return columns.get(columnIndex).get(rowIndex); }
+    public String get(int rowIndex, String columnName) { return mapColumn.get(columnName).get(rowIndex); }
 
-    public String getPrimaryKeyColumnName(int index) {
-        return columns.get(
-                    primaryKeys.get(index)
-                ).getName()
-            ;
-    }
-
-    public int getPrimaryKeyColumnIndex(int index) {
+    //I can get Column because it is "defended" on modifications from another package
+    public Column getPrimaryKey(int index) {
         return primaryKeys.get(index);
     }
+    //But List isn't defended on modifications from another package (modificator public and package)
+    List<Column> getPrimaryKeys() {
+        return primaryKeys;
+    }
+
+    public Column getColumn(int index) { return columns.get(index); }
+    public Column getColumn(String columnName) { return mapColumn.get(columnName); }
+    List<Column> getColumns() { return columns; }
 
     //1) Entity may be empty (it is normal)
     //2) All the columns have the same size
@@ -99,7 +97,4 @@ public class Entity {
     public String getColumnName(int columnIndex) { return columns.get(columnIndex).getName(); }
 
     public String getName() { return name; }
-
-    public Column getColumn(int index) { return columns.get(index); }
-    public Column getColumn(String columnName) { return mapColumn.get(columnName); }
 }

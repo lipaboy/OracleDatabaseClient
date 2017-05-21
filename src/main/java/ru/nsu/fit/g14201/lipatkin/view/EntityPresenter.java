@@ -102,7 +102,7 @@ public class EntityPresenter {
                 try {
                     dbManager.setValueAt(entity, rowIndex, columnIndex, aValue.toString());
                 } catch (UpdateException exp) {
-                    System.out.println("oops");
+                    System.out.println(exp.getMessage());
                 }
             }
         };

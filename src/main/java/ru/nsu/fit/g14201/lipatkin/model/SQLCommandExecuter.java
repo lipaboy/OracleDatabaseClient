@@ -17,34 +17,68 @@ public class SQLCommandExecuter implements SQLCommander {
         connection = con;
     }
 
+    private String wrapByQuotes(String value, String sqlTypeName) {
+        String wrappedValue;
+        //TODO: may be need check on NULL, DOUBLE, TIMESTAMP
+        switch (sqlTypeName.toUpperCase()) {
+            case "NUMBER":
+            case "INTEGER":
+                wrappedValue = value;
+                break;
+            case "VARCHAR":
+            case "VARCHAR2":
+            case "LONG":
+            case "DATE":
+            default:
+                wrappedValue = "'" + value + "'";
+        }
+        return wrappedValue;
+    }
+
         /*-----------------Setters----------------*/
 
     @Override
     public void update(Entity entity, int rowIndex, String columnName, String newValue)
             throws UpdateException {
         try {
-            int primaryKeyIndex = entity.getPrimaryKeyColumnIndex(0);
-            String primaryKeyColumn = entity.getColumnName(primaryKeyIndex);
-            String columnTypeName = entity.getColumn(columnName).getType();
-            String newValueWrapper;
-            switch (columnTypeName.toUpperCase()) {
-                case "NUMBER":
-                case "INTEGER":
-                    newValueWrapper = newValue;
-                    break;
-                case "VARCHAR":
-                case "VARCHAR2":
-                case "LONG":
-                case "DATE":
-                default:
-                    newValueWrapper = "'" + newValue + "'";
+            String whereCondition;
+            List<Column> primaryKeys = entity.getPrimaryKeys();
+
+            if (primaryKeys.size() <= 0) {
+                //throw new UpdateException("Primary keys is empty into " + entity.getName());
+                List<Column> columns = entity.getColumns();
+                Column column = columns.get(0);
+                whereCondition = column.getName() + " = "
+                        + wrapByQuotes(column.get(rowIndex), column.getType());
+
+                for (int i = 1; i < columns.size(); i++) {
+                    column = columns.get(i);
+                    whereCondition = whereCondition + " AND "
+                            + column.getName() + " = "
+                            + wrapByQuotes(column.get(rowIndex), column.getType());
+                }
+            }
+            else {
+                Column primaryKeyColumn = primaryKeys.get(0);
+                whereCondition = primaryKeyColumn.getName() + " = "
+                        + wrapByQuotes(primaryKeyColumn.get(rowIndex), primaryKeyColumn.getType());
+
+                for (int i = 1; i < primaryKeys.size(); i++) {
+                    Column column = primaryKeys.get(i);
+                    whereCondition = whereCondition + " AND "
+                            + column.getName() + " = "
+                            + wrapByQuotes(column.get(rowIndex), column.getType());
+                }
             }
 
+            String columnTypeName = entity.getColumn(columnName).getType();
+            String wrappedValue = wrapByQuotes(newValue, columnTypeName);
+
             String query =
-                "UPDATE " + entity.getName()
-                    + " SET " + columnName + " = " + newValueWrapper
-                    + " WHERE " + primaryKeyColumn + " = "
-                        + entity.get(rowIndex, primaryKeyIndex);//!!!! NO ';' NO ';' NO ';'
+                    "UPDATE " + entity.getName()
+                            + " SET " + columnName + " = " + wrappedValue
+                            + " WHERE " + whereCondition;
+            //!!!! NO ';' NO ';' NO ';' in query string
 
             //System.out.println(query);
             //connection.setAutoCommit(false);
@@ -52,6 +86,9 @@ public class SQLCommandExecuter implements SQLCommander {
             preStatement.executeUpdate();
             log.info("execute Update successful");
             preStatement.close();
+        } catch(UpdateException exp) {
+            log.error(exp.getMessage());
+            throw exp;
         } catch(SQLException exp) {
             log.error(exp.getMessage());
             throw new UpdateException(exp.getMessage());

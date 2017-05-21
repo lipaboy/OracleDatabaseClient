@@ -9,5 +9,5 @@ public class UpdateException extends OracleClientException {
     private String message;
 
     public UpdateException(String msg) { message = msg; }
-    public String getMessage() { return "Update: " + message; }
+    public String getMessage() { return "Update exception: " + message; }
 }
