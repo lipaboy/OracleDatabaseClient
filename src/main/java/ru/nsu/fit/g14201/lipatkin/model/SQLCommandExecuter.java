@@ -17,7 +17,7 @@ public class SQLCommandExecuter implements SQLCommander {
         connection = con;
     }
 
-    private String wrapByQuotes(String value, String sqlTypeName) {
+    String wrapByQuotes(String value, String sqlTypeName) {
         String wrappedValue;
         //TODO: may be need check on NULL, DOUBLE, TIMESTAMP
         switch (sqlTypeName.toUpperCase()) {
@@ -80,11 +80,9 @@ public class SQLCommandExecuter implements SQLCommander {
                             + " WHERE " + whereCondition;
             //!!!! NO ';' NO ';' NO ';' in query string
 
-            //System.out.println(query);
-            //connection.setAutoCommit(false);
             PreparedStatement preStatement = connection.prepareStatement(query);
             preStatement.executeUpdate();
-            log.info("execute Update successful");
+            //log.info("execute Update successful");
             preStatement.close();
         } catch(UpdateException exp) {
             log.error(exp.getMessage());
@@ -102,6 +100,32 @@ public class SQLCommandExecuter implements SQLCommander {
 //                    JDBCTutorialUtilities.printSQLException(excep);
 //                }
 //            }
+        }
+    }
+
+    @Override
+    public void renameColumn(Entity entity, Column column, String newName) throws UpdateException {
+        //"alter table sales rename column order_date to date_of_order"
+
+        try {
+            String type = column.getType();
+            //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
+            //TODO: calling this method (i.e. in constructor)
+            String query =
+                    "ALTER TABLE " + entity.getName()
+                        + " RENAME COLUMN " + column.getName() +        //unnecessary to wrap by quotes
+                            " TO " + newName;
+
+            PreparedStatement preStatement = connection.prepareStatement(query);
+            //log.info("Rename column: " + query);
+            preStatement.executeUpdate();
+            preStatement.close();
+        } catch(UpdateException exp) {
+            log.error(exp.getMessage());
+            throw exp;
+        } catch(SQLException exp) {
+            log.error(exp.getMessage());
+            throw new UpdateException(exp.getMessage());
         }
     }
 
@@ -144,7 +168,8 @@ public class SQLCommandExecuter implements SQLCommander {
             entity = new Entity(tableName, entrySet.getMetaData(), connection.getMetaData());
             entity.fill(entrySet);
 
-            statement.close();
+            //if (!statement.isClosed())
+                statement.close();      //why it is already closed
             //TODO: I think that we need to throw exception up the method
         } catch(SQLException exp) {
             log.error(exp.getMessage());     //TODO: throw another exception (business)

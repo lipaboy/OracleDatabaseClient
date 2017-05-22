@@ -83,6 +83,8 @@ public class Entity {
     List<Column> getPrimaryKeys() {
         return primaryKeys;
     }
+    public boolean isPrimaryKey(int indexColumn) { return primaryKeys.contains(columns.get(indexColumn)); }
+    public boolean isPrimaryKey(Column column) { return primaryKeys.contains(column); }
 
     public Column getColumn(int index) { return columns.get(index); }
     public Column getColumn(String columnName) { return mapColumn.get(columnName); }

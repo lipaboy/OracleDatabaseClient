@@ -26,21 +26,41 @@ public class DBManager {
         //commander.update(mapEntities.get("DEPT"), 0, "DNAME", "12");
     }
 
-    public List<Entity> getEntities() { return entities; }
+    /*-------------Setters----------------------------*/
 
     public void setValueAt(Entity entity, int rowIndex, int columnIndex, String value)
             throws UpdateException {
         try {
                 //commander doesn't update entity in Client
             commander.update(entity, rowIndex, entity.getColumnName(columnIndex), value);
-            //Entity entity1 = mapEntities.get("DEPT");
-            //commander.update(entity1, 0, "DNAME", "STOP");
             entity.setValueAt(rowIndex, columnIndex, value);
         } catch(UpdateException exp) {
-            //log.error(exp.getMessage());
-            throw new UpdateException(exp.getMessage());
+            throw exp;
         }
     }
 
-    //here remove and add entity
+    public void setColumnName(Entity entity, Column column, String newName)
+            throws UpdateException {
+        try {
+            commander.renameColumn(entity, column, newName);
+            column.setName(newName);
+        } catch(UpdateException exp) {
+            throw exp;
+        }
+    }
+
+    public void setColumnType(Entity entity, Column column, String type)
+            throws UpdateException {
+        try {
+//            commander.renameColumn(entity, column, newName);
+//            column.setName(newName);
+        } catch(UpdateException exp) {
+            throw exp;
+        }
+    }
+
+    /*-------------Getters----------------------------*/
+
+    public List<Entity> getEntities() { return entities; }
+
 }

@@ -13,6 +13,8 @@ public interface SQLCommander {
 
     public void update(Entity entity, int rowIndex, String columnName, String newValue) throws UpdateException;
 
+    public void renameColumn(Entity entity, Column column, String newName) throws UpdateException;
+
     /*-----------------Getters----------------*/
 
     public List<String> getAllEntityNames();

@@ -1,11 +1,14 @@
 package ru.nsu.fit.g14201.lipatkin.view;
 
+import ru.nsu.fit.g14201.lipatkin.model.Column;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by SPN on 08.05.2017.
@@ -33,31 +36,40 @@ public class EntityPresenter {
             }
 
             @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-
-                switch (columnIndex) {
-                    case 0: return entity.getColumnName(rowIndex);
-                    case 1: return entity.getColumn(rowIndex).getType();
-                    case 2: //return JCheckBox;
-                    case 3: return "Reference";
-                    case 4: return "Description";
-                    default:
-                }
-                return "";
-
-            }
-
-            @Override
             public String getColumnName(int index) {
+                //TODO: make function for get Enum of Column Type (like name, primary key or descripion)
+                //TODO: by index
                 switch (index) {
                     case 0: return "Column Name";
                     case 1: return "Type";
                     case 2: return "Is Primary Key";
-                    case 3: return "Reference";
+                    case 3: return "Foreign Key";
                     case 4: return "Description";
                     default:
                 }
                 return "";
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                Column column = entity.getColumn(rowIndex);
+
+                switch (columnIndex) {
+                    case 0: return column.getName();
+                    case 1: return column.getType();
+                    case 2: return entity.isPrimaryKey(column);     //checkbox inside of AbstractModel or DefaultJTable
+                    case 3: return "Reference";     //may be combobox
+                    case 4: return "Description";
+                    default:
+                }
+                return "";
+            }
+
+            @Override
+            public Class getColumnClass(int column) {
+                if (column == 2)
+                    return Boolean.class;
+                return String.class;
             }
 
             @Override
@@ -66,9 +78,18 @@ public class EntityPresenter {
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 try {
-                    dbManager.setValueAt(entity, rowIndex, columnIndex, aValue.toString());
+                    Column column = entity.getColumn(rowIndex);
+
+                    switch (columnIndex) {
+                        case 0:     dbManager.setColumnName(entity, column, aValue.toString());
+                        case 1:     dbManager.setColumnType(entity, column, aValue.toString());
+                        case 2:
+                        case 3:
+                        case 4:
+                        default:
+                    }
                 } catch (UpdateException exp) {
-                    System.out.println("oops");
+                    System.out.println(exp.getMessage());
                 }
             }
         };

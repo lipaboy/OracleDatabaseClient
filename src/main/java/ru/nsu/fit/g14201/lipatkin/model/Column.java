@@ -34,6 +34,15 @@ public class Column {
         name = resultSetMetaData.getColumnName(columnNumber);
         className = resultSetMetaData.getColumnClassName(columnNumber);
         type = resultSetMetaData.getColumnTypeName(columnNumber);
+//        System.out.println(     //for varchar2 good
+//                "Display size " + name + " column = " + resultSetMetaData.getColumnDisplaySize(number));
+//        System.out.println(     //the best
+//                "Precision " + name + " column = " + resultSetMetaData.getPrecision(number) +
+//        ", " + resultSetMetaData.getScale(number));
+//        System.out.println(
+//                "Catalog name " + number + " column = " + resultSetMetaData.getCatalogName(number));
+//        System.out.println(
+//                "Column label " + number + " column = " + resultSetMetaData.getColumnLabel(number));
     }
 
     //package availability modificator
@@ -46,11 +55,15 @@ public class Column {
         //resultSet.get
     }
 
+    /*----------------Setters---------------------*/
+
     void setValueAt(int rowIndex, String value) {
         elements.set(rowIndex, value);
     }
 
-    //void setIsPrimaryKey(boolean value) { constraint.isPrimary = value; }
+    void setName(String newName) { name = newName; }
+
+    /*----------------Getters---------------------*/
 
     public int size() { return elements.size(); }
 
