@@ -49,29 +49,30 @@ public class SQLCommandExecuter implements SQLCommander {
                 List<Column> columns = entity.getColumns();
                 Column column = columns.get(0);
                 whereCondition = column.getName() + " = "
-                        + wrapByQuotes(column.get(rowIndex), column.getType());
+                        + wrapByQuotes(column.get(rowIndex), column.getType().getTypeName());
 
                 for (int i = 1; i < columns.size(); i++) {
                     column = columns.get(i);
                     whereCondition = whereCondition + " AND "
                             + column.getName() + " = "
-                            + wrapByQuotes(column.get(rowIndex), column.getType());
+                            + wrapByQuotes(column.get(rowIndex), column.getType().getTypeName());
                 }
             }
             else {
                 Column primaryKeyColumn = primaryKeys.get(0);
                 whereCondition = primaryKeyColumn.getName() + " = "
-                        + wrapByQuotes(primaryKeyColumn.get(rowIndex), primaryKeyColumn.getType());
+                        + wrapByQuotes(primaryKeyColumn.get(rowIndex),
+                                        primaryKeyColumn.getType().getTypeName());
 
                 for (int i = 1; i < primaryKeys.size(); i++) {
                     Column column = primaryKeys.get(i);
                     whereCondition = whereCondition + " AND "
                             + column.getName() + " = "
-                            + wrapByQuotes(column.get(rowIndex), column.getType());
+                            + wrapByQuotes(column.get(rowIndex), column.getType().getTypeName());
                 }
             }
 
-            String columnTypeName = entity.getColumn(columnName).getType();
+            String columnTypeName = entity.getColumn(columnName).getType().getTypeName();
             String wrappedValue = wrapByQuotes(newValue, columnTypeName);
 
             String query =
@@ -108,7 +109,6 @@ public class SQLCommandExecuter implements SQLCommander {
         //"alter table sales rename column order_date to date_of_order"
 
         try {
-            String type = column.getType();
             //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
             //TODO: calling this method (i.e. in constructor)
             String query =
@@ -118,6 +118,29 @@ public class SQLCommandExecuter implements SQLCommander {
 
             PreparedStatement preStatement = connection.prepareStatement(query);
             //log.info("Rename column: " + query);
+            preStatement.executeUpdate();
+            preStatement.close();
+        } catch(UpdateException exp) {
+            log.error(exp.getMessage());
+            throw exp;
+        } catch(SQLException exp) {
+            log.error(exp.getMessage());
+            throw new UpdateException(exp.getMessage());
+        }
+    }
+
+    @Override
+    public void setColumnType(Entity entity, Column column, String newWholeType) throws UpdateException {
+        try {
+            //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
+            //TODO: calling this method (i.e. in constructor)
+            String query =
+                    "ALTER TABLE " + entity.getName()
+                            + " MODIFY " + column.getName()        //unnecessary to wrap by quotes
+                              + " " + newWholeType;
+
+            PreparedStatement preStatement = connection.prepareStatement(query);
+            log.info("Rename column type: " + query);
             preStatement.executeUpdate();
             preStatement.close();
         } catch(UpdateException exp) {

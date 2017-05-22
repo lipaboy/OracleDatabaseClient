@@ -11,18 +11,9 @@ import java.util.ArrayList;
 public class Column {
     private int number;     //from 1 to ... (number of column)
     private String name;
-    private String type;
+    private SQLType type;
     private String className;
-//    public class Constraints {
-//        public boolean isPrimary = false;
-//        public boolean isForeign = false;
-//        public Entity tableRef = null;
-//        public Column columnRef = null;
-//    };
-//    private Constraints constraint;
 
-
-    //or public String className;
     private ArrayList<String> elements;         //ArrayList because our Entity can grow
 
     {
@@ -31,9 +22,12 @@ public class Column {
 
     public Column(ResultSetMetaData resultSetMetaData, int columnNumber) throws SQLException {
         number = columnNumber;
-        name = resultSetMetaData.getColumnName(columnNumber);
-        className = resultSetMetaData.getColumnClassName(columnNumber);
-        type = resultSetMetaData.getColumnTypeName(columnNumber);
+        ResultSetMetaData rsmd = resultSetMetaData;
+        name = rsmd.getColumnName(columnNumber);
+        className = rsmd.getColumnClassName(columnNumber);
+        type = new SQLType(rsmd.getColumnTypeName(columnNumber),
+                           rsmd.getPrecision(columnNumber),
+                           rsmd.getScale(columnNumber));
 //        System.out.println(     //for varchar2 good
 //                "Display size " + name + " column = " + resultSetMetaData.getColumnDisplaySize(number));
 //        System.out.println(     //the best
@@ -63,15 +57,21 @@ public class Column {
 
     void setName(String newName) { name = newName; }
 
+    void setType(String newTypeName, int newPrecision, int newScale) {
+        type.set(newTypeName, newPrecision, newScale);
+    }
+
+    void setType(SQLType newType) { type = newType; }
+
     /*----------------Getters---------------------*/
 
     public int size() { return elements.size(); }
 
-    public String get(int rowIndex) { return elements.get(rowIndex); }
+    public final String get(int rowIndex) { return elements.get(rowIndex); }
 
-    public String getName() { return name; }
+    public final String getName() { return name; }
 
-    public String getClassName() { return className; }
+    public final String getClassName() { return className; }
 
-    public String getType() { return type; }
+    public final SQLType getType() { return type; }
 }

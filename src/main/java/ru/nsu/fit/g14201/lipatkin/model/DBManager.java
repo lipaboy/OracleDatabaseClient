@@ -49,11 +49,12 @@ public class DBManager {
         }
     }
 
-    public void setColumnType(Entity entity, Column column, String type)
+    public void setColumnType(Entity entity, Column column, String typeFormat)
             throws UpdateException {
         try {
-//            commander.renameColumn(entity, column, newName);
-//            column.setName(newName);
+            SQLType type = new SQLType(typeFormat);     //if wrong format then need exception
+            commander.setColumnType(entity, column, typeFormat);
+            column.setType(type);
         } catch(UpdateException exp) {
             throw exp;
         }

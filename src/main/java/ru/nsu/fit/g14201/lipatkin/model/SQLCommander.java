@@ -15,6 +15,8 @@ public interface SQLCommander {
 
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException;
 
+    public void setColumnType(Entity entity, Column column, String newType) throws UpdateException;
+
     /*-----------------Getters----------------*/
 
     public List<String> getAllEntityNames();

@@ -1,29 +1,30 @@
-2017-05-22 14:05:43 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:05:43 INFO  Controller:40 - Start session
-2017-05-22 14:05:43 ERROR SQLCommandExecuter:174 - Stream has already been closed
-2017-05-22 14:05:48 INFO  SQLCommandExecuter:120 - Rename column: ALTER TABLE DEPT RENAME DEPTNO TO DEPTN
-2017-05-22 14:05:48 ERROR SQLCommandExecuter:127 - ORA-14155: missing PARTITION or SUBPARTITION keyword
+2017-05-22 17:49:57 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-22 17:49:57 INFO  Controller:40 - Start session
+2017-05-22 17:49:57 ERROR SQLCommandExecuter:198 - Stream has already been closed
+2017-05-22 17:51:32 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-22 17:51:32 INFO  Controller:40 - Start session
+2017-05-22 17:51:33 ERROR SQLCommandExecuter:198 - Stream has already been closed
+2017-05-22 17:52:49 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-22 17:52:49 INFO  Controller:40 - Start session
+2017-05-22 17:52:49 ERROR SQLCommandExecuter:198 - Stream has already been closed
+2017-05-22 17:53:15 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-22 17:53:15 INFO  Controller:40 - Start session
+2017-05-22 17:53:16 ERROR SQLCommandExecuter:198 - Stream has already been closed
+2017-05-22 17:54:00 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-22 17:54:00 INFO  Controller:40 - Start session
+2017-05-22 17:54:00 ERROR SQLCommandExecuter:198 - Stream has already been closed
+2017-05-22 17:55:39 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-22 17:55:39 INFO  Controller:40 - Start session
+2017-05-22 17:55:40 ERROR SQLCommandExecuter:198 - Stream has already been closed
+2017-05-22 18:03:52 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-22 18:03:52 INFO  Controller:40 - Start session
+2017-05-22 18:03:52 ERROR SQLCommandExecuter:198 - Stream has already been closed
+2017-05-22 18:03:59 INFO  SQLCommandExecuter:143 - Rename column type: ALTER TABLE DEPT MODIFY DEPTNNUMBER(3, 0)
+2017-05-22 18:03:59 ERROR SQLCommandExecuter:150 - ORA-00902: invalid datatype
 
-2017-05-22 14:07:43 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:07:43 INFO  Controller:40 - Start session
-2017-05-22 14:07:44 ERROR SQLCommandExecuter:174 - Stream has already been closed
-2017-05-22 14:07:50 INFO  SQLCommandExecuter:120 - Rename column: ALTER TABLE DEPT RENAME COLUMN DEPTNO TO DEPTN
-2017-05-22 14:10:16 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:10:16 INFO  Controller:40 - Start session
-2017-05-22 14:10:16 ERROR SQLCommandExecuter:174 - Stream has already been closed
-2017-05-22 14:15:29 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:15:30 INFO  Controller:40 - Start session
-2017-05-22 14:16:06 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:16:06 INFO  Controller:40 - Start session
-2017-05-22 14:16:30 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:16:31 INFO  Controller:40 - Start session
-2017-05-22 14:16:31 ERROR SQLCommandExecuter:175 - Stream has already been closed
-2017-05-22 14:16:44 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:16:44 INFO  Controller:40 - Start session
-2017-05-22 14:16:45 ERROR SQLCommandExecuter:175 - Stream has already been closed
-2017-05-22 14:21:57 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:21:57 INFO  Controller:40 - Start session
-2017-05-22 14:21:58 ERROR SQLCommandExecuter:175 - Stream has already been closed
-2017-05-22 14:22:55 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
-2017-05-22 14:22:55 INFO  Controller:40 - Start session
-2017-05-22 14:22:55 ERROR SQLCommandExecuter:175 - Stream has already been closed
+2017-05-22 18:04:39 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-05-22 18:04:39 INFO  Controller:40 - Start session
+2017-05-22 18:04:39 ERROR SQLCommandExecuter:198 - Stream has already been closed
+2017-05-22 18:04:45 INFO  SQLCommandExecuter:143 - Rename column type: ALTER TABLE DEPT MODIFY DEPTN NUMBER(3, 0)
+2017-05-22 18:05:01 ERROR SQLCommandExecuter:92 - ORA-01438: value larger than specified precision allowed for this column
+

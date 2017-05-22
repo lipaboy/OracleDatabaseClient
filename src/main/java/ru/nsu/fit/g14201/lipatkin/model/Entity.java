@@ -72,11 +72,11 @@ public class Entity {
 
     /*----------------Getters---------------------*/
 
-    public String get(int rowIndex, int columnIndex) { return columns.get(columnIndex).get(rowIndex); }
+    public final String get(int rowIndex, int columnIndex) { return columns.get(columnIndex).get(rowIndex); }
     public String get(int rowIndex, String columnName) { return mapColumn.get(columnName).get(rowIndex); }
 
     //I can get Column because it is "defended" on modifications from another package
-    public Column getPrimaryKey(int index) {
+    public final Column getPrimaryKey(int index) {
         return primaryKeys.get(index);
     }
     //But List isn't defended on modifications from another package (modificator public and package)
@@ -86,8 +86,8 @@ public class Entity {
     public boolean isPrimaryKey(int indexColumn) { return primaryKeys.contains(columns.get(indexColumn)); }
     public boolean isPrimaryKey(Column column) { return primaryKeys.contains(column); }
 
-    public Column getColumn(int index) { return columns.get(index); }
-    public Column getColumn(String columnName) { return mapColumn.get(columnName); }
+    public final Column getColumn(int index) { return columns.get(index); }
+    public final Column getColumn(String columnName) { return mapColumn.get(columnName); }
     List<Column> getColumns() { return columns; }
 
     //1) Entity may be empty (it is normal)
@@ -96,7 +96,7 @@ public class Entity {
 
     public int getColumnCount() { return columns.size(); }
 
-    public String getColumnName(int columnIndex) { return columns.get(columnIndex).getName(); }
+    public final String getColumnName(int columnIndex) { return columns.get(columnIndex).getName(); }
 
-    public String getName() { return name; }
+    public final String getName() { return name; }
 }
