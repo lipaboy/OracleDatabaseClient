@@ -1,4 +1,4 @@
-package ru.nsu.fit.g14201.lipatkin.view;
+package ru.nsu.fit.g14201.lipatkin.presenter;
 
 /**
  * Created by SPN on 08.05.2017.

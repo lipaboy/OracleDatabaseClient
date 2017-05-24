@@ -1,4 +1,4 @@
-package ru.nsu.fit.g14201.lipatkin.view;
+package ru.nsu.fit.g14201.lipatkin.presenter;
 
 import java.util.ArrayList;
 import java.util.List;

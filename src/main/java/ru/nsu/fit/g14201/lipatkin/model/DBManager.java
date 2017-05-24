@@ -2,6 +2,7 @@ package ru.nsu.fit.g14201.lipatkin.model;
 
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -15,8 +16,8 @@ public class DBManager {
     private List<Entity> entities;      //TODO: may be I need Map<String, Entity>
     private Map<String, Entity> mapEntities;
 
-    public DBManager(SQLCommander sqlCommander) {
-        commander = sqlCommander;
+    public DBManager(Connection connection) {
+        commander = new SQLCommandExecuter(connection);
         entities = commander.getAllEntities();
         mapEntities = new TreeMap<>();
         for (Entity entity : entities) {

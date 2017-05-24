@@ -11,7 +11,7 @@ public class SQLType {
     public int precision;
     public int scale;
 
-    //If your constructor is public that you need to return final SQLType to view or presenters
+    //If your constructor is public that you need to return final SQLType to presenter or presenters
     public SQLType(String typeName1, int precision1, int scale1) {
         typeName = typeName1;
         precision = precision1;

@@ -14,7 +14,7 @@ public class OracleClientMain
         //controller.login();
         controller.startSession(new NetworkController().getConnection("user1",
                 "r4kxlktt"
-                //"user"
+             //   "user"
         ));
     }
 }

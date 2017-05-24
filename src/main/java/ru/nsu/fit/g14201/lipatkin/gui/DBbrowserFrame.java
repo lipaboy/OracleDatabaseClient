@@ -2,9 +2,8 @@ package ru.nsu.fit.g14201.lipatkin.gui;
 
 import ru.nsu.fit.g14201.lipatkin.core.BeforeQuitOperation;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
-import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
-import ru.nsu.fit.g14201.lipatkin.view.DBPresenter;
-import ru.nsu.fit.g14201.lipatkin.view.TableEditorState;
+import ru.nsu.fit.g14201.lipatkin.presenter.DBPresenter;
+import ru.nsu.fit.g14201.lipatkin.presenter.TableEditorState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,17 +13,17 @@ import java.awt.event.ActionListener;
 /**
  * Created by castiel on 02.05.2017.
  */
-public class ObjectBrowserFrame extends JFrame{
+public class DBbrowserFrame extends JFrame{
     private JPanel panel1;
     private JList tableList;
     private JTable tableView;
     private JButton dataEditorButton;
     private JButton constructorButton;
     private JButton viewButton;
-    private JButton addFieldButton;
+    private JButton addEntryButton;
     private TableEditorState tableEditorState;
 
-    public ObjectBrowserFrame(final DBManager dbManager, BeforeQuitOperation beforeQuitOperation) {
+    public DBbrowserFrame(final DBManager dbManager, BeforeQuitOperation beforeQuitOperation) {
         super("Object Browser");
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +65,12 @@ public class ObjectBrowserFrame extends JFrame{
                 tableEditorState.set(TableEditorState.States.DATA_EDITOR);
             }
         });
-
+        addEntryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dbPresenter.addEntry();
+            }
+        });
 
 
         /*-----------------Menu bar-------------------------*/

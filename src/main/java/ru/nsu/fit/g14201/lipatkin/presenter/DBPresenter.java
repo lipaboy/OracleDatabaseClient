@@ -1,14 +1,16 @@
-package ru.nsu.fit.g14201.lipatkin.view;
+package ru.nsu.fit.g14201.lipatkin.presenter;
 
-import javafx.scene.control.Tab;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
+
+import static ru.nsu.fit.g14201.lipatkin.presenter.TableEditorState.States.DATA_EDITOR;
 
 /**
  * Created by SPN on 07.05.2017.
@@ -18,7 +20,7 @@ public class DBPresenter implements EditorStateChangedListener {
     private DBManager dbManager;
     private JTable tableView;
     private List<EntityPresenter> entitiesPresenter;
-    private int selected;
+    private int selected;   //current table
     private TableEditorState tableEditorState;
 
     public DBPresenter(DBManager manager, JList list, JTable table, TableEditorState editorState) {
@@ -54,6 +56,15 @@ public class DBPresenter implements EditorStateChangedListener {
                 tableView.setModel(entity.getEntityModel(tableEditorState.get()));
             }
         });
+    }
+
+    //Action
+    public void addEntry() {
+        if (tableEditorState.get() == DATA_EDITOR) {
+//            int rows = tableView.getRowCount();
+//            DefaultTableModel table = (DefaultTableModel)tableView.getModel();
+//            table.addRow(new Object[rows]);
+        }
     }
 
     @Override

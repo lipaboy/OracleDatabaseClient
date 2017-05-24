@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ru.nsu.fit.g14201.lipatkin.gui.ObjectBrowserFrame">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ru.nsu.fit.g14201.lipatkin.gui.DBbrowserFrame">
   <grid id="27dc6" binding="panel1" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="80" left="0" bottom="80" right="80"/>
     <constraints>
@@ -76,12 +76,12 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="a3652" class="javax.swing.JButton" binding="addFieldButton" default-binding="true">
+          <component id="a3652" class="javax.swing.JButton" binding="addEntryButton" default-binding="true">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Add field"/>
+              <text value="Add entry"/>
             </properties>
           </component>
         </children>

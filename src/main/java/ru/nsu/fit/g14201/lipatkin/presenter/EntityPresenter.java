@@ -1,19 +1,16 @@
-package ru.nsu.fit.g14201.lipatkin.view;
+package ru.nsu.fit.g14201.lipatkin.presenter;
 
 import ru.nsu.fit.g14201.lipatkin.model.Column;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by SPN on 08.05.2017.
  */
-public class EntityPresenter {
+class EntityPresenter {
     private Entity entity;
     private DBManager dbManager;
     private AbstractTableModel viewEntity;
@@ -127,6 +124,7 @@ public class EntityPresenter {
                 }
             }
         };
+
 
         viewEntity = new AbstractTableModel() {
             @Override

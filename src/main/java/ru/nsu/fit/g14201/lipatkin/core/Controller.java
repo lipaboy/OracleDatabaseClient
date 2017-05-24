@@ -2,12 +2,9 @@ package ru.nsu.fit.g14201.lipatkin.core;
 
 import org.apache.log4j.Logger;
 import ru.nsu.fit.g14201.lipatkin.gui.LoginFrame;
-import ru.nsu.fit.g14201.lipatkin.gui.ObjectBrowserFrame;
+import ru.nsu.fit.g14201.lipatkin.gui.DBbrowserFrame;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
-import ru.nsu.fit.g14201.lipatkin.model.SQLCommander;
-import ru.nsu.fit.g14201.lipatkin.model.SQLCommandExecuter;
 import ru.nsu.fit.g14201.lipatkin.network.NetworkController;
-import ru.nsu.fit.g14201.lipatkin.view.EntityPresenter;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,10 +36,10 @@ public class Controller {
     public void startSession(Connection connection) {
         log.info("Start session");
 
-        SQLCommander commander = new SQLCommandExecuter(connection);
-        DBManager dbManager = new DBManager(commander);
+        //SQLCommander commander = new SQLCommandExecuter(connection);
+        DBManager dbManager = new DBManager(connection);
 
-        ObjectBrowserFrame window = new ObjectBrowserFrame(dbManager, new BeforeQuitOperation() {
+        DBbrowserFrame window = new DBbrowserFrame(dbManager, new BeforeQuitOperation() {
             @Override
             public void quit() {
                 try {
