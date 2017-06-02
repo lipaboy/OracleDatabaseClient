@@ -7,9 +7,9 @@ import java.util.InputMismatchException;
  * Created by SPN on 22.05.2017.
  */
 public class SQLType {
-    public String typeName;
-    public int precision;
-    public int scale;
+    String typeName;
+    int precision;
+    int scale;
 
     //If your constructor is public that you need to return final SQLType to presenter or presenters
     public SQLType(String typeName1, int precision1, int scale1) {

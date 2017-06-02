@@ -2,6 +2,7 @@ package ru.nsu.fit.g14201.lipatkin.presenter;
 
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
+import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -60,10 +61,16 @@ public class DBPresenter implements EditorStateChangedListener {
 
     //Action
     public void addEntry() {
-        if (tableEditorState.get() == DATA_EDITOR) {
-//            int rows = tableView.getRowCount();
-//            DefaultTableModel table = (DefaultTableModel)tableView.getModel();
-//            table.addRow(new Object[rows]);
+        try {
+            if (tableEditorState.get() == DATA_EDITOR) {
+                EntityPresenter entityPresenter = entitiesPresenter.get(selected);
+                List<String> row = entityPresenter.getNewRow();
+                dbManager.insert(entityPresenter.getEntity(), row);
+                entityPresenter.clearNewRows();
+                //need update table
+            }
+        } catch (UpdateException exp) {
+            System.out.println(exp.getMessage());
         }
     }
 

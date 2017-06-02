@@ -70,6 +70,12 @@ public class Entity {
         columns.get(columnIndex).setValueAt(rowIndex, value);
     }
 
+    void insert(List<String> row) {
+        for (int i = 0; i < row.size(); i++) {
+            columns.get(i).add(row.get(i));
+        }
+    }
+
     /*----------------Getters---------------------*/
 
     public final String get(int rowIndex, int columnIndex) { return columns.get(columnIndex).get(rowIndex); }

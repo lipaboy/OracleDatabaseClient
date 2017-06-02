@@ -41,12 +41,15 @@ public class Column {
 
     //package availability modificator
     void add(ResultSet resultSet) throws SQLException {
-//        if (type.equals("LONG"))
+//        if (type.equals("LONG"))          //TODO: for LONG wrong
 //            elements.add(resultSet.getClob());
 //        else
         //LONG doesn't work
             elements.add(resultSet.getString(number));
-        //resultSet.get
+    }
+
+    void add(String newElement) {
+        elements.add(newElement);
     }
 
     /*----------------Setters---------------------*/

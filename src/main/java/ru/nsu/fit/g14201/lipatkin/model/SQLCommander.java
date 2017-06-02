@@ -11,6 +11,8 @@ public interface SQLCommander {
 
     /*-----------------Setters----------------*/
 
+    public void insert(Entity entity, List<String> row) throws UpdateException;
+
     public void update(Entity entity, int rowIndex, String columnName, String newValue) throws UpdateException;
 
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException;

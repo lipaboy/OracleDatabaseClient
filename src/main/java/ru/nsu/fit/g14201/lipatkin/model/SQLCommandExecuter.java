@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
+import java.lang.StringBuilder;
 
 /**
  * Created by castiel on 02.05.2017.
@@ -36,6 +37,38 @@ public class SQLCommandExecuter implements SQLCommander {
     }
 
         /*-----------------Setters----------------*/
+
+    @Override
+    public void insert(Entity entity, List<String> row) throws UpdateException {
+        try {
+            //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
+            //TODO: calling this method (i.e. in constructor)
+            StringBuilder query = new StringBuilder(
+                    "INSERT INTO " + entity.getName()
+                            + " VALUES ("
+            );
+
+            List<Column> columns = entity.getColumns();
+            for (int i = 0; i < row.size(); i++) {
+                query.append(wrapByQuotes(row.get(i), columns.get(i).getType().getTypeName()));
+                if (i < row.size() - 1)
+                    query.append(", ");
+            }
+            query.append(")");
+
+            //System.out.println(query);
+            PreparedStatement preStatement = connection.prepareStatement(query.toString());
+            //log.info("Rename column: " + query);
+            preStatement.executeUpdate();
+            preStatement.close();
+        } catch(UpdateException exp) {
+            log.error(exp.getMessage());
+            throw exp;
+        } catch(SQLException exp) {
+            log.error(exp.getMessage());
+            throw new UpdateException(exp.getMessage());
+        }
+    }
 
     @Override
     public void update(Entity entity, int rowIndex, String columnName, String newValue)

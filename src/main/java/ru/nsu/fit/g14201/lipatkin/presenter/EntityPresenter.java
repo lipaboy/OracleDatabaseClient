@@ -6,6 +6,8 @@ import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SPN on 08.05.2017.
@@ -17,9 +19,14 @@ class EntityPresenter {
     private AbstractTableModel dataEditor;
     private AbstractTableModel constructor;
 
+    private List<String> newRow;
+
     public EntityPresenter(Entity en, DBManager manager) {
         entity = en;
         dbManager = manager;
+        newRow = new ArrayList<>();
+        for (int i = 0; i < en.getColumnCount(); i++)
+            newRow.add("");
 
         constructor = new AbstractTableModel() {
             @Override
@@ -94,7 +101,7 @@ class EntityPresenter {
         dataEditor = new AbstractTableModel() {
             @Override
             public int getRowCount() {
-                return entity.getRowCount();
+                return entity.getRowCount() + 1;
             }
 
             @Override
@@ -104,7 +111,8 @@ class EntityPresenter {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                return entity.get(rowIndex, columnIndex);
+                return ((rowIndex == entity.getRowCount()) ? newRow.get(columnIndex) :
+                        entity.get(rowIndex, columnIndex));
             }
 
             @Override
@@ -118,7 +126,10 @@ class EntityPresenter {
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 try {
-                    dbManager.setValueAt(entity, rowIndex, columnIndex, aValue.toString());
+                    if (rowIndex < entity.getRowCount())
+                        dbManager.setValueAt(entity, rowIndex, columnIndex, aValue.toString());
+                    else
+                        newRow.set(columnIndex, aValue.toString());
                 } catch (UpdateException exp) {
                     System.out.println(exp.getMessage());
                 }
@@ -160,6 +171,23 @@ class EntityPresenter {
 //            }
         };
     }
+
+//    void addEntry() {
+//        for (int i = 0; i < dataEditor.getColumnCount(); i++) {
+//
+//        }
+//    }
+
+    void clearNewRows() {
+        for (int i = 0; i < newRow.size(); i++)
+            newRow.set(i, "");
+    }
+
+    /*-------------------Getters--------------------------*/
+
+    public final List<String> getNewRow() { return newRow; }
+
+    //public int getNewEntryFirstPosition() { return dataEditor.getRowCount() - 1; }
 
     public AbstractTableModel getViewEntity() { return viewEntity; }
 

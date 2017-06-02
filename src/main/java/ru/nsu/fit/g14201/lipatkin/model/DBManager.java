@@ -61,6 +61,15 @@ public class DBManager {
         }
     }
 
+    public void insert(Entity entity, List<String> row) throws UpdateException {
+        try {
+            commander.insert(entity, row);
+            entity.insert(row);
+        } catch(UpdateException exp) {
+            throw exp;
+        }
+    }
+
     /*-------------Getters----------------------------*/
 
     public List<Entity> getEntities() { return entities; }

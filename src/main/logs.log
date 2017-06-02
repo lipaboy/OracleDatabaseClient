@@ -36,3 +36,29 @@
 
 2017-05-22 23:55:51 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
 2017-05-22 23:55:54 INFO  Controller:37 - Start session
+2017-06-02 22:08:27 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 22:08:28 ERROR NetworkController:38 - Listener refused the connection with the following error:
+ORA-12505, TNS:listener does not currently know of SID given in connect descriptor
+The Connection descriptor used by the client was:
+127.0.0.1:1521:xe
+
+2017-06-02 22:13:46 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 22:13:46 INFO  Controller:37 - Start session
+2017-06-02 22:42:36 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 22:42:36 INFO  Controller:37 - Start session
+2017-06-02 22:43:27 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 22:43:27 INFO  Controller:37 - Start session
+2017-06-02 22:47:53 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 22:47:53 INFO  Controller:37 - Start session
+2017-06-02 22:49:51 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 22:49:51 INFO  Controller:37 - Start session
+2017-06-02 22:50:27 ERROR SQLCommandExecuter:66 - ORA-00936: missing expression
+
+2017-06-02 23:19:41 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 23:19:43 INFO  Controller:37 - Start session
+2017-06-02 23:19:57 ERROR SQLCommandExecuter:67 - ORA-00936: missing expression
+
+2017-06-02 23:20:44 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 23:20:45 INFO  Controller:37 - Start session
+2017-06-02 23:24:16 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-02 23:24:17 INFO  Controller:37 - Start session
