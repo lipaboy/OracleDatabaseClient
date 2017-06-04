@@ -1,9 +1,6 @@
 package ru.nsu.fit.g14201.lipatkin.presenter;
 
-import ru.nsu.fit.g14201.lipatkin.model.Column;
-import ru.nsu.fit.g14201.lipatkin.model.DBManager;
-import ru.nsu.fit.g14201.lipatkin.model.Entity;
-import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
+import ru.nsu.fit.g14201.lipatkin.model.*;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -12,7 +9,7 @@ import java.util.List;
 /**
  * Created by SPN on 08.05.2017.
  */
-class EntityPresenter {
+class EntityPresenter implements EntityListener {
     private Entity entity;
     private DBManager dbManager;
     private AbstractTableModel viewEntity;
@@ -25,6 +22,8 @@ class EntityPresenter {
         entity = en;
         dbManager = manager;
         newRow = new ArrayList<>();
+        en.addEntityListener(this);
+
         for (int i = 0; i < en.getColumnCount(); i++)
             newRow.add("");
 
@@ -136,7 +135,6 @@ class EntityPresenter {
             }
         };
 
-
         viewEntity = new AbstractTableModel() {
             @Override
             public int getRowCount() {
@@ -163,12 +161,6 @@ class EntityPresenter {
         };
 
     }
-
-//    void addEntry() {
-//        for (int i = 0; i < dataEditor.getColumnCount(); i++) {
-//
-//        }
-//    }
 
     void clearNewRows() {
         for (int i = 0; i < newRow.size(); i++)
@@ -197,4 +189,11 @@ class EntityPresenter {
     }
 
     public Entity getEntity() { return entity; }
+
+    @Override
+    public void dataChanged() {
+        viewEntity.fireTableDataChanged();
+        dataEditor.fireTableDataChanged();
+        constructor.fireTableDataChanged();
+    }
 }

@@ -17,11 +17,14 @@ public class Entity {
     private ArrayList<Column> primaryKeys;     //column index (from 0.to.n-1)
     private String name;
 
+    private ArrayList<EntityListener> listeners;
+
     {
         name = null;
         columns = new ArrayList<>();
         mapColumn = new TreeMap<>();    //TODO: may TreeMap?
         primaryKeys = new ArrayList<>();
+        listeners = new ArrayList<>();
     }
 
     //TODO:(advice) at table columns have numeration from 1.to.n but other objects (like Arrays) have from 0.to.n-1
@@ -54,6 +57,7 @@ public class Entity {
         //for foreign keys use label: PKCOLUMN_NAME
     }
 
+    //this method relates to constructor
     void fill(ResultSet resultSet) throws SQLException {
         while(resultSet.next()) {
             for (int i = 0; i < columns.size(); i++) {
@@ -63,23 +67,35 @@ public class Entity {
         }
     }
 
+    /*---------------Listeners---------------------*/
+
+    public void addEntityListener(EntityListener listener) { listeners.add(listener); }
+    public void removeEntityListener(EntityListener listener) { listeners.add(listener); }
+    void notifyListeners() {
+        for (EntityListener listener : listeners)
+            listener.dataChanged();
+    }
+
     /*----------------Setters---------------------*/
 
     //package availability modificator
     void setValueAt(int rowIndex, int columnIndex, String value) {
         columns.get(columnIndex).setValueAt(rowIndex, value);
+        notifyListeners();
     }
 
     void insert(List<String> row) {
         for (int i = 0; i < row.size(); i++) {
             columns.get(i).add(row.get(i));
         }
+        notifyListeners();
     }
 
     void deleteRow(int rowIndex) {
         for (Column column : columns) {
             column.remove(rowIndex);
         }
+        notifyListeners();
     }
 
     /*----------------Getters---------------------*/

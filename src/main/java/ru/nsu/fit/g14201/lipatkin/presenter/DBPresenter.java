@@ -7,7 +7,6 @@ import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class DBPresenter implements EditorStateChangedListener {
         tableView = table;
         dbManager = manager;
         tableEditorState = editorState;
-        tableEditorState.add(this);
+        tableEditorState.addTableEditorListener(this);
 
         entitiesPresenter = new ArrayList<>();
         for (Entity entity : dbManager.getEntities()) {

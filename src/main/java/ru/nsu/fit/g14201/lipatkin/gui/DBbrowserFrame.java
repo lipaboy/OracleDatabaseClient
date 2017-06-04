@@ -46,7 +46,7 @@ public class DBbrowserFrame extends JFrame
         //TODO: I think that would be better to incapsulate the ability to change TableEditorState directrly
         //TODO: solution: may be use lambdas or like that
         tableEditorState = new TableEditorState();
-        tableEditorState.add(this);
+        tableEditorState.addTableEditorListener(this);
         tableEditorState.set(TableEditorState.States.DATA_EDITOR);
         DBPresenter dbPresenter = new DBPresenter(dbManager, tableList, tableView, tableEditorState);
 

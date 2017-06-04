@@ -20,7 +20,7 @@ public class NetworkController {
         try {
             Locale.setDefault(Locale.ENGLISH);      //for output Oracle system information //VERY IMPORTANT
 
-            //if you have exception here than you add ojdbc14 (3) in jdk wrong
+            //if you have exception here than you addTableEditorListener ojdbc14 (3) in jdk wrong
             Class.forName("oracle.jdbc.driver.OracleDriver");
             log.info("Oracle JDBC Driver Registered!");
 

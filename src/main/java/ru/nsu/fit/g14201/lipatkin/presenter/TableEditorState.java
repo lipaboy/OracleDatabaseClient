@@ -21,20 +21,20 @@ public class TableEditorState {
 
     public TableEditorState() {}
 
-//    public TableEditorState(States curr) {
-//        currentState = curr;
-//    }
+    public void addTableEditorListener(EditorStateChangedListener listener) { listeners.add(listener); }
 
-    public void add(EditorStateChangedListener listener) { listeners.add(listener); }
-
-    public void remove(EditorStateChangedListener listener) { listeners.remove(listener); }
+    public void removeTableEditorListener(EditorStateChangedListener listener) { listeners.remove(listener); }
 
     public void set(States state) {
         if (state != currentState) {
             currentState = state;
-            for (EditorStateChangedListener listener : listeners) {
-                listener.stateChanged(state);
-            }
+            notifyListeners();
+        }
+    }
+
+    void notifyListeners() {
+        for (EditorStateChangedListener listener : listeners) {
+            listener.stateChanged(currentState);
         }
     }
 

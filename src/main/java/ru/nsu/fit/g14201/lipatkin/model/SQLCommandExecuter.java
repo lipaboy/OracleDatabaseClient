@@ -264,7 +264,7 @@ public class SQLCommandExecuter implements SQLCommander {
 
     @Override
     public List<Entity> getAllEntities() {
-        List<Entity> entities = new ArrayList<>(); //I think that "find" operations will be more than "add" ones.
+        List<Entity> entities = new ArrayList<>(); //I think that "find" operations will be more than "addTableEditorListener" ones.
         List<String> tableNames = getAllEntityNames();
 
         //TODO: rewrite code to
