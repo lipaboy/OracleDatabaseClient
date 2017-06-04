@@ -26,6 +26,10 @@ public class DBbrowserFrame extends JFrame
     private JButton removeEntryButton;
     private JButton addColumnButton;
     private JButton removeColumnButton;
+    private JButton addTableButton;
+    private JButton removeTableButton;
+    private JPanel EntryEditPanel;
+    private JPanel TableConstuctPanel;
     private TableEditorState tableEditorState;
 
     public DBbrowserFrame(final DBManager dbManager, BeforeQuitOperation beforeQuitOperation) {
@@ -118,26 +122,23 @@ public class DBbrowserFrame extends JFrame
             case VIEW:
                 addEntryButton.setEnabled(false);
                 removeEntryButton.setEnabled(false);
+                //TODO: write disable all panel components
+                //EntryEditPanel.setEnabled(false);
 
-                addEntryButton.setVisible(true);
-                removeEntryButton.setVisible(true);
-                addColumnButton.setVisible(false);
-                removeColumnButton.setVisible(false);
+                EntryEditPanel.setVisible(true);
+                TableConstuctPanel.setVisible(false);
                 break;
             case DATA_EDITOR:
                 addEntryButton.setEnabled(true);
                 removeEntryButton.setEnabled(true);
+//                EntryEditPanel.setEnabled(true);
 
-                addEntryButton.setVisible(true);
-                removeEntryButton.setVisible(true);
-                addColumnButton.setVisible(false);
-                removeColumnButton.setVisible(false);
+                EntryEditPanel.setVisible(true);
+                TableConstuctPanel.setVisible(false);
                 break;
             case CONSTRUCTOR:
-                addEntryButton.setVisible(false);
-                removeEntryButton.setVisible(false);
-                addColumnButton.setVisible(true);
-                removeColumnButton.setVisible(true);
+                EntryEditPanel.setVisible(false);
+                TableConstuctPanel.setVisible(true);
                 break;
         }
     }
