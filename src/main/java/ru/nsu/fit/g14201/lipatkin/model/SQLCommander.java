@@ -11,7 +11,7 @@ public interface SQLCommander {
 
     /*-----------------Entries edit----------------*/
 
-    public void deleteRow(Entity entity, int rowIndex);
+    public void deleteRow(Entity entity, int rowIndex) throws UpdateException;
 
     public void insertRow(Entity entity, List<String> row) throws UpdateException;
 
@@ -19,7 +19,9 @@ public interface SQLCommander {
 
     /*-----------------Entity construct (destruct)----------------*/
 
-    //public void deleteEntity(Entity entity);
+    public void createEntity(Entity entity) throws UpdateException;
+
+    public void deleteEntity(Entity entity) throws UpdateException;
 
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException;
 

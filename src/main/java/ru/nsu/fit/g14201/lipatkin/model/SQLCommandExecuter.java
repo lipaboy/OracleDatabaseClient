@@ -70,17 +70,10 @@ public class SQLCommandExecuter implements SQLCommander {
         return whereCondition.toString();
     }
 
-    /*-----------------Entries edit----------------*/
-
-    @Override
-    public void deleteRow(Entity entity, int rowIndex) {
+    void executeUpdateQuery(String updateQuery) throws UpdateException {
         try {
-            String whereCondition = getWhereConditionForSelectedRow(entity, rowIndex);
-            String query = "DELETE FROM " + entity.getName()
-                    + " WHERE " + whereCondition;
-
-            PreparedStatement preStatement = connection.prepareStatement(query);
-            log.info("Deleting row: " + query);
+            PreparedStatement preStatement = connection.prepareStatement(updateQuery);
+            log.info("Execs query: " + updateQuery);
             preStatement.executeUpdate();
             preStatement.close();
         } catch(UpdateException exp) {
@@ -92,125 +85,101 @@ public class SQLCommandExecuter implements SQLCommander {
         }
     }
 
+    /*-----------------Entries edit----------------*/
+
+    @Override
+    public void deleteRow(Entity entity, int rowIndex) throws UpdateException {
+        String whereCondition = getWhereConditionForSelectedRow(entity, rowIndex);
+        String query = "DELETE FROM " + entity.getName()
+                + " WHERE " + whereCondition;
+        executeUpdateQuery(query);
+    }
+
     @Override
     public void insertRow(Entity entity, List<String> row) throws UpdateException {
-        try {
-            //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
-            //TODO: calling this method (i.e. in constructor)
-            StringBuilder query = new StringBuilder(
-                    "INSERT INTO " + entity.getName()
-                            + " VALUES ("
-            );
+        //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
+        //TODO: calling this method (i.e. in constructor)
+        StringBuilder query = new StringBuilder(
+                "INSERT INTO " + entity.getName()
+                        + " VALUES ("
+        );
 
-            List<Column> columns = entity.getColumns();
-            for (int i = 0; i < row.size(); i++) {
-                query.append(wrapByQuotes(row.get(i), columns.get(i).getType().getTypeName()));
-                if (i < row.size() - 1)
-                    query.append(", ");
-            }
-            query.append(")");
-
-            //System.out.println(query);
-            PreparedStatement preStatement = connection.prepareStatement(query.toString());
-            //log.info("Rename column: " + query);
-            preStatement.executeUpdate();
-            preStatement.close();
-        } catch(UpdateException exp) {
-            log.error(exp.getMessage());
-            throw exp;
-        } catch(SQLException exp) {
-            log.error(exp.getMessage());
-            throw new UpdateException(exp.getMessage());
+        List<Column> columns = entity.getColumns();
+        for (int i = 0; i < row.size(); i++) {
+            query.append(wrapByQuotes(row.get(i), columns.get(i).getType().getTypeName()));
+            if (i < row.size() - 1)
+                query.append(", ");
         }
+        query.append(")");
+        executeUpdateQuery(query.toString());
     }
 
     @Override
     public void update(Entity entity, int rowIndex, String columnName, String newValue)
             throws UpdateException {
-        try {
 
-            String whereCondition = getWhereConditionForSelectedRow(entity, rowIndex);
-            String columnTypeName = entity.getColumn(columnName).getType().getTypeName();
-            String wrappedValue = wrapByQuotes(newValue, columnTypeName);
+        String whereCondition = getWhereConditionForSelectedRow(entity, rowIndex);
+        String columnTypeName = entity.getColumn(columnName).getType().getTypeName();
+        String wrappedValue = wrapByQuotes(newValue, columnTypeName);
 
-            String query =
-                    "UPDATE " + entity.getName()
-                            + " SET " + columnName + " = " + wrappedValue
-                            + " WHERE " + whereCondition;
-            //!!!! NO ';' NO ';' NO ';' in query string
-
-            PreparedStatement preStatement = connection.prepareStatement(query);
-            preStatement.executeUpdate();
-            //log.info("execute Update successful");
-            preStatement.close();
-        } catch(UpdateException exp) {
-            log.error(exp.getMessage());
-            throw exp;
-        } catch(SQLException exp) {
-            log.error(exp.getMessage());
-            throw new UpdateException(exp.getMessage());
-            //TODO: useful information for exception
-//            JDBCTutorialUtilities.printSQLException(e);
-//            if (con != null) {
-//                try {
-//                    System.err.print("Transaction is being rolled back");
-//                    con.rollback();
-//                } catch(SQLException excep) {
-//                    JDBCTutorialUtilities.printSQLException(excep);
-//                }
-//            }
-        }
+        String query =
+                "UPDATE " + entity.getName()
+                        + " SET " + columnName + " = " + wrappedValue
+                        + " WHERE " + whereCondition;
+        //!!!! NO ';' NO ';' NO ';' in query string
+        executeUpdateQuery(query);
     }
 
 
     /*-----------------Entity construct (destruct)----------------*/
 
     @Override
+    public void createEntity(Entity entity) throws UpdateException {
+        StringBuilder query = new StringBuilder("CREATE TABLE ")
+                .append(entity.getName()).append("(");
+        List<Column> columns = entity.getColumns();
+        for (int i = 0; i < columns.size(); i++) {
+            Column column = columns.get(i);
+            //name, type
+            query.append(column.getName())
+                    .append(" ")
+                    .append(column.getType().toSQLFormat());
+            //TODO: add constraints
+            if (i < columns.size() - 1)
+                query.append(", ");
+        }
+        query.append(")");
+        executeUpdateQuery(query.toString());
+    }
+
+    @Override
+    public void deleteEntity(Entity entity) throws UpdateException {
+        String query = "DROP " + entity.getName();
+        executeUpdateQuery(query);
+    }
+
+    @Override
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException {
         //"alter table sales rename column order_date to date_of_order"
-
-        try {
-            //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
-            //TODO: calling this method (i.e. in constructor)
-            String query =
-                    "ALTER TABLE " + entity.getName()
-                        + " RENAME COLUMN " + column.getName() +        //unnecessary to wrap by quotes
-                            " TO " + newName;
-
-            PreparedStatement preStatement = connection.prepareStatement(query);
-            //log.info("Rename column: " + query);
-            preStatement.executeUpdate();
-            preStatement.close();
-        } catch(UpdateException exp) {
-            log.error(exp.getMessage());
-            throw exp;
-        } catch(SQLException exp) {
-            log.error(exp.getMessage());
-            throw new UpdateException(exp.getMessage());
-        }
+        //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
+        //TODO: calling this method (i.e. in constructor)
+        String query =
+                "ALTER TABLE " + entity.getName()
+                    + " RENAME COLUMN " + column.getName() +        //unnecessary to wrap by quotes
+                        " TO " + newName;
+        executeUpdateQuery(query);
     }
 
     @Override
     public void setColumnType(Entity entity, Column column, String newWholeType) throws UpdateException {
-        try {
-            //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
-            //TODO: calling this method (i.e. in constructor)
-            String query =
-                    "ALTER TABLE " + entity.getName()
-                            + " MODIFY " + column.getName()        //unnecessary to wrap by quotes
-                              + " " + newWholeType;
+        //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
+        //TODO: calling this method (i.e. in constructor)
+        String query =
+                "ALTER TABLE " + entity.getName()
+                        + " MODIFY " + column.getName()        //unnecessary to wrap by quotes
+                          + " " + newWholeType;
 
-            PreparedStatement preStatement = connection.prepareStatement(query);
-            log.info("Rename column type: " + query);
-            preStatement.executeUpdate();
-            preStatement.close();
-        } catch(UpdateException exp) {
-            log.error(exp.getMessage());
-            throw exp;
-        } catch(SQLException exp) {
-            log.error(exp.getMessage());
-            throw new UpdateException(exp.getMessage());
-        }
+        executeUpdateQuery(query);
     }
 
         /*-----------------Getters----------------*/

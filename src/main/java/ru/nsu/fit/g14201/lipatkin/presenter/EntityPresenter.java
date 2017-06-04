@@ -59,7 +59,7 @@ class EntityPresenter implements EntityListener {
 
                 switch (columnIndex) {
                     case 0: return column.getName();
-                    case 1: return column.getType().toViewFormat();
+                    case 1: return column.getType().toSQLFormat();
                     case 2: return entity.isPrimaryKey(column);     //checkbox inside of AbstractModel or DefaultJTable
                     case 3: return "Reference";     //may be combobox
                     case 4: return "Description";
