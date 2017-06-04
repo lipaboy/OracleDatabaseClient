@@ -66,6 +66,8 @@ public class Column {
 
     void setType(SQLType newType) { type = newType; }
 
+    void remove(int index) { elements.remove(index); }
+
     /*----------------Getters---------------------*/
 
     public int size() { return elements.size(); }

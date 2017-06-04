@@ -80,6 +80,9 @@ public class DBPresenter implements EditorStateChangedListener {
             if (tableEditorState.get() == DATA_EDITOR) {
                 EntityPresenter entityPresenter = entitiesPresenter.get(selected);
                 int[] rowIndices = tableView.getSelectedRows();
+                for (int i = 0; i < rowIndices.length; i++) {
+                    dbManager.removeRow(entityPresenter.getEntity(), rowIndices[i]);
+                }
                 //TODO: need to update table but how??? sol: maybe exec a setter
                 //tableView.getRowCount();
             }

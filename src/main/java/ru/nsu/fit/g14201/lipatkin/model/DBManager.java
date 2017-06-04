@@ -27,7 +27,7 @@ public class DBManager {
         //commander.update(mapEntities.get("DEPT"), 0, "DNAME", "12");
     }
 
-    /*-------------Setters----------------------------*/
+    /*-----------------Entries edit----------------*/
 
     public void setValueAt(Entity entity, int rowIndex, int columnIndex, String value)
             throws UpdateException {
@@ -39,6 +39,26 @@ public class DBManager {
             throw exp;
         }
     }
+
+    public void insert(Entity entity, List<String> row) throws UpdateException {
+        try {
+            commander.insertRow(entity, row);
+            entity.insert(row);
+        } catch(UpdateException exp) {
+            throw exp;
+        }
+    }
+
+    public void removeRow(Entity entity, int rowIndex) throws UpdateException {
+        try {
+            commander.deleteRow(entity, rowIndex);
+            entity.deleteRow(rowIndex);
+        } catch(UpdateException exp) {
+            throw exp;
+        }
+    }
+
+    /*-----------------Entity construct (destruct)----------------*/
 
     public void setColumnName(Entity entity, Column column, String newName)
             throws UpdateException {
@@ -61,14 +81,7 @@ public class DBManager {
         }
     }
 
-    public void insert(Entity entity, List<String> row) throws UpdateException {
-        try {
-            commander.insertRow(entity, row);
-            entity.insert(row);
-        } catch(UpdateException exp) {
-            throw exp;
-        }
-    }
+
 
     /*-------------Getters----------------------------*/
 

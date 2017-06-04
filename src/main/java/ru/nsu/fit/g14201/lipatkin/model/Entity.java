@@ -54,7 +54,7 @@ public class Entity {
         //for foreign keys use label: PKCOLUMN_NAME
     }
 
-    public void fill(ResultSet resultSet) throws SQLException {
+    void fill(ResultSet resultSet) throws SQLException {
         while(resultSet.next()) {
             for (int i = 0; i < columns.size(); i++) {
                 Column column = columns.get(i);
@@ -76,6 +76,12 @@ public class Entity {
         }
     }
 
+    void deleteRow(int rowIndex) {
+        for (Column column : columns) {
+            column.remove(rowIndex);
+        }
+    }
+
     /*----------------Getters---------------------*/
 
     public final String get(int rowIndex, int columnIndex) { return columns.get(columnIndex).get(rowIndex); }
@@ -86,9 +92,7 @@ public class Entity {
         return primaryKeys.get(index);
     }
     //But List isn't defended on modifications from another package (modificator public and package)
-    List<Column> getPrimaryKeys() {
-        return primaryKeys;
-    }
+    List<Column> getPrimaryKeys() { return primaryKeys; }
     public boolean isPrimaryKey(int indexColumn) { return primaryKeys.contains(columns.get(indexColumn)); }
     public boolean isPrimaryKey(Column column) { return primaryKeys.contains(column); }
 
