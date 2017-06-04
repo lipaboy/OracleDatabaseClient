@@ -160,16 +160,8 @@ class EntityPresenter {
 
             @Override
             public boolean isCellEditable(int row, int column) { return false; }
-
-            //bad to switch between true and false (I don't know how do it and it is unnecessary)
-//            @Override
-//            public boolean isCellEditable(int row, int column) {
-//                //Only the third column
-//                Editable editable = isEditable;
-//                System.out.println(editable.value);
-//                return editable.value;
-//            }
         };
+
     }
 
 //    void addEntry() {

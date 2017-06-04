@@ -29,6 +29,7 @@ public class DBPresenter implements EditorStateChangedListener {
         tableView = table;
         dbManager = manager;
         tableEditorState = editorState;
+        tableEditorState.add(this);
 
         entitiesPresenter = new ArrayList<>();
         for (Entity entity : dbManager.getEntities()) {
@@ -52,14 +53,13 @@ public class DBPresenter implements EditorStateChangedListener {
             public void valueChanged(ListSelectionEvent e) {
                 selected = tableList.getSelectedIndex();
                 EntityPresenter entity = entitiesPresenter.get(selected);
-                //TODO: I think it is bad that after every selection it will created new AbstractTableModel
-                //TODO: One of some solutions: for each table create one TableModel
                 tableView.setModel(entity.getEntityModel(tableEditorState.get()));
             }
         });
     }
 
-    //Action
+    /*---------------Actions-----------------*/
+
     public void addEntry() {
         try {
             if (tableEditorState.get() == DATA_EDITOR) {
@@ -67,7 +67,21 @@ public class DBPresenter implements EditorStateChangedListener {
                 List<String> row = entityPresenter.getNewRow();
                 dbManager.insert(entityPresenter.getEntity(), row);
                 entityPresenter.clearNewRows();
-                //need update table
+                //TODO: need to update table but how??? sol: maybe exec a setter
+                //tableView.getRowCount();
+            }
+        } catch (UpdateException exp) {
+            System.out.println(exp.getMessage());
+        }
+    }
+
+    public void removeEntry() {
+        try {
+            if (tableEditorState.get() == DATA_EDITOR) {
+                EntityPresenter entityPresenter = entitiesPresenter.get(selected);
+                int[] rowIndices = tableView.getSelectedRows();
+                //TODO: need to update table but how??? sol: maybe exec a setter
+                //tableView.getRowCount();
             }
         } catch (UpdateException exp) {
             System.out.println(exp.getMessage());

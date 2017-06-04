@@ -63,7 +63,7 @@ public class DBManager {
 
     public void insert(Entity entity, List<String> row) throws UpdateException {
         try {
-            commander.insert(entity, row);
+            commander.insertRow(entity, row);
             entity.insert(row);
         } catch(UpdateException exp) {
             throw exp;

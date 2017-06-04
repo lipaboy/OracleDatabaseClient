@@ -18,7 +18,7 @@ public class SQLCommandExecuter implements SQLCommander {
         connection = con;
     }
 
-    String wrapByQuotes(String value, String sqlTypeName) {
+    String wrapByQuotes(final String value, final String sqlTypeName) {
         String wrappedValue;
         //TODO: may be need check on NULL, DOUBLE, TIMESTAMP
         switch (sqlTypeName.toUpperCase()) {
@@ -36,10 +36,64 @@ public class SQLCommandExecuter implements SQLCommander {
         return wrappedValue;
     }
 
-        /*-----------------Setters----------------*/
+    String getWhereConditionForSelectedRow(final Entity entity, int rowIndex) {
+        StringBuilder whereCondition;
+        List<Column> primaryKeys = entity.getPrimaryKeys();
+
+        if (primaryKeys.size() <= 0) {
+            //throw new UpdateException("Primary keys is empty into " + entity.getName());
+            List<Column> columns = entity.getColumns();
+            Column column = columns.get(0);
+            whereCondition = new StringBuilder(column.getName() + " = "
+                    + wrapByQuotes(column.get(rowIndex), column.getType().getTypeName()));
+
+            //TODO: use lambda to exclude repeating code
+            for (int i = 1; i < columns.size(); i++) {
+                column = columns.get(i);
+                whereCondition.append(" AND ").append(column.getName()).append(" = ")
+                        .append(wrapByQuotes(column.get(rowIndex), column.getType().getTypeName()));
+            }
+        }
+        else {
+            Column primaryKeyColumn = primaryKeys.get(0);
+            whereCondition = new StringBuilder(primaryKeyColumn.getName() + " = "
+                    + wrapByQuotes(primaryKeyColumn.get(rowIndex),
+                    primaryKeyColumn.getType().getTypeName()));
+            //TODO: use lambda to exclude repeating code
+            for (int i = 1; i < primaryKeys.size(); i++) {
+                Column column = primaryKeys.get(i);
+                whereCondition.append(" AND ").append(column.getName()).append(" = ")
+                        .append(wrapByQuotes(column.get(rowIndex), column.getType().getTypeName()));
+            }
+        }
+
+        return whereCondition.toString();
+    }
+
+    /*-----------------Entries edit----------------*/
 
     @Override
-    public void insert(Entity entity, List<String> row) throws UpdateException {
+    public void deleteRow(Entity entity, int rowIndex) {
+        try {
+            String whereCondition = getWhereConditionForSelectedRow(entity, rowIndex);
+            String query = "DELETE FROM " + entity.getName()
+                    + " WHERE " + whereCondition;
+
+            PreparedStatement preStatement = connection.prepareStatement(query);
+            log.info("Deleting row: " + query);
+            preStatement.executeUpdate();
+            preStatement.close();
+        } catch(UpdateException exp) {
+            log.error(exp.getMessage());
+            throw exp;
+        } catch(SQLException exp) {
+            log.error(exp.getMessage());
+            throw new UpdateException(exp.getMessage());
+        }
+    }
+
+    @Override
+    public void insertRow(Entity entity, List<String> row) throws UpdateException {
         try {
             //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
             //TODO: calling this method (i.e. in constructor)
@@ -74,37 +128,8 @@ public class SQLCommandExecuter implements SQLCommander {
     public void update(Entity entity, int rowIndex, String columnName, String newValue)
             throws UpdateException {
         try {
-            String whereCondition;
-            List<Column> primaryKeys = entity.getPrimaryKeys();
 
-            if (primaryKeys.size() <= 0) {
-                //throw new UpdateException("Primary keys is empty into " + entity.getName());
-                List<Column> columns = entity.getColumns();
-                Column column = columns.get(0);
-                whereCondition = column.getName() + " = "
-                        + wrapByQuotes(column.get(rowIndex), column.getType().getTypeName());
-
-                for (int i = 1; i < columns.size(); i++) {
-                    column = columns.get(i);
-                    whereCondition = whereCondition + " AND "
-                            + column.getName() + " = "
-                            + wrapByQuotes(column.get(rowIndex), column.getType().getTypeName());
-                }
-            }
-            else {
-                Column primaryKeyColumn = primaryKeys.get(0);
-                whereCondition = primaryKeyColumn.getName() + " = "
-                        + wrapByQuotes(primaryKeyColumn.get(rowIndex),
-                                        primaryKeyColumn.getType().getTypeName());
-
-                for (int i = 1; i < primaryKeys.size(); i++) {
-                    Column column = primaryKeys.get(i);
-                    whereCondition = whereCondition + " AND "
-                            + column.getName() + " = "
-                            + wrapByQuotes(column.get(rowIndex), column.getType().getTypeName());
-                }
-            }
-
+            String whereCondition = getWhereConditionForSelectedRow(entity, rowIndex);
             String columnTypeName = entity.getColumn(columnName).getType().getTypeName();
             String wrappedValue = wrapByQuotes(newValue, columnTypeName);
 
@@ -136,6 +161,9 @@ public class SQLCommandExecuter implements SQLCommander {
 //            }
         }
     }
+
+
+    /*-----------------Entity construct (destruct)----------------*/
 
     @Override
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException {
@@ -248,14 +276,5 @@ public class SQLCommandExecuter implements SQLCommander {
 
         return entities;
     }
-
-//    @Override
-//    public void close() {
-//        try {
-//            connection.close();
-//        } catch(SQLException exp) {
-//            log.error(exp.getMessage());
-//        }
-//    }
 
 }

@@ -19,9 +19,11 @@ public class TableEditorState {
         listeners = new ArrayList<>();
     }
 
-    public TableEditorState(States curr) {
-        currentState = curr;
-    }
+    public TableEditorState() {}
+
+//    public TableEditorState(States curr) {
+//        currentState = curr;
+//    }
 
     public void add(EditorStateChangedListener listener) { listeners.add(listener); }
 

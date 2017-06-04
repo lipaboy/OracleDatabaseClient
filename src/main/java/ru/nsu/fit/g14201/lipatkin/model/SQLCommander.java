@@ -9,11 +9,17 @@ import java.util.Set;
  */
 public interface SQLCommander {
 
-    /*-----------------Setters----------------*/
+    /*-----------------Entries edit----------------*/
 
-    public void insert(Entity entity, List<String> row) throws UpdateException;
+    public void deleteRow(Entity entity, int rowIndex);
+
+    public void insertRow(Entity entity, List<String> row) throws UpdateException;
 
     public void update(Entity entity, int rowIndex, String columnName, String newValue) throws UpdateException;
+
+    /*-----------------Entity construct (destruct)----------------*/
+
+    //public void deleteEntity(Entity entity);
 
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException;
 

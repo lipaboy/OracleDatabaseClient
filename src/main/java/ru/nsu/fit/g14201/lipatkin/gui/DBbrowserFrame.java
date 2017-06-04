@@ -3,6 +3,7 @@ package ru.nsu.fit.g14201.lipatkin.gui;
 import ru.nsu.fit.g14201.lipatkin.core.BeforeQuitOperation;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.presenter.DBPresenter;
+import ru.nsu.fit.g14201.lipatkin.presenter.EditorStateChangedListener;
 import ru.nsu.fit.g14201.lipatkin.presenter.TableEditorState;
 
 import javax.swing.*;
@@ -13,7 +14,8 @@ import java.awt.event.ActionListener;
 /**
  * Created by castiel on 02.05.2017.
  */
-public class DBbrowserFrame extends JFrame{
+public class DBbrowserFrame extends JFrame
+                    implements EditorStateChangedListener{
     private JPanel panel1;
     private JList tableList;
     private JTable tableView;
@@ -21,6 +23,9 @@ public class DBbrowserFrame extends JFrame{
     private JButton constructorButton;
     private JButton viewButton;
     private JButton addEntryButton;
+    private JButton removeEntryButton;
+    private JButton addColumnButton;
+    private JButton removeColumnButton;
     private TableEditorState tableEditorState;
 
     public DBbrowserFrame(final DBManager dbManager, BeforeQuitOperation beforeQuitOperation) {
@@ -36,17 +41,20 @@ public class DBbrowserFrame extends JFrame{
 
         /*---------------Presenter creation-------------------*/
 
-        //NICE: if you move 3 bottom lines through away Panel Componets which depend on tableEditorState
+        //NICE: if you move 3 bottom lines(rows) through away Panel Components which depend on tableEditorState
         //then nothing will change.
         //TODO: I think that would be better to incapsulate the ability to change TableEditorState directrly
         //TODO: solution: may be use lambdas or like that
-        tableEditorState = new TableEditorState(TableEditorState.States.DATA_EDITOR);
+        tableEditorState = new TableEditorState();
+        tableEditorState.add(this);
+        tableEditorState.set(TableEditorState.States.DATA_EDITOR);
         DBPresenter dbPresenter = new DBPresenter(dbManager, tableList, tableView, tableEditorState);
-        tableEditorState.add(dbPresenter);
 
         /*---------------Panel components-------------------*/
 
         tableView.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+                /*----------State switch buttons-----------*/
         viewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,10 +73,18 @@ public class DBbrowserFrame extends JFrame{
                 tableEditorState.set(TableEditorState.States.DATA_EDITOR);
             }
         });
+
+            /*--------Table configuring buttons-------*/
         addEntryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dbPresenter.addEntry();
+            }
+        });
+        removeEntryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dbPresenter.removeEntry();
             }
         });
 
@@ -93,6 +109,37 @@ public class DBbrowserFrame extends JFrame{
         this.setJMenuBar(menuBar);
 
 
+    }
+
+    @Override
+    public void stateChanged(TableEditorState.States newState) {
+
+        switch (newState) {
+            case VIEW:
+                addEntryButton.setEnabled(false);
+                removeEntryButton.setEnabled(false);
+
+                addEntryButton.setVisible(true);
+                removeEntryButton.setVisible(true);
+                addColumnButton.setVisible(false);
+                removeColumnButton.setVisible(false);
+                break;
+            case DATA_EDITOR:
+                addEntryButton.setEnabled(true);
+                removeEntryButton.setEnabled(true);
+
+                addEntryButton.setVisible(true);
+                removeEntryButton.setVisible(true);
+                addColumnButton.setVisible(false);
+                removeColumnButton.setVisible(false);
+                break;
+            case CONSTRUCTOR:
+                addEntryButton.setVisible(false);
+                removeEntryButton.setVisible(false);
+                addColumnButton.setVisible(true);
+                removeColumnButton.setVisible(true);
+                break;
+        }
     }
 
     //TODO: close connection in windowClosing event
