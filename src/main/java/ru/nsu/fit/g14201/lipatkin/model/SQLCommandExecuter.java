@@ -18,7 +18,7 @@ public class SQLCommandExecuter implements SQLCommander {
         connection = con;
     }
 
-    String wrapByQuotes(final String value, final String sqlTypeName) {
+    String wrapBySingleQuotes(final String value, final String sqlTypeName) {
         String wrappedValue;
         //TODO: may be need check on NULL, DOUBLE, TIMESTAMP
         switch (sqlTypeName.toUpperCase()) {
@@ -45,25 +45,25 @@ public class SQLCommandExecuter implements SQLCommander {
             List<Column> columns = entity.getColumns();
             Column column = columns.get(0);
             whereCondition = new StringBuilder(column.getName() + " = "
-                    + wrapByQuotes(column.get(rowIndex), column.getType().getTypeName()));
+                    + wrapBySingleQuotes(column.get(rowIndex), column.getType().getTypeName()));
 
             //TODO: use lambda to exclude repeating code
             for (int i = 1; i < columns.size(); i++) {
                 column = columns.get(i);
                 whereCondition.append(" AND ").append(column.getName()).append(" = ")
-                        .append(wrapByQuotes(column.get(rowIndex), column.getType().getTypeName()));
+                        .append(wrapBySingleQuotes(column.get(rowIndex), column.getType().getTypeName()));
             }
         }
         else {
             Column primaryKeyColumn = primaryKeys.get(0);
             whereCondition = new StringBuilder(primaryKeyColumn.getName() + " = "
-                    + wrapByQuotes(primaryKeyColumn.get(rowIndex),
+                    + wrapBySingleQuotes(primaryKeyColumn.get(rowIndex),
                     primaryKeyColumn.getType().getTypeName()));
             //TODO: use lambda to exclude repeating code
             for (int i = 1; i < primaryKeys.size(); i++) {
                 Column column = primaryKeys.get(i);
                 whereCondition.append(" AND ").append(column.getName()).append(" = ")
-                        .append(wrapByQuotes(column.get(rowIndex), column.getType().getTypeName()));
+                        .append(wrapBySingleQuotes(column.get(rowIndex), column.getType().getTypeName()));
             }
         }
 
@@ -84,6 +84,8 @@ public class SQLCommandExecuter implements SQLCommander {
             throw new UpdateException(exp.getMessage());
         }
     }
+
+    private String wrap(String str) { return "\"" + str + "\""; }
 
     /*-----------------Entries edit----------------*/
 
@@ -106,7 +108,7 @@ public class SQLCommandExecuter implements SQLCommander {
 
         List<Column> columns = entity.getColumns();
         for (int i = 0; i < row.size(); i++) {
-            query.append(wrapByQuotes(row.get(i), columns.get(i).getType().getTypeName()));
+            query.append(wrapBySingleQuotes(row.get(i), columns.get(i).getType().getTypeName()));
             if (i < row.size() - 1)
                 query.append(", ");
         }
@@ -120,7 +122,7 @@ public class SQLCommandExecuter implements SQLCommander {
 
         String whereCondition = getWhereConditionForSelectedRow(entity, rowIndex);
         String columnTypeName = entity.getColumn(columnName).getType().getTypeName();
-        String wrappedValue = wrapByQuotes(newValue, columnTypeName);
+        String wrappedValue = wrapBySingleQuotes(newValue, columnTypeName);
 
         String query =
                 "UPDATE " + entity.getName()
@@ -156,6 +158,25 @@ public class SQLCommandExecuter implements SQLCommander {
     public void removeEntity(Entity entity) throws UpdateException {
         String query = "DROP TABLE " + entity.getName();
         executeUpdateQuery(query);
+    }
+
+    @Override
+    public void addConstraint(Entity entity, Column column, Constraint constraint) {
+        String query = null;
+        switch(constraint.getType()) {
+            case FOREIGN_KEY:
+                Reference ref = constraint.getReference();
+                query = "ALTER TABLE " + wrap(entity.getName())
+                        + " ADD CONSTRAINT " + wrap(constraint.getName())
+                        + " FOREIGN KEY (" + wrap(column.getName())
+                        + ") REFERENCES " + wrap(ref.getEntity().getName())
+                        + " (" + wrap(ref.getColumn().getName())
+                        + ") ON DELETE NO ACTION ENABLE";
+                break;
+        }
+        executeUpdateQuery(query);
+//        ALTER TABLE  "DEMO_ORDER_ITEMS" ADD CONSTRAINT "DEMO_ORDER_ITEMS_FK" FOREIGN KEY ("ORDER_ID")
+//        REFERENCES  "DEMO_ORDERS" ("ORDER_ID") ON DELETE CASCADE ENABLE;
     }
 
     @Override

@@ -25,6 +25,10 @@ public interface SQLCommander {
 
     public void removeEntity(Entity entity) throws UpdateException;
 
+        /*-----------------Column modifications----------------*/
+
+    public void addConstraint(Entity entity, Column column, Constraint constraint);
+
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException;
 
     public void setColumnType(Entity entity, Column column, SQLType newType) throws UpdateException;

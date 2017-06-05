@@ -27,11 +27,18 @@ public class DBManager {
                 mapEntities.put(entity.getName(), entity);
             }
 
-        /*----------------------Foreign keys (references)-----------------------*/
+            /*----------------------Foreign keys (references)-----------------------*/
 
             for (Entity entity : entities) {
                 ResultSet foreignKeySet = commander.getMetaData().getImportedKeys(null, null,
                         entity.getName());
+//                System.out.println(entity.getName());
+//                for (int i = 1; i <= foreignKeySet.getMetaData().getColumnCount(); i++)
+//                    System.out.print(foreignKeySet.getMetaData().getColumnName(i) + " ");
+//                System.out.println("");
+//                PKTABLE_CAT PKTABLE_SCHEM PKTABLE_NAME PKCOLUMN_NAME FKTABLE_CAT
+//                FKTABLE_SCHEM FKTABLE_NAME FKCOLUMN_NAME KEY_SEQ UPDATE_RULE DELETE_RULE
+//                FK_NAME PK_NAME DEFERRABILITY
                 while (foreignKeySet.next()) {
                     final Entity entityForeign = mapEntities.get(
                             foreignKeySet.getString("FKTABLE_NAME")
@@ -45,7 +52,15 @@ public class DBManager {
                     final Column columnPrimary = entityPrimary.getColumn(
                             foreignKeySet.getString("PKCOLUMN_NAME")
                     );
-                    columnForeign.setReference(new Reference(entityPrimary, columnPrimary));
+                    final String constraintName = foreignKeySet.getString("FK_NAME");
+                    //columnForeign.setReference(new Reference(entityPrimary, columnPrimary));
+                    final Constraint newConstraint = new Constraint(Constraint.Type.FOREIGN_KEY,
+                            constraintName);
+                    newConstraint.setReference(new Reference(entityPrimary, columnPrimary));
+                    columnForeign.addConstraint(newConstraint);
+//                    for (int i = 1; i <= foreignKeySet.getMetaData().getColumnCount(); i++)
+//                        System.out.print(foreignKeySet.getString(i) + " ");
+//                    System.out.println("");
                 }
             }
         } catch (SQLException exp) {

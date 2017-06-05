@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by SPN on 06.05.2017.
@@ -16,11 +18,13 @@ public class Column {
     private SQLType type;
     //private String className;
     private Reference reference;        //foreign key reference to another entity
+    private Set<Constraint> constraintSet;
 
     private ArrayList<String> elements;         //ArrayList because our Entity can grow
 
     {
         elements = new ArrayList<>();
+        constraintSet = new TreeSet<>();
         reference = null;
     }
 
@@ -30,11 +34,9 @@ public class Column {
         type = new SQLType(type1);
     }
 
-    public Column(ResultSetMetaData resultSetMetaData, int columnNumber) throws SQLException {
+    public Column(ResultSetMetaData rsmd, int columnNumber) throws SQLException {
         number = columnNumber;
-        ResultSetMetaData rsmd = resultSetMetaData;
         name = rsmd.getColumnName(columnNumber);
-        //className = rsmd.getColumnClassName(columnNumber);
         type = new SQLType(rsmd.getColumnTypeName(columnNumber),
                            rsmd.getPrecision(columnNumber),
                            rsmd.getScale(columnNumber));
@@ -53,11 +55,15 @@ public class Column {
         elements.add(newElement);
     }
 
-    /*----------------Setters---------------------*/
+    /*----------------Element Setters---------------------*/
 
     void setValueAt(int rowIndex, String value) {
         elements.set(rowIndex, value);
     }
+
+    void remove(int index) { elements.remove(index); }
+
+    /*----------------Column Setters---------------------*/
 
     void setName(String newName) { name = newName; }
 
@@ -67,9 +73,20 @@ public class Column {
 
     void setType(SQLType newType) { type = newType; }
 
-    void setReference(Reference ref) { reference = ref; }
+    //void setReference(Reference ref) { reference = ref; }
 
-    void remove(int index) { elements.remove(index); }
+    boolean addConstraint(Constraint constraint) {
+        return constraintSet.add(constraint);
+    }
+
+    void addWithConstraintReplacing(Constraint constraint) {
+        if (constraintSet.contains(constraint))
+            for (Constraint obj : constraintSet)
+                if (obj.equals(constraint))
+                    obj.copy(constraint);
+        else
+            addConstraint(constraint);
+    }
 
     /*----------------Getters---------------------*/
 
@@ -81,8 +98,6 @@ public class Column {
     public final String get(int rowIndex) { return elements.get(rowIndex); }
 
     public final String getName() { return name; }
-
-    //public final String getClassName() { return className; }
 
     public final SQLType getType() { return type; }
 }
