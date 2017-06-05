@@ -3,6 +3,7 @@ package ru.nsu.fit.g14201.lipatkin.presenter;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
+import ru.nsu.fit.g14201.lipatkin.model.UserWrongActionException;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -57,7 +58,15 @@ public class DBPresenter implements EditorStateChangedListener {
         });
     }
 
-    /*---------------Actions-----------------*/
+    /*---------------Entity Actions-----------------*/
+
+    public void createEntity() {
+
+    }
+
+
+
+    /*---------------Entry Actions-----------------*/
 
     public void addEntry() {
         try {
@@ -69,8 +78,8 @@ public class DBPresenter implements EditorStateChangedListener {
                 //TODO: need to update table but how??? sol: maybe exec a setter
                 //tableView.getRowCount();
             }
-        } catch (UpdateException exp) {
-            System.out.println(exp.getMessage());
+        } catch (UserWrongActionException exp) {
+            JOptionPane.showMessageDialog(tableView, exp.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -85,8 +94,8 @@ public class DBPresenter implements EditorStateChangedListener {
                 //TODO: need to update table but how??? sol: maybe exec a setter
                 //tableView.getRowCount();
             }
-        } catch (UpdateException exp) {
-            System.out.println(exp.getMessage());
+        } catch (UserWrongActionException exp) {
+            JOptionPane.showMessageDialog(tableView, exp.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

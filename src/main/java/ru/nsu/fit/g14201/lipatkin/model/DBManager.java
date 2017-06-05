@@ -30,54 +30,56 @@ public class DBManager {
     /*-----------------Entries edit----------------*/
 
     public void setValueAt(Entity entity, int rowIndex, int columnIndex, String value)
-            throws UpdateException {
+            throws UserWrongActionException {
         try {
                 //commander doesn't update entity in Client
             commander.update(entity, rowIndex, entity.getColumnName(columnIndex), value);
             entity.setValueAt(rowIndex, columnIndex, value);
         } catch(UpdateException exp) {
-            throw exp;
+            throw new UserWrongActionException("Wrong setting value in field");
         }
     }
 
-    public void insert(Entity entity, List<String> row) throws UpdateException {
+    public void insert(Entity entity, List<String> row)
+            throws UserWrongActionException {
         try {
             commander.insertRow(entity, row);
             entity.insert(row);
         } catch(UpdateException exp) {
-            throw exp;
+            throw new UserWrongActionException("Wrong insertion row");
         }
     }
 
-    public void removeRow(Entity entity, int rowIndex) throws UpdateException {
+    public void removeRow(Entity entity, int rowIndex)
+            throws UserWrongActionException {
         try {
             commander.deleteRow(entity, rowIndex);
             entity.deleteRow(rowIndex);
         } catch(UpdateException exp) {
-            throw exp;
+            throw new UserWrongActionException("Wrong removing row");
         }
     }
 
     /*-----------------Entity construct (destruct)----------------*/
 
     public void setColumnName(Entity entity, Column column, String newName)
-            throws UpdateException {
+            throws UserWrongActionException {
         try {
             commander.renameColumn(entity, column, newName);
             column.setName(newName);
         } catch(UpdateException exp) {
-            throw exp;
+            throw new UserWrongActionException("Wrong setting column name");
         }
     }
 
     public void setColumnType(Entity entity, Column column, String typeFormat)
-            throws UpdateException {
+            throws UserWrongActionException {
         try {
             SQLType type = new SQLType(typeFormat);     //if wrong format then need exception
             commander.setColumnType(entity, column, typeFormat);
             column.setType(type);
         } catch(UpdateException exp) {
-            throw exp;
+            throw new UserWrongActionException("Wrong setting column type");
         }
     }
 
