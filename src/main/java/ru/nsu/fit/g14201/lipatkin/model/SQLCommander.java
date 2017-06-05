@@ -25,7 +25,7 @@ public interface SQLCommander {
 
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException;
 
-    public void setColumnType(Entity entity, Column column, String newType) throws UpdateException;
+    public void setColumnType(Entity entity, Column column, SQLType newType) throws UpdateException;
 
     /*-----------------Getters----------------*/
 

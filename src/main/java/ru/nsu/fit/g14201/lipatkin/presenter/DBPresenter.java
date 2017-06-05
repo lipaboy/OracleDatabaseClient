@@ -33,7 +33,7 @@ public class DBPresenter implements EditorStateChangedListener {
 
         entitiesPresenter = new ArrayList<>();
         for (Entity entity : dbManager.getEntities()) {
-            entitiesPresenter.add(new EntityPresenter(entity, manager));
+            entitiesPresenter.add(new EntityPresenter(entity, manager, this));
         }
 
         tableList.setModel(new AbstractListModel() {
@@ -102,5 +102,9 @@ public class DBPresenter implements EditorStateChangedListener {
     @Override
     public void stateChanged(TableEditorState.States newState) {
         tableView.setModel(entitiesPresenter.get(selected).getEntityModel(newState));
+    }
+
+    void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(tableView, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

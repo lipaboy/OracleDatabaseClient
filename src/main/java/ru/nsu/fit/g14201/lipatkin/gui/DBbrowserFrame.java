@@ -78,7 +78,7 @@ public class DBbrowserFrame extends JFrame
             }
         });
 
-            /*--------Table configuring buttons-------*/
+            /*--------Entry configuring buttons-------*/
         addEntryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,6 +89,14 @@ public class DBbrowserFrame extends JFrame
             @Override
             public void actionPerformed(ActionEvent e) {
                 dbPresenter.removeEntry();
+            }
+        });
+
+            /*--------Table configuring buttons-------*/
+        addTableButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dbPresenter.createEntity();
             }
         });
 

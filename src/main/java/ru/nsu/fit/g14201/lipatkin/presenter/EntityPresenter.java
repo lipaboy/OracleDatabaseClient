@@ -2,6 +2,7 @@ package ru.nsu.fit.g14201.lipatkin.presenter;
 
 import ru.nsu.fit.g14201.lipatkin.model.*;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +13,17 @@ import java.util.List;
 class EntityPresenter implements EntityListener {
     private Entity entity;
     private DBManager dbManager;
+    private DBPresenter dbPresenter;
     private AbstractTableModel viewEntity;
     private AbstractTableModel dataEditor;
     private AbstractTableModel constructor;
 
     private List<String> newRow;
 
-    public EntityPresenter(Entity en, DBManager manager) {
+    public EntityPresenter(Entity en, DBManager manager, DBPresenter presenter) {
         entity = en;
         dbManager = manager;
+        dbPresenter = presenter;        //TODO: remove dependency
         newRow = new ArrayList<>();
         en.addEntityListener(this);
 
@@ -46,8 +49,8 @@ class EntityPresenter implements EntityListener {
                     case 0: return "Column Name";
                     case 1: return "Type";
                     case 2: return "Is Primary Key";
-                    case 3: return "Foreign Key";
-                    case 4: return "Description";
+                    case 3: return "Reference To";
+                    case 4: return "Not Null";
                     default:
                 }
                 return "";
@@ -61,8 +64,8 @@ class EntityPresenter implements EntityListener {
                     case 0: return column.getName();
                     case 1: return column.getType().toSQLFormat();
                     case 2: return entity.isPrimaryKey(column);     //checkbox inside of AbstractModel or DefaultJTable
-                    case 3: return "Reference";     //may be combobox
-                    case 4: return "Description";
+                    case 3: return "Reference To";     //may be combobox
+                    case 4: return false;
                     default:
                 }
                 return "";
@@ -70,7 +73,7 @@ class EntityPresenter implements EntityListener {
 
             @Override
             public Class getColumnClass(int column) {
-                if (column == 2)
+                if (column == 2 || column == 4)
                     return Boolean.class;
                 return String.class;
             }
@@ -91,8 +94,8 @@ class EntityPresenter implements EntityListener {
                         case 4:
                         default:
                     }
-                } catch (UpdateException exp) {
-                    System.out.println(exp.getMessage());
+                } catch (UserWrongActionException exp) {
+                    dbPresenter.showErrorMessage(exp.getMessage());
                 }
             }
         };
@@ -173,13 +176,13 @@ class EntityPresenter implements EntityListener {
 
     //public int getNewEntryFirstPosition() { return dataEditor.getRowCount() - 1; }
 
-    public AbstractTableModel getViewEntity() { return viewEntity; }
+    public final AbstractTableModel getViewEntity() { return viewEntity; }
 
-    public AbstractTableModel getDataEditor() { return dataEditor; }
+    public final AbstractTableModel getDataEditor() { return dataEditor; }
 
-    public AbstractTableModel getConstructor() { return constructor; }
+    public final AbstractTableModel getConstructor() { return constructor; }
 
-    public AbstractTableModel getEntityModel(TableEditorState.States state) {
+    public final AbstractTableModel getEntityModel(TableEditorState.States state) {
         switch (state) {
             case CONSTRUCTOR: return getConstructor();
             case DATA_EDITOR: return getDataEditor();
@@ -188,7 +191,7 @@ class EntityPresenter implements EntityListener {
         }
     }
 
-    public Entity getEntity() { return entity; }
+    public final Entity getEntity() { return entity; }
 
     @Override
     public void dataChanged() {

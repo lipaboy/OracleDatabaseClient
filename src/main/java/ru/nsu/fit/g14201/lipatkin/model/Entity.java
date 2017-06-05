@@ -22,7 +22,7 @@ public class Entity {
     {
         name = null;
         columns = new ArrayList<>();
-        mapColumn = new TreeMap<>();    //TODO: may TreeMap?
+        mapColumn = new TreeMap<>();
         primaryKeys = new ArrayList<>();
         listeners = new ArrayList<>();
     }
@@ -45,6 +45,7 @@ public class Entity {
         }
 
         ResultSet primaryKeysSet = dbMetaData.getPrimaryKeys(null, null, name1);
+        //dbMetaData.getImpo
         while (primaryKeysSet.next()) {
             primaryKeys.add(
                 mapColumn.get(
@@ -54,7 +55,27 @@ public class Entity {
                              )
             );
         }
+        //ResultSet foreingKeySet = dbMetaData.getPrimaryKeys(null, null, name1);
+        //primaryKeysSet.first();
+        //dbMetaData.getImpo
+//        System.out.println("");
+//        System.out.println(name1);
+//        while (primaryKeysSet.next()) {
+//            primaryKeys.add(
+//                mapColumn.get(
+//                                primaryKeysSet.getString(
+//                                        "COLUMN_NAME" //label only for primary keys
+//                                )
+//                             )
+//            );
+//            for (int i = 0; i < primaryKeysSet.getMetaData().getColumnCount(); i++)
+//                System.out.print(
+//                        primaryKeysSet.getString(i)
+//                );
+//            System.out.println("");
+//        }
         //for foreign keys use label: PKCOLUMN_NAME
+        //and getImportedKeys
     }
 
     //this method relates to constructor
@@ -70,8 +91,8 @@ public class Entity {
     /*---------------Listeners---------------------*/
 
     public void addEntityListener(EntityListener listener) { listeners.add(listener); }
-    public void removeEntityListener(EntityListener listener) { listeners.add(listener); }
-    void notifyListeners() {
+    public void removeEntityListener(EntityListener listener) { listeners.remove(listener); }
+    public void notifyListeners() {
         for (EntityListener listener : listeners)
             listener.dataChanged();
     }
@@ -107,8 +128,9 @@ public class Entity {
     public final Column getPrimaryKey(int index) {
         return primaryKeys.get(index);
     }
+    public int primaryKeysSize() { return primaryKeys.size(); }
     //But List isn't defended on modifications from another package (modificator public and package)
-    List<Column> getPrimaryKeys() { return primaryKeys; }
+    final List<Column> getPrimaryKeys() { return primaryKeys; }
     public boolean isPrimaryKey(int indexColumn) { return primaryKeys.contains(columns.get(indexColumn)); }
     public boolean isPrimaryKey(Column column) { return primaryKeys.contains(column); }
 

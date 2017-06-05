@@ -13,6 +13,7 @@ public class Column {
     private String name;
     private SQLType type;
     private String className;
+    private Reference reference;
 
     private ArrayList<String> elements;         //ArrayList because our Entity can grow
 

@@ -171,13 +171,13 @@ public class SQLCommandExecuter implements SQLCommander {
     }
 
     @Override
-    public void setColumnType(Entity entity, Column column, String newWholeType) throws UpdateException {
+    public void setColumnType(Entity entity, Column column, SQLType newType) throws UpdateException {
         //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
         //TODO: calling this method (i.e. in constructor)
         String query =
                 "ALTER TABLE " + entity.getName()
                         + " MODIFY " + column.getName()        //unnecessary to wrap by quotes
-                          + " " + newWholeType;
+                          + " " + newType.toSQLFormat();
 
         executeUpdateQuery(query);
     }

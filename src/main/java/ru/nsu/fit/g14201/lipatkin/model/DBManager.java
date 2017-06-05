@@ -76,7 +76,7 @@ public class DBManager {
             throws UserWrongActionException {
         try {
             SQLType type = new SQLType(typeFormat);     //if wrong format then need exception
-            commander.setColumnType(entity, column, typeFormat);
+            commander.setColumnType(entity, column, type);
             column.setType(type);
         } catch(UpdateException exp) {
             throw new UserWrongActionException("Wrong setting column type");
