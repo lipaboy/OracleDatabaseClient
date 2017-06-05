@@ -23,7 +23,7 @@ public interface SQLCommander {
 
     public void createEntity(Entity entity) throws UpdateException;
 
-    public void deleteEntity(Entity entity) throws UpdateException;
+    public void removeEntity(Entity entity) throws UpdateException;
 
     public void renameColumn(Entity entity, Column column, String newName) throws UpdateException;
 

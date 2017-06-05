@@ -153,8 +153,8 @@ public class SQLCommandExecuter implements SQLCommander {
     }
 
     @Override
-    public void deleteEntity(Entity entity) throws UpdateException {
-        String query = "DROP " + entity.getName();
+    public void removeEntity(Entity entity) throws UpdateException {
+        String query = "DROP TABLE " + entity.getName();
         executeUpdateQuery(query);
     }
 

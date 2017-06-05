@@ -31,7 +31,12 @@ public class Entity {
     //TODO:(advice) you need to use for first "number" name variables for indexing and "index" for second ones
 
     public Entity(String name1) {
-        name = name1;
+        name = name1.toUpperCase();
+    }
+
+    public Entity(String name1, Column column1) {
+        this(name1);
+        columns.add(column1);
     }
 
     public Entity(String name1, ResultSetMetaData tableMetaData, DatabaseMetaData dbMetaData)
@@ -56,8 +61,6 @@ public class Entity {
                              )
             );
         }
-
-
     }
 
     //this method relates to constructor

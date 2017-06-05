@@ -1,0 +1,31 @@
+2017-06-05 22:44:44 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 22:44:45 INFO  Controller:37 - Start session
+2017-06-05 22:44:48 INFO  SQLCommandExecuter:76 - Execs query: CREATE TABLE sdfsd(first NUMBER(0, 0))
+2017-06-05 22:44:48 ERROR SQLCommandExecuter:83 - ORA-01727: numeric precision specifier is out of range (1 to 38)
+
+2017-06-05 22:51:05 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 22:51:05 INFO  Controller:37 - Start session
+2017-06-05 22:52:00 INFO  SQLCommandExecuter:76 - Execs query: CREATE TABLE Sales(first NUMBER(0, -127))
+2017-06-05 22:52:00 ERROR SQLCommandExecuter:83 - ORA-01727: numeric precision specifier is out of range (1 to 38)
+
+2017-06-05 22:52:33 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 22:52:33 INFO  Controller:37 - Start session
+2017-06-05 22:53:24 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 22:53:24 INFO  Controller:37 - Start session
+2017-06-05 22:53:57 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 22:53:57 INFO  Controller:37 - Start session
+2017-06-05 22:54:13 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 22:54:13 INFO  Controller:37 - Start session
+2017-06-05 22:54:30 INFO  SQLCommandExecuter:76 - Execs query: CREATE TABLE Sales(first NUMBER)
+2017-06-05 22:55:34 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 22:55:34 INFO  Controller:37 - Start session
+2017-06-05 22:55:50 INFO  SQLCommandExecuter:76 - Execs query: CREATE TABLE NotSales(first NUMBER)
+2017-06-05 23:05:11 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 23:05:11 INFO  Controller:37 - Start session
+2017-06-05 23:05:21 INFO  SQLCommandExecuter:76 - Execs query: DROP NOTSALES
+2017-06-05 23:05:22 ERROR SQLCommandExecuter:83 - ORA-00950: invalid DROP option
+
+2017-06-05 23:05:43 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-05 23:05:43 INFO  Controller:37 - Start session
+2017-06-05 23:05:46 INFO  SQLCommandExecuter:76 - Execs query: DROP TABLE NOTSALES
+2017-06-05 23:05:49 INFO  SQLCommandExecuter:76 - Execs query: DROP TABLE SALES

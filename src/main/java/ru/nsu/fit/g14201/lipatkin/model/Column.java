@@ -14,7 +14,7 @@ public class Column {
     private int number;     //from 1 to ... (number of column)
     private String name;
     private SQLType type;
-    private String className;
+    //private String className;
     private Reference reference;        //foreign key reference to another entity
 
     private ArrayList<String> elements;         //ArrayList because our Entity can grow
@@ -24,11 +24,17 @@ public class Column {
         reference = null;
     }
 
+    public Column(String name1, String type1, int columnNumber) {
+        number = columnNumber;
+        name = name1;
+        type = new SQLType(type1);
+    }
+
     public Column(ResultSetMetaData resultSetMetaData, int columnNumber) throws SQLException {
         number = columnNumber;
         ResultSetMetaData rsmd = resultSetMetaData;
         name = rsmd.getColumnName(columnNumber);
-        className = rsmd.getColumnClassName(columnNumber);
+        //className = rsmd.getColumnClassName(columnNumber);
         type = new SQLType(rsmd.getColumnTypeName(columnNumber),
                            rsmd.getPrecision(columnNumber),
                            rsmd.getScale(columnNumber));
@@ -76,7 +82,7 @@ public class Column {
 
     public final String getName() { return name; }
 
-    public final String getClassName() { return className; }
+    //public final String getClassName() { return className; }
 
     public final SQLType getType() { return type; }
 }

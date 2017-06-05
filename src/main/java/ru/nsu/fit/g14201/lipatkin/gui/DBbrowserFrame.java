@@ -99,6 +99,12 @@ public class DBbrowserFrame extends JFrame
                 dbPresenter.createEntity();
             }
         });
+        removeTableButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dbPresenter.removeEntity();
+            }
+        });
 
 
         /*-----------------Menu bar-------------------------*/

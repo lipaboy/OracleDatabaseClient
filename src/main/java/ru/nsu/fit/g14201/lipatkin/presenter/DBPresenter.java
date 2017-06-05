@@ -1,5 +1,6 @@
 package ru.nsu.fit.g14201.lipatkin.presenter;
 
+import jdk.nashorn.internal.scripts.JO;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.model.Entity;
 import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
@@ -31,6 +32,7 @@ public class DBPresenter implements EditorStateChangedListener {
         tableEditorState = editorState;
         tableEditorState.addTableEditorListener(this);
 
+        //TODO: add listener to DBManager for entities
         entitiesPresenter = new ArrayList<>();
         for (Entity entity : dbManager.getEntities()) {
             entitiesPresenter.add(new EntityPresenter(entity, manager, this));
@@ -61,10 +63,33 @@ public class DBPresenter implements EditorStateChangedListener {
     /*---------------Entity Actions-----------------*/
 
     public void createEntity() {
+        try {
+            final String tableName = JOptionPane.showInputDialog("Enter the table name:");
+            final Entity entity = dbManager.createEntity(tableName, "first", "number");
 
+            entitiesPresenter.add(new EntityPresenter(entity, dbManager, this));
+            tableList.updateUI();
+            tableList.setSelectedIndex(entitiesPresenter.size() - 1);
+
+            tableEditorState.set(TableEditorState.States.CONSTRUCTOR);
+        } catch (UserWrongActionException exp) {
+            JOptionPane.showMessageDialog(tableView, exp.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-
+    public void removeEntity() {
+        try {
+            final String entityName = tableList.getSelectedValue().toString();
+            if (entityName != null) {
+                dbManager.removeEntity(entityName);
+                entitiesPresenter.remove(tableList.getSelectedIndex());
+                tableList.setSelectedIndex(0);
+                tableList.updateUI();
+            }
+        } catch (UserWrongActionException exp) {
+            JOptionPane.showMessageDialog(tableView, exp.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /*---------------Entry Actions-----------------*/
 

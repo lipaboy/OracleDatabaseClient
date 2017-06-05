@@ -92,6 +92,31 @@ public class DBManager {
 
     /*-----------------Entity construct (destruct)----------------*/
 
+    public final Entity createEntity(String entityName, String columnName, String typeName)
+            throws UserWrongActionException {
+        try {
+            final Column column = new Column(columnName, typeName, 1);
+            final Entity entity = new Entity(entityName, column);
+
+            commander.createEntity(entity);
+            add(entity);
+
+            return entity;
+        } catch (UpdateException exp) {
+            throw new UserWrongActionException("Cannot create entity");
+        }
+    }
+
+    public void removeEntity(String entityName) {
+        try {
+            final Entity entity = mapEntities.get(entityName);
+            commander.removeEntity(entity);
+            remove(entity);
+        } catch (UpdateException exp) {
+            throw new UserWrongActionException("Cannot remove entity");
+        }
+    }
+
     public void setColumnName(Entity entity, Column column, String newName)
             throws UserWrongActionException {
         try {
@@ -114,6 +139,17 @@ public class DBManager {
     }
 
 
+    /*-------------Setters----------------------------*/
+
+    private void add(Entity entity) {
+        entities.add(entity);
+        mapEntities.put(entity.getName(), entity);
+    }
+
+    private void remove(Entity entity) {
+        entities.remove(entity);
+        mapEntities.remove(entity.getName());
+    }
 
     /*-------------Getters----------------------------*/
 
