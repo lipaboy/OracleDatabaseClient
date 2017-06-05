@@ -2,8 +2,8 @@ package ru.nsu.fit.g14201.lipatkin.presenter;
 
 import ru.nsu.fit.g14201.lipatkin.model.*;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,18 +38,19 @@ class EntityPresenter implements EntityListener {
 
             @Override
             public int getColumnCount() {
-                return 5;
+                return 4;
             }
 
             @Override
             public String getColumnName(int index) {
                 //TODO: make function for get Enum of Column Type (like name, primary key or descripion)
-                //TODO: by index
+                //TODO: by index (to exclude dependency of order)
                 switch (index) {
                     case 0: return "Column Name";
                     case 1: return "Type";
                     case 2: return "Is Primary Key";
                     case 3: return "Reference To";
+                    //TODO: add not null
                     case 4: return "Not Null";
                     default:
                 }
@@ -62,9 +63,11 @@ class EntityPresenter implements EntityListener {
 
                 switch (columnIndex) {
                     case 0: return column.getName();
-                    case 1: return column.getType().toSQLFormat();
+                    case 1: return column.getType().getSQLFormat();
                     case 2: return entity.isPrimaryKey(column);     //checkbox inside of AbstractModel or DefaultJTable
-                    case 3: return "Reference To";     //may be combobox
+                    case 3:
+                        Reference ref = column.getReference();
+                        return (ref == null) ? "" : ref.getViewFormat();     //may be combobox
                     case 4: return false;
                     default:
                 }

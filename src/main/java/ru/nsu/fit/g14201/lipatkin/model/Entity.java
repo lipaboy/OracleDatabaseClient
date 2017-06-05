@@ -44,8 +44,9 @@ public class Entity {
             mapColumn.put(column.getName(), column);
         }
 
+            /*----------------------Primary keys-----------------------*/
+
         ResultSet primaryKeysSet = dbMetaData.getPrimaryKeys(null, null, name1);
-        //dbMetaData.getImpo
         while (primaryKeysSet.next()) {
             primaryKeys.add(
                 mapColumn.get(
@@ -55,27 +56,8 @@ public class Entity {
                              )
             );
         }
-        //ResultSet foreingKeySet = dbMetaData.getPrimaryKeys(null, null, name1);
-        //primaryKeysSet.first();
-        //dbMetaData.getImpo
-//        System.out.println("");
-//        System.out.println(name1);
-//        while (primaryKeysSet.next()) {
-//            primaryKeys.add(
-//                mapColumn.get(
-//                                primaryKeysSet.getString(
-//                                        "COLUMN_NAME" //label only for primary keys
-//                                )
-//                             )
-//            );
-//            for (int i = 0; i < primaryKeysSet.getMetaData().getColumnCount(); i++)
-//                System.out.print(
-//                        primaryKeysSet.getString(i)
-//                );
-//            System.out.println("");
-//        }
-        //for foreign keys use label: PKCOLUMN_NAME
-        //and getImportedKeys
+
+
     }
 
     //this method relates to constructor

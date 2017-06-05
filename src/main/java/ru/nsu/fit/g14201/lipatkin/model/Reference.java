@@ -12,6 +12,8 @@ public class Reference {
         column = column1;
     }
 
+    public String getViewFormat() { return entity.getName() + "." + column.getName(); }
+
     public final Entity getEntity() { return entity; }
     public final Column getColumn() { return column; }
 }

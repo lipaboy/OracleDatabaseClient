@@ -3,6 +3,8 @@ package ru.nsu.fit.g14201.lipatkin.model;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -17,14 +19,42 @@ public class DBManager {
     private Map<String, Entity> mapEntities;
 
     public DBManager(Connection connection) {
-        commander = new SQLCommandExecuter(connection);
-        entities = commander.getAllEntities();
-        mapEntities = new TreeMap<>();
-        for (Entity entity : entities) {
-            mapEntities.put(entity.getName(), entity);
-        }
+        try {
+            commander = new SQLCommandExecuter(connection);
+            entities = commander.getAllEntities();
+            mapEntities = new TreeMap<>();
+            for (Entity entity : entities) {
+                mapEntities.put(entity.getName(), entity);
+            }
 
-        //commander.update(mapEntities.get("DEPT"), 0, "DNAME", "12");
+        /*----------------------Foreign keys (references)-----------------------*/
+
+            for (Entity entity : entities) {
+                ResultSet foreignKeySet = commander.getMetaData().getImportedKeys(null, null,
+                        entity.getName());
+                while (foreignKeySet.next()) {
+                    final Entity entityForeign = mapEntities.get(
+                            foreignKeySet.getString("FKTABLE_NAME")
+                    );
+                    final Column columnForeign = entityForeign.getColumn(
+                            foreignKeySet.getString("FKCOLUMN_NAME")
+                    );
+                    final Entity entityPrimary = mapEntities.get(
+                            foreignKeySet.getString("PKTABLE_NAME")
+                    );
+                    final Column columnPrimary = entityPrimary.getColumn(
+                            foreignKeySet.getString("PKCOLUMN_NAME")
+                    );
+                    columnForeign.setReference(new Reference(entityPrimary, columnPrimary));
+                }
+            }
+        } catch (SQLException exp) {
+            log.error(exp.getMessage());
+        }
+        //for foreign keys use label:
+        // getImportedKeys
+        //PKTABLE_NAME PKCOLUMN_NAME <- to
+        //FKTABLE_NAME FKCOLUMN_NAME <- FROM
     }
 
     /*-----------------Entries edit----------------*/

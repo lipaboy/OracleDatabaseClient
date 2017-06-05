@@ -143,7 +143,7 @@ public class SQLCommandExecuter implements SQLCommander {
             //name, type
             query.append(column.getName())
                     .append(" ")
-                    .append(column.getType().toSQLFormat());
+                    .append(column.getType().getSQLFormat());
             //TODO: add constraints
             if (i < columns.size() - 1)
                 query.append(", ");
@@ -177,7 +177,7 @@ public class SQLCommandExecuter implements SQLCommander {
         String query =
                 "ALTER TABLE " + entity.getName()
                         + " MODIFY " + column.getName()        //unnecessary to wrap by quotes
-                          + " " + newType.toSQLFormat();
+                          + " " + newType.getSQLFormat();
 
         executeUpdateQuery(query);
     }
@@ -244,6 +244,11 @@ public class SQLCommandExecuter implements SQLCommander {
         }
 
         return entities;
+    }
+
+    @Override
+    public DatabaseMetaData getMetaData() throws SQLException {
+        return connection.getMetaData();
     }
 
 }

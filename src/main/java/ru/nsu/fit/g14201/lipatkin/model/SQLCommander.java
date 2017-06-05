@@ -1,5 +1,7 @@
 package ru.nsu.fit.g14201.lipatkin.model;
 
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +36,8 @@ public interface SQLCommander {
     public Entity getEntity(String tableName);
 
     public List<Entity> getAllEntities();
+
+    public DatabaseMetaData getMetaData() throws SQLException;
 
 //    public void close();
 }

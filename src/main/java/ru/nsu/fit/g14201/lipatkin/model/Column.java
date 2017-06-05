@@ -1,5 +1,7 @@
 package ru.nsu.fit.g14201.lipatkin.model;
 
+import com.sun.istack.internal.Nullable;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -13,12 +15,13 @@ public class Column {
     private String name;
     private SQLType type;
     private String className;
-    private Reference reference;
+    private Reference reference;        //foreign key reference to another entity
 
     private ArrayList<String> elements;         //ArrayList because our Entity can grow
 
     {
         elements = new ArrayList<>();
+        reference = null;
     }
 
     public Column(ResultSetMetaData resultSetMetaData, int columnNumber) throws SQLException {
@@ -29,15 +32,6 @@ public class Column {
         type = new SQLType(rsmd.getColumnTypeName(columnNumber),
                            rsmd.getPrecision(columnNumber),
                            rsmd.getScale(columnNumber));
-//        System.out.println(     //for varchar2 good
-//                "Display size " + name + " column = " + resultSetMetaData.getColumnDisplaySize(number));
-//        System.out.println(     //the best
-//                "Precision " + name + " column = " + resultSetMetaData.getPrecision(number) +
-//        ", " + resultSetMetaData.getScale(number));
-//        System.out.println(
-//                "Catalog name " + number + " column = " + resultSetMetaData.getCatalogName(number));
-//        System.out.println(
-//                "Column label " + number + " column = " + resultSetMetaData.getColumnLabel(number));
     }
 
     //package availability modificator
@@ -67,11 +61,16 @@ public class Column {
 
     void setType(SQLType newType) { type = newType; }
 
+    void setReference(Reference ref) { reference = ref; }
+
     void remove(int index) { elements.remove(index); }
 
     /*----------------Getters---------------------*/
 
     public int size() { return elements.size(); }
+
+    @Nullable
+    public final Reference getReference() { return reference; }
 
     public final String get(int rowIndex) { return elements.get(rowIndex); }
 

@@ -55,7 +55,7 @@ public class SQLType {
 
     public final String getTypeName() { return typeName; }
 
-    public String toSQLFormat() {
+    public String getSQLFormat() {
         return typeName + "(" + Integer.toString(precision) + ", " + Integer.toString(scale) + ")";
     }
 }
