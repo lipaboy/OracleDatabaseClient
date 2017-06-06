@@ -1,11 +1,13 @@
 package ru.nsu.fit.g14201.lipatkin.model;
 
 import com.sun.istack.internal.Nullable;
+import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,6 +15,8 @@ import java.util.TreeSet;
  * Created by SPN on 06.05.2017.
  */
 public class Column {
+    private static final Logger log = Logger.getLogger(Column.class);
+
     private int number;     //from 1 to ... (number of column)
     private String name;
     private SQLType type;
@@ -24,7 +28,7 @@ public class Column {
 
     {
         elements = new ArrayList<>();
-        constraintSet = new TreeSet<>();
+        constraintSet = new HashSet<>();
         reference = null;
     }
 
@@ -44,8 +48,15 @@ public class Column {
 
     //package availability modificator
     void add(ResultSet resultSet) throws SQLException {
-//        if (type.equals("LONG"))          //TODO: for LONG wrong
-//            elements.addTableEditorListener(resultSet.getClob());
+
+        if (type.typeName.equals("LONG")) {         //TODO: for LONG wrong
+            //byte[] bufLong = resultSet.getBytes(number);
+            //elements.add(new String(bufLong));
+            //resultSet.get
+            //log.info(bufLong);
+            elements.add("");
+            //may be getBinaryStream
+        }
 //        else
         //LONG doesn't work
             elements.add(resultSet.getString(number));

@@ -162,17 +162,22 @@ public class SQLCommandExecuter implements SQLCommander {
 
     @Override
     public void addConstraint(Entity entity, Column column, Constraint constraint) {
-        String query = null;
+        String query = "ALTER TABLE " + wrap(entity.getName())
+                + " ADD CONSTRAINT ";
         switch(constraint.getType()) {
             case FOREIGN_KEY:
                 Reference ref = constraint.getReference();
-                query = "ALTER TABLE " + wrap(entity.getName())
-                        + " ADD CONSTRAINT " + wrap(constraint.getName())
+                query = query + wrap(constraint.getName())
                         + " FOREIGN KEY (" + wrap(column.getName())
                         + ") REFERENCES " + wrap(ref.getEntity().getName())
                         + " (" + wrap(ref.getColumn().getName())
                         + ") ON DELETE NO ACTION ENABLE";
                 break;
+            case PRIMARY_KEY:
+                if (constraint.getName() == null)
+                    query = query + " Primary Key ";
+                else
+                    query = query + wrap(constraint.getName());
         }
         executeUpdateQuery(query);
 //        ALTER TABLE  "DEMO_ORDER_ITEMS" ADD CONSTRAINT "DEMO_ORDER_ITEMS_FK" FOREIGN KEY ("ORDER_ID")

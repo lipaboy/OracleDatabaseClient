@@ -1,6 +1,7 @@
 package ru.nsu.fit.g14201.lipatkin.model;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import java.sql.Ref;
@@ -22,14 +23,19 @@ public class Constraint {
     String name;
     {
         reference = null;
+        name = null;
     }
 
-    private Constraint(Type type1) {
+    public Constraint(Type type1) {
         type = type1;
+//        switch (type1) {
+//            case FOREIGN_KEY: name = "FOREIGN KEY"; break;
+//            case PRIMARY_KEY: name = "PRIMARY KEY"; break;
+//        }
     }
 
     public Constraint(Type type1, String name1) {
-        this(type1);
+        type = type1;
         name = name1;
     }
 
@@ -45,7 +51,7 @@ public class Constraint {
 
     public final Type getType() { return type; }
     public final Reference getReference() { return reference; }
-    @NotNull
+    @Nullable
     public final String getName() { return name; }
 
     @Override

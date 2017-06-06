@@ -52,14 +52,22 @@ public class Entity {
             /*----------------------Primary keys-----------------------*/
 
         ResultSet primaryKeysSet = dbMetaData.getPrimaryKeys(null, null, name1);
+        for (int i = 1; i < primaryKeysSet.getMetaData().getColumnCount(); i++) {
+            System.out.print(primaryKeysSet.getMetaData().getColumnName(i) + " ");
+        }
+        System.out.println("");
         while (primaryKeysSet.next()) {
-            primaryKeys.add(
-                mapColumn.get(
-                                primaryKeysSet.getString(
-                                        "COLUMN_NAME" //label only for primary keys
-                                )
-                             )
+            final Column column = mapColumn.get(
+                    primaryKeysSet.getString(
+                            "COLUMN_NAME" //label only for primary keys
+                    )
             );
+            primaryKeys.add(column);
+            for (int i = 1; i < primaryKeysSet.getMetaData().getColumnCount(); i++) {
+                System.out.print(primaryKeysSet.getString(i) + " ");
+            }
+            System.out.println("");
+            //column.addConstraint()
         }
     }
 

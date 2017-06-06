@@ -29,3 +29,18 @@
 2017-06-05 23:05:43 INFO  Controller:37 - Start session
 2017-06-05 23:05:46 INFO  SQLCommandExecuter:76 - Execs query: DROP TABLE NOTSALES
 2017-06-05 23:05:49 INFO  SQLCommandExecuter:76 - Execs query: DROP TABLE SALES
+2017-06-06 11:33:19 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 11:33:20 INFO  Controller:37 - Start session
+2017-06-06 11:33:20 ERROR SQLCommandExecuter:249 - Stream has already been closed
+2017-06-06 11:38:58 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 11:38:59 INFO  Controller:37 - Start session
+2017-06-06 11:39:20 ERROR SQLCommandExecuter:249 - Stream has already been closed
+2017-06-06 11:39:45 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 11:39:46 INFO  Controller:37 - Start session
+2017-06-06 11:40:15 ERROR SQLCommandExecuter:249 - Stream has already been closed
+2017-06-06 11:43:44 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 11:43:45 INFO  Controller:37 - Start session
+2017-06-06 11:43:45 ERROR SQLCommandExecuter:249 - Stream has already been closed
+2017-06-06 11:44:35 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 11:44:35 INFO  Controller:37 - Start session
+2017-06-06 11:44:36 ERROR SQLCommandExecuter:249 - Stream has already been closed
