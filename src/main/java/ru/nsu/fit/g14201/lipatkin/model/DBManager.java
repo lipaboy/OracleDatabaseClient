@@ -134,6 +134,25 @@ public class DBManager {
 
     /*-----------------Columns edit----------------*/
 
+    public final Column addColumn(Entity entity, String columnName, SQLType type) {
+        try {
+            Column newColumn = new Column(columnName, type, 1);
+            commander.addColumn(entity, newColumn);
+            return entity.add(columnName, type);
+        } catch(UpdateException exp) {
+            throw new UserWrongActionException("Cannot add column");
+        }
+    }
+
+    public void removeColumn(Entity entity, Column column) {
+        try {
+            commander.dropColumn(entity, column);
+            entity.remove(column);
+        } catch(UpdateException exp) {
+            throw new UserWrongActionException("Cannot remove column");
+        }
+    }
+
     public void addConstraint(Entity entity, Column column, Constraint constraint)
             throws UserWrongActionException {
         try {

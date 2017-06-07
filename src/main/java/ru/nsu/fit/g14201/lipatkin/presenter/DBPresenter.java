@@ -1,10 +1,6 @@
 package ru.nsu.fit.g14201.lipatkin.presenter;
 
-import jdk.nashorn.internal.scripts.JO;
-import ru.nsu.fit.g14201.lipatkin.model.DBManager;
-import ru.nsu.fit.g14201.lipatkin.model.Entity;
-import ru.nsu.fit.g14201.lipatkin.model.UpdateException;
-import ru.nsu.fit.g14201.lipatkin.model.UserWrongActionException;
+import ru.nsu.fit.g14201.lipatkin.model.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -12,6 +8,7 @@ import javax.swing.event.ListSelectionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.nsu.fit.g14201.lipatkin.presenter.TableEditorState.States.CONSTRUCTOR;
 import static ru.nsu.fit.g14201.lipatkin.presenter.TableEditorState.States.DATA_EDITOR;
 
 /**
@@ -91,15 +88,63 @@ public class DBPresenter implements EditorStateChangedListener {
         }
     }
 
+    /*---------------Column Actions-----------------*/
+
+    public void addColumn() {
+        try {
+            if (tableEditorState.get() == CONSTRUCTOR) {
+                EntityPresenter entityPresenter = entitiesPresenter.get(selected);
+                final List<String> row = entityPresenter.getNewColumnRow();
+                final Entity entity = entityPresenter.getEntity();
+                final Column column = dbManager.addColumn(entity, row.get(0),
+                        new SQLType(row.get(1)));
+
+                if (row.get(2).equals("true")) {
+                    dbManager.addConstraint(entity, column, new Constraint(Constraint.Type.PRIMARY_KEY));
+                }
+                //TODO: bad copy paste (from entity presenter)
+                String reff = row.get(3);
+                String[] strs = reff.split("\\.");
+                if (strs.length >= 2) {
+                    Entity entityPK = dbManager.getEntity(strs[0]);
+                    Column columnPK = entityPK.getColumn(strs[1]);
+
+                    Constraint constraint = new Constraint(Constraint.Type.FOREIGN_KEY);
+                    constraint.setReference(new Reference(entityPK, columnPK));
+                    dbManager.addConstraint(entity, column, constraint);
+                }
+
+                entityPresenter.clearNewColumnRow();
+            }
+        } catch (UserWrongActionException exp) {
+            showErrorMessage(exp.getMessage());
+        }
+    }
+
+    public void removeColumn() {
+        try{
+            if (tableEditorState.get() == CONSTRUCTOR) {
+                EntityPresenter entityPresenter = entitiesPresenter.get(selected);
+                int[] rowIndices = tableView.getSelectedRows();
+                final Entity entity = entityPresenter.getEntity();
+                for (int i = 0; i < rowIndices.length; i++) {
+                    dbManager.removeColumn(entity, entity.getColumn(rowIndices[i]));
+                }
+            }
+        } catch (UserWrongActionException exp) {
+            showErrorMessage(exp.getMessage());
+        }
+    }
+
     /*---------------Entry Actions-----------------*/
 
     public void addEntry() {
         try {
             if (tableEditorState.get() == DATA_EDITOR) {
                 EntityPresenter entityPresenter = entitiesPresenter.get(selected);
-                List<String> row = entityPresenter.getNewRow();
+                List<String> row = entityPresenter.getNewRowData();
                 dbManager.insert(entityPresenter.getEntity(), row);
-                entityPresenter.clearNewRows();
+                entityPresenter.clearNewRowData();
                 //TODO: need to update table but how??? sol: maybe exec a setter
                 //tableView.getRowCount();
             }

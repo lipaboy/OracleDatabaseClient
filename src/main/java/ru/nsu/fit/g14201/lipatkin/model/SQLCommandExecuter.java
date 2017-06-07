@@ -160,6 +160,22 @@ public class SQLCommandExecuter implements SQLCommander {
         executeUpdateQuery(query);
     }
 
+        /*-----------------Column modifications----------------*/
+
+    @Override
+    public void addColumn(Entity entity, Column column) throws UpdateException {
+        String query = "ALTER TABLE " + wrap(entity.getName())
+                + " ADD " + wrap(column.getName()) + " " + column.getType().getSQLFormat();
+        executeUpdateQuery(query);
+    }
+
+    @Override
+    public void dropColumn(Entity entity, Column column) throws UpdateException {
+        String query = "ALTER TABLE " + wrap(entity.getName())
+                + " DROP COLUMN " + wrap(column.getName());
+        executeUpdateQuery(query);
+    }
+
     @Override
     public void addConstraint(Entity entity, Column column, Constraint constraint)
             throws UpdateException {
@@ -231,6 +247,7 @@ public class SQLCommandExecuter implements SQLCommander {
 
         executeUpdateQuery(query);
     }
+
 
         /*-----------------Getters----------------*/
 

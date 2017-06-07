@@ -87,13 +87,23 @@ public class Entity {
         }
     }
 
-    /*---------------Listeners---------------------*/
+    /*------------------Columns-------------------------*/
 
-    public void addEntityListener(EntityListener listener) { listeners.add(listener); }
-    public void removeEntityListener(EntityListener listener) { listeners.remove(listener); }
-    public void notifyListeners() {
-        for (EntityListener listener : listeners)
-            listener.dataChanged();
+    final Column add(String columnName, SQLType type) {
+        final Column column = new Column(columnName, type, columns.size() + 1);
+        columns.add(column);
+        notifyListeners();
+        return column;
+    }
+
+    void remove(int columnIndex) {
+        columns.remove(columnIndex);
+        notifyListeners();
+    }
+
+    void remove(Column column) {
+        columns.remove(column);
+        notifyListeners();
     }
 
     /*----------------Constraints---------------------*/
@@ -103,12 +113,14 @@ public class Entity {
         boolean flag = column.addConstraint(constraint);
         if (flag && constraint.getType() == Constraint.Type.PRIMARY_KEY)
             primaryKeys.add(column);
+        notifyListeners();
     }
 
     void removeConstraint(Column column, Constraint constraint) {
         boolean flag = column.removeConstraint(constraint);
         if (flag && constraint.getType() == Constraint.Type.PRIMARY_KEY)
             primaryKeys.remove(column);
+        notifyListeners();
     }
 
     /*----------------Setters---------------------*/
@@ -161,4 +173,13 @@ public class Entity {
     public final String getColumnName(int columnIndex) { return columns.get(columnIndex).getName(); }
 
     public final String getName() { return name; }
+
+    /*---------------Listeners---------------------*/
+
+    public void addEntityListener(EntityListener listener) { listeners.add(listener); }
+    public void removeEntityListener(EntityListener listener) { listeners.remove(listener); }
+    public void notifyListeners() {
+        for (EntityListener listener : listeners)
+            listener.dataChanged();
+    }
 }

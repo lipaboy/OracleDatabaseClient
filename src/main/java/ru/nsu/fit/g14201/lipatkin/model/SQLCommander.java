@@ -27,7 +27,11 @@ public interface SQLCommander {
 
         /*-----------------Column modifications----------------*/
 
-    public void addConstraint(Entity entity, Column column, Constraint constraint)throws UpdateException;
+    public void addColumn(Entity entity, Column column) throws UpdateException;
+
+    public void dropColumn(Entity entity, Column column) throws UpdateException;
+
+    public void addConstraint(Entity entity, Column column, Constraint constraint) throws UpdateException;
 
     public void dropConstraint(Entity entity, Column column, Constraint constraint)
             throws UpdateException;

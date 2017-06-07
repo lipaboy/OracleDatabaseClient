@@ -3,7 +3,6 @@ package ru.nsu.fit.g14201.lipatkin.presenter;
 import ru.nsu.fit.g14201.lipatkin.model.*;
 
 import javax.swing.table.AbstractTableModel;
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,29 +15,37 @@ class EntityPresenter implements EntityListener {
     private DBPresenter dbPresenter;
     private AbstractTableModel viewEntity;
     private AbstractTableModel dataEditor;
+    private final int constructorCols = 4;
     private AbstractTableModel constructor;
 
-    private List<String> newRow;
+    private List<String> newRowData;
+    private List<String> newColumnRow;
 
     public EntityPresenter(Entity en, DBManager manager, DBPresenter presenter) {
         entity = en;
         dbManager = manager;
         dbPresenter = presenter;        //TODO: remove dependency
-        newRow = new ArrayList<>();
+        newRowData = new ArrayList<>();
+        newColumnRow = new ArrayList<>();
         en.addEntityListener(this);
 
-        for (int i = 0; i < en.getColumnCount(); i++)
-            newRow.add("");
+        for (int i = 0; i < en.getColumnCount(); i++) {
+            newRowData.add("");
+        }
+        for (int i = 0; i < constructorCols; i++) {
+            newColumnRow.add("");
+        }
 
         constructor = new AbstractTableModel() {
             @Override
             public int getRowCount() {
-                return entity.getColumnCount();
+                return entity.getColumnCount()
+                                + 1;        // new row for add column
             }
 
             @Override
             public int getColumnCount() {
-                return 4;
+                return constructorCols;
             }
 
             @Override
@@ -59,20 +66,33 @@ class EntityPresenter implements EntityListener {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                Column column = entity.getColumn(rowIndex);
+                if (rowIndex < entity.getColumnCount()) {
+                    Column column = entity.getColumn(rowIndex);
 
-                switch (columnIndex) {
-                    case 0: return column.getName();
-                    case 1: return column.getType().getSQLFormat();
-                    case 2: return entity.isPrimaryKey(column);     //checkbox inside of AbstractModel or DefaultJTable
-                    case 3:
-                        final Constraint con = column.getConstraint(Constraint.Type.FOREIGN_KEY);
-                        if (null == con)
-                            return "";
-                        final Reference ref = con.getReference();
-                        return ((ref == null) ? "" : ref.getViewFormat());     //may be combobox
-                    case 4: return false;
-                    default:
+                    switch (columnIndex) {
+                        case 0:
+                            return column.getName();
+                        case 1:
+                            return column.getType().getSQLFormat();
+                        case 2:
+                            return entity.isPrimaryKey(column);     //checkbox inside of AbstractModel or DefaultJTable
+                        case 3:
+                            final Constraint con = column.getConstraint(Constraint.Type.FOREIGN_KEY);
+                            if (null == con)
+                                return "";
+                            final Reference ref = con.getReference();
+                            return ((ref == null) ? "" : ref.getViewFormat());     //may be combobox
+                        case 4:
+                            return false;
+                        default:
+                    }
+                } else {
+                    switch (columnIndex) {
+                        case 2:
+                            return (newColumnRow.get(2).equals("true"));
+                        default:
+                            return newColumnRow.get(columnIndex);
+                    }
                 }
                 return "";
             }
@@ -90,37 +110,51 @@ class EntityPresenter implements EntityListener {
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 try {
-                    Column column = entity.getColumn(rowIndex);
+                    if (rowIndex < entity.getColumnCount()) {
+                        Column column = entity.getColumn(rowIndex);
 
-                    switch (columnIndex) {
-                        case 0:     dbManager.setColumnName(entity, column, aValue.toString()); break;
-                        case 1:     dbManager.setColumnType(entity, column, aValue.toString()); break;
-                        case 2:
-                            boolean isPrim = (boolean)aValue;
-                            if (isPrim)
-                                dbManager.addConstraint(entity, column,
-                                        new Constraint(Constraint.Type.PRIMARY_KEY));
+                        switch (columnIndex) {
+                            case 0:
+                                dbManager.setColumnName(entity, column, aValue.toString());
+                                break;
+                            case 1:
+                                dbManager.setColumnType(entity, column, aValue.toString());
+                                break;
+                            case 2:
+                                boolean isPrim = (boolean) aValue;
+                                if (isPrim)
+                                    dbManager.addConstraint(entity, column,
+                                            new Constraint(Constraint.Type.PRIMARY_KEY));
+                                else
+                                    dbManager.removeConstraint(entity, column,
+                                            new Constraint(Constraint.Type.PRIMARY_KEY));
+                                break;
+                            case 3:
+                                String reff = aValue.toString();
+                                String[] strs = reff.split("\\.");
+                                if (strs.length >= 2) {
+                                    Entity entityPK = dbManager.getEntity(strs[0]);
+                                    Column columnPK = entityPK.getColumn(strs[1]);
+
+                                    Constraint constraint = new Constraint(Constraint.Type.FOREIGN_KEY);
+                                    constraint.setReference(new Reference(entityPK, columnPK));
+                                    dbManager.addConstraint(entity, column, constraint);
+                                } else {
+                                    dbManager.removeConstraint(entity, column,
+                                            column.getConstraint(Constraint.Type.FOREIGN_KEY));
+                                }
+                            case 4:
+                            default:
+                        }
+                    }
+                    else {
+                        switch (columnIndex) {
+                            case 2: if ((boolean)aValue)
+                                newColumnRow.set(columnIndex, "true");
                             else
-                                dbManager.removeConstraint(entity, column,
-                                        new Constraint(Constraint.Type.PRIMARY_KEY));
-                        break;
-                        case 3:
-                            String reff = aValue.toString();
-                            String[] strs = reff.split("\\.");
-                            if (strs.length >= 2) {
-                                Entity entityPK = dbManager.getEntity(strs[0]);
-                                Column columnPK = entityPK.getColumn(strs[1]);
-
-                                Constraint constraint = new Constraint(Constraint.Type.FOREIGN_KEY);
-                                constraint.setReference(new Reference(entityPK, columnPK));
-                                dbManager.addConstraint(entity, column, constraint);
-                            }
-                            else {
-                                dbManager.removeConstraint(entity, column,
-                                        column.getConstraint(Constraint.Type.FOREIGN_KEY));
-                            }
-                        case 4:
-                        default:
+                                newColumnRow.set(columnIndex, "");
+                            default: newColumnRow.set(columnIndex, aValue.toString());
+                        }
                     }
                 } catch (UserWrongActionException exp) {
                     dbPresenter.showErrorMessage(exp.getMessage());
@@ -141,7 +175,7 @@ class EntityPresenter implements EntityListener {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                return ((rowIndex == entity.getRowCount()) ? newRow.get(columnIndex) :
+                return ((rowIndex == entity.getRowCount()) ? newRowData.get(columnIndex) :
                         entity.get(rowIndex, columnIndex));
             }
 
@@ -159,7 +193,7 @@ class EntityPresenter implements EntityListener {
                     if (rowIndex < entity.getRowCount())
                         dbManager.setValueAt(entity, rowIndex, columnIndex, aValue.toString());
                     else
-                        newRow.set(columnIndex, aValue.toString());
+                        newRowData.set(columnIndex, aValue.toString());
                 } catch (UpdateException exp) {
                     System.out.println(exp.getMessage());
                 }
@@ -193,16 +227,21 @@ class EntityPresenter implements EntityListener {
 
     }
 
-    void clearNewRows() {
-        for (int i = 0; i < newRow.size(); i++)
-            newRow.set(i, "");
+    void clearNewRowData() {
+        for (int i = 0; i < newRowData.size(); i++)
+            newRowData.set(i, "");
+    }
+
+    void clearNewColumnRow() {
+        for (int i = 0; i < newColumnRow.size(); i++)
+            newColumnRow.set(i, "");
     }
 
     /*-------------------Getters--------------------------*/
 
-    public final List<String> getNewRow() { return newRow; }
+    public final List<String> getNewRowData() { return newRowData; }
 
-    //public int getNewEntryFirstPosition() { return dataEditor.getRowCount() - 1; }
+    public final List<String> getNewColumnRow() { return newColumnRow; }
 
     public final AbstractTableModel getViewEntity() { return viewEntity; }
 

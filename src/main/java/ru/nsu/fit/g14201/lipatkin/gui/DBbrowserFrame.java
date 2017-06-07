@@ -106,6 +106,20 @@ public class DBbrowserFrame extends JFrame
             }
         });
 
+            /*--------Column configuring buttons-------*/
+        addColumnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dbPresenter.addColumn();
+            }
+        });
+        removeColumnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dbPresenter.removeColumn();
+            }
+        });
+
 
         /*-----------------Menu bar-------------------------*/
 

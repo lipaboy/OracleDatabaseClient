@@ -190,3 +190,56 @@
 2017-06-07 13:58:21 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
 2017-06-07 13:58:21 INFO  Controller:37 - Start session
 2017-06-07 13:58:44 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   CONSTRAINT "NEWTABLE_FIRST_FOREIGN_KEY"
+2017-06-07 15:08:59 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 15:09:00 INFO  Controller:37 - Start session
+2017-06-07 15:57:55 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 15:57:55 INFO  Controller:37 - Start session
+2017-06-07 16:13:50 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:13:50 INFO  Controller:37 - Start session
+2017-06-07 16:14:55 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:14:55 INFO  Controller:37 - Start session
+2017-06-07 16:17:11 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:17:12 INFO  Controller:37 - Start session
+2017-06-07 16:18:03 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:18:03 INFO  Controller:37 - Start session
+2017-06-07 16:20:00 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:20:00 INFO  Controller:37 - Start session
+2017-06-07 16:23:37 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:23:38 INFO  Controller:37 - Start session
+2017-06-07 16:26:30 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:26:30 INFO  Controller:37 - Start session
+2017-06-07 16:27:16 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:27:16 INFO  Controller:37 - Start session
+2017-06-07 16:30:37 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:30:37 INFO  Controller:37 - Start session
+2017-06-07 16:32:14 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:32:15 INFO  Controller:37 - Start session
+2017-06-07 16:33:20 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:33:21 INFO  Controller:37 - Start session
+2017-06-07 16:34:37 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:34:38 INFO  Controller:37 - Start session
+2017-06-07 16:35:11 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:35:11 INFO  Controller:37 - Start session
+2017-06-07 16:35:16 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE RENAME COLUMN FIRST TO FIRST
+2017-06-07 16:35:16 ERROR SQLCommandExecuter:83 - ORA-00957: duplicate column name
+
+2017-06-07 16:35:32 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD "SECOND" VARCHAR(50, 0)
+2017-06-07 16:35:32 ERROR SQLCommandExecuter:83 - ORA-00907: missing right parenthesis
+
+2017-06-07 16:36:22 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:36:23 INFO  Controller:37 - Start session
+2017-06-07 16:36:38 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD COLUMN "S" VARCHAR(50, 0)
+2017-06-07 16:36:38 ERROR SQLCommandExecuter:83 - ORA-00904: : invalid identifier
+
+2017-06-07 16:38:26 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:38:26 INFO  Controller:37 - Start session
+2017-06-07 16:38:36 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD "S" NUMBER
+2017-06-07 16:38:56 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 16:38:57 INFO  Controller:37 - Start session
+2017-06-07 16:39:34 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD "T" NUMBER
+2017-06-07 16:39:34 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_T_PRIMARY_KEY" Primary Key ("T")
+2017-06-07 16:39:34 ERROR SQLCommandExecuter:83 - ORA-01449: column contains NULL values; cannot alter to NOT NULL
+
+2017-06-07 16:40:19 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_T_PRIMARY_KEY" Primary Key ("T")
+2017-06-07 16:40:19 ERROR SQLCommandExecuter:83 - ORA-01449: column contains NULL values; cannot alter to NOT NULL
+
