@@ -14,6 +14,7 @@ public class Entity {
 
     private Map<String, Column> mapColumn;
     private ArrayList<Column> columns;
+    //TODO: replate on Set
     private ArrayList<Column> primaryKeys;     //column index (from 0.to.n-1)
     private String name;
 
@@ -52,21 +53,26 @@ public class Entity {
             /*----------------------Primary keys-----------------------*/
 
         ResultSet primaryKeysSet = dbMetaData.getPrimaryKeys(null, null, name1);
-        for (int i = 1; i < primaryKeysSet.getMetaData().getColumnCount(); i++) {
-            System.out.print(primaryKeysSet.getMetaData().getColumnName(i) + " ");
-        }
-        System.out.println("");
+//        for (int i = 1; i < primaryKeysSet.getMetaData().getColumnCount(); i++) {
+//            System.out.print(primaryKeysSet.getMetaData().getColumnName(i) + " ");
+//        }
+//        System.out.println("");
         while (primaryKeysSet.next()) {
-            final Column column = mapColumn.get(
-                    primaryKeysSet.getString(
-                            "COLUMN_NAME" //label only for primary keys
-                    )
+            String str = primaryKeysSet.getString(
+                    "COLUMN_NAME" //label only for primary keys
             );
-            primaryKeys.add(column);
-            for (int i = 1; i < primaryKeysSet.getMetaData().getColumnCount(); i++) {
-                System.out.print(primaryKeysSet.getString(i) + " ");
+            if (!str.equals("")) {
+                final Column column = mapColumn.get(
+                        str
+                );
+                column.addConstraint(new Constraint(Constraint.Type.PRIMARY_KEY));
+                primaryKeys.add(column);
             }
-            System.out.println("");
+//            primaryKeys.add(column);
+//            for (int i = 1; i < primaryKeysSet.getMetaData().getColumnCount(); i++) {
+//                System.out.print(primaryKeysSet.getString(i) + " ");
+//            }
+//            System.out.println("");
             //column.addConstraint()
         }
     }
@@ -88,6 +94,21 @@ public class Entity {
     public void notifyListeners() {
         for (EntityListener listener : listeners)
             listener.dataChanged();
+    }
+
+    /*----------------Constraints---------------------*/
+
+    //TODO: divide on packages right (entity and column into own package for example)
+    void addConstraint(Column column, Constraint constraint) {
+        boolean flag = column.addConstraint(constraint);
+        if (flag && constraint.getType() == Constraint.Type.PRIMARY_KEY)
+            primaryKeys.add(column);
+    }
+
+    void removeConstraint(Column column, Constraint constraint) {
+        boolean flag = column.removeConstraint(constraint);
+        if (flag && constraint.getType() == Constraint.Type.PRIMARY_KEY)
+            primaryKeys.remove(column);
     }
 
     /*----------------Setters---------------------*/
@@ -128,7 +149,7 @@ public class Entity {
     public boolean isPrimaryKey(Column column) { return primaryKeys.contains(column); }
 
     public final Column getColumn(int index) { return columns.get(index); }
-    public final Column getColumn(String columnName) { return mapColumn.get(columnName); }
+    public final Column getColumn(String columnName) { return mapColumn.get(columnName.toUpperCase()); }
     List<Column> getColumns() { return columns; }
 
     //1) Entity may be empty (it is normal)

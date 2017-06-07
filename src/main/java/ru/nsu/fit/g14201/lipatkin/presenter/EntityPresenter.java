@@ -66,8 +66,11 @@ class EntityPresenter implements EntityListener {
                     case 1: return column.getType().getSQLFormat();
                     case 2: return entity.isPrimaryKey(column);     //checkbox inside of AbstractModel or DefaultJTable
                     case 3:
-                        Reference ref = column.getReference();
-                        return (ref == null) ? "" : ref.getViewFormat();     //may be combobox
+                        final Constraint con = column.getConstraint(Constraint.Type.FOREIGN_KEY);
+                        if (null == con)
+                            return "";
+                        final Reference ref = con.getReference();
+                        return ((ref == null) ? "" : ref.getViewFormat());     //may be combobox
                     case 4: return false;
                     default:
                 }
@@ -90,10 +93,32 @@ class EntityPresenter implements EntityListener {
                     Column column = entity.getColumn(rowIndex);
 
                     switch (columnIndex) {
-                        case 0:     dbManager.setColumnName(entity, column, aValue.toString());
-                        case 1:     dbManager.setColumnType(entity, column, aValue.toString());
+                        case 0:     dbManager.setColumnName(entity, column, aValue.toString()); break;
+                        case 1:     dbManager.setColumnType(entity, column, aValue.toString()); break;
                         case 2:
+                            boolean isPrim = (boolean)aValue;
+                            if (isPrim)
+                                dbManager.addConstraint(entity, column,
+                                        new Constraint(Constraint.Type.PRIMARY_KEY));
+                            else
+                                dbManager.removeConstraint(entity, column,
+                                        new Constraint(Constraint.Type.PRIMARY_KEY));
+                        break;
                         case 3:
+                            String reff = aValue.toString();
+                            String[] strs = reff.split("\\.");
+                            if (strs.length >= 2) {
+                                Entity entityPK = dbManager.getEntity(strs[0]);
+                                Column columnPK = entityPK.getColumn(strs[1]);
+
+                                Constraint constraint = new Constraint(Constraint.Type.FOREIGN_KEY);
+                                constraint.setReference(new Reference(entityPK, columnPK));
+                                dbManager.addConstraint(entity, column, constraint);
+                            }
+                            else {
+                                dbManager.removeConstraint(entity, column,
+                                        column.getConstraint(Constraint.Type.FOREIGN_KEY));
+                            }
                         case 4:
                         default:
                     }

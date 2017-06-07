@@ -39,7 +39,7 @@ public class Constraint {
         name = name1;
     }
 
-    void setReference(Reference ref) {
+    public void setReference(Reference ref) {
         reference = ref;
     }
 
@@ -49,6 +49,15 @@ public class Constraint {
         name = constraint.name;
     }
 
+    public String getTypeName() {
+        switch (type) {
+            case PRIMARY_KEY:
+                return "PRIMARY KEY";
+            case FOREIGN_KEY:
+                return "FOREIGN KEY";
+        }
+        return "";
+    }
     public final Type getType() { return type; }
     public final Reference getReference() { return reference; }
     @Nullable

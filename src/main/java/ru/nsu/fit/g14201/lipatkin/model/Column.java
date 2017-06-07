@@ -20,8 +20,6 @@ public class Column {
     private int number;     //from 1 to ... (number of column)
     private String name;
     private SQLType type;
-    //private String className;
-    private Reference reference;        //foreign key reference to another entity
     private Set<Constraint> constraintSet;
 
     private ArrayList<String> elements;         //ArrayList because our Entity can grow
@@ -29,12 +27,11 @@ public class Column {
     {
         elements = new ArrayList<>();
         constraintSet = new HashSet<>();
-        reference = null;
     }
 
     public Column(String name1, String type1, int columnNumber) {
         number = columnNumber;
-        name = name1;
+        name = name1.toUpperCase();
         type = new SQLType(type1);
     }
 
@@ -76,7 +73,7 @@ public class Column {
 
     /*----------------Column Setters---------------------*/
 
-    void setName(String newName) { name = newName; }
+    void setName(String newName) { name = newName.toUpperCase(); }
 
     void setType(String newTypeName, int newPrecision, int newScale) {
         type.set(newTypeName, newPrecision, newScale);
@@ -84,27 +81,32 @@ public class Column {
 
     void setType(SQLType newType) { type = newType; }
 
-    //void setReference(Reference ref) { reference = ref; }
-
     boolean addConstraint(Constraint constraint) {
         return constraintSet.add(constraint);
     }
 
-    void addWithConstraintReplacing(Constraint constraint) {
-        if (constraintSet.contains(constraint))
-            for (Constraint obj : constraintSet)
-                if (obj.equals(constraint))
-                    obj.copy(constraint);
-        else
-            addConstraint(constraint);
+    boolean removeConstraint(Constraint constraint) {
+        for (Constraint obj : constraintSet)
+            if (obj.getType() == constraint.getType())
+                return constraintSet.remove(obj);
+        return false;
+    }
+
+    public boolean containsConstraint(Constraint constraint) {
+        return constraintSet.contains(constraint);
+    }
+
+    @Nullable
+    public final Constraint getConstraint(Constraint.Type type) {
+        for (Constraint obj : constraintSet)
+            if (obj.getType() == type)
+                return obj;
+        return null;
     }
 
     /*----------------Getters---------------------*/
 
     public int size() { return elements.size(); }
-
-    @Nullable
-    public final Reference getReference() { return reference; }
 
     public final String get(int rowIndex) { return elements.get(rowIndex); }
 

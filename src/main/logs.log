@@ -44,3 +44,149 @@
 2017-06-06 11:44:35 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
 2017-06-06 11:44:35 INFO  Controller:37 - Start session
 2017-06-06 11:44:36 ERROR SQLCommandExecuter:249 - Stream has already been closed
+2017-06-06 15:59:04 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 15:59:06 INFO  Controller:37 - Start session
+2017-06-06 16:00:36 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "EMP" DROP CONSTRAINT "PRIMARY KEY"
+2017-06-06 16:00:36 ERROR SQLCommandExecuter:83 - ORA-02443: Cannot drop constraint  - nonexistent constraint
+
+2017-06-06 16:01:24 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:01:24 INFO  Controller:37 - Start session
+2017-06-06 16:02:31 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "EMP" DROP CONSTRAINT "PRIMARY KEY"
+2017-06-06 16:02:31 ERROR SQLCommandExecuter:83 - ORA-02443: Cannot drop constraint  - nonexistent constraint
+
+2017-06-06 16:02:53 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:02:53 INFO  Controller:37 - Start session
+2017-06-06 16:03:29 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "EMP" DROP CONSTRAINT "PRIMARY KEY"
+2017-06-06 16:03:29 ERROR SQLCommandExecuter:83 - ORA-02443: Cannot drop constraint  - nonexistent constraint
+
+2017-06-06 16:06:52 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:06:52 INFO  Controller:37 - Start session
+2017-06-06 16:06:58 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "EMP" DROP CONSTRAINT "PRIMARY KEY"
+2017-06-06 16:06:58 ERROR SQLCommandExecuter:83 - ORA-02443: Cannot drop constraint  - nonexistent constraint
+
+2017-06-06 16:08:14 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:08:15 INFO  Controller:37 - Start session
+2017-06-06 16:08:45 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "EMP" DROP CONSTRAINT "PRIMARY KEY"
+2017-06-06 16:08:45 ERROR SQLCommandExecuter:83 - ORA-02443: Cannot drop constraint  - nonexistent constraint
+
+2017-06-06 16:09:01 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "EMP" ADD CONSTRAINT "EMP_ENAME_PRIMARY_KEY"
+2017-06-06 16:09:01 ERROR SQLCommandExecuter:83 - ORA-00904: : invalid identifier
+
+2017-06-06 16:10:14 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:10:14 INFO  Controller:37 - Start session
+2017-06-06 16:10:24 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "EMP" ADD CONSTRAINT "EMP_ENAME_PRIMARY_KEY" Primary Key 
+2017-06-06 16:10:24 ERROR SQLCommandExecuter:83 - ORA-00906: missing left parenthesis
+
+2017-06-06 16:10:28 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "EMP" ADD CONSTRAINT "EMP_JOB_PRIMARY_KEY" Primary Key 
+2017-06-06 16:10:28 ERROR SQLCommandExecuter:83 - ORA-00906: missing left parenthesis
+
+2017-06-06 16:10:37 INFO  SQLCommandExecuter:76 - Execs query: CREATE TABLE NEWTABLE(FIRST NUMBER)
+2017-06-06 16:10:41 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key 
+2017-06-06 16:10:41 ERROR SQLCommandExecuter:83 - ORA-00906: missing left parenthesis
+
+2017-06-06 16:13:51 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:13:51 INFO  Controller:37 - Start session
+2017-06-06 16:13:57 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-06 16:14:00 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP CONSTRAINT PRIMARY KEY
+2017-06-06 16:14:00 ERROR SQLCommandExecuter:83 - ORA-01735: invalid ALTER TABLE option
+
+2017-06-06 16:16:14 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:16:14 INFO  Controller:37 - Start session
+2017-06-06 16:16:20 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP CONSTRAINT  Primary Key ("FIRST")
+2017-06-06 16:16:20 ERROR SQLCommandExecuter:83 - ORA-01735: invalid ALTER TABLE option
+
+2017-06-06 16:16:58 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:16:59 INFO  Controller:37 - Start session
+2017-06-06 16:17:04 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key ("FIRST")
+2017-06-06 16:17:04 ERROR SQLCommandExecuter:83 - ORA-01735: invalid ALTER TABLE option
+
+2017-06-06 16:17:54 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:17:54 INFO  Controller:37 - Start session
+2017-06-06 16:17:58 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-06 16:19:08 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:19:09 INFO  Controller:37 - Start session
+2017-06-06 16:19:17 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:19:17 INFO  Controller:37 - Start session
+2017-06-06 16:19:31 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-06 16:19:33 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-06 16:21:46 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:21:46 INFO  Controller:37 - Start session
+2017-06-06 16:21:51 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-06 16:21:53 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-06 16:22:00 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-06 16:22:04 INFO  SQLCommandExecuter:76 - Execs query: INSERT INTO NEWTABLE VALUES ()
+2017-06-06 16:22:04 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-06 16:22:15 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-06 16:22:19 INFO  SQLCommandExecuter:76 - Execs query: INSERT INTO NEWTABLE VALUES ()
+2017-06-06 16:22:19 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-06 16:22:29 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE MODIFY FIRST NUMBER(20, 0)
+2017-06-06 16:22:37 INFO  SQLCommandExecuter:76 - Execs query: INSERT INTO NEWTABLE VALUES ()
+2017-06-06 16:22:37 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-06 16:22:41 INFO  SQLCommandExecuter:76 - Execs query: INSERT INTO NEWTABLE VALUES (2)
+2017-06-06 16:22:47 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE MODIFY FIRST NUMBER
+2017-06-06 16:22:53 INFO  SQLCommandExecuter:76 - Execs query: INSERT INTO NEWTABLE VALUES (3)
+2017-06-06 16:37:09 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-06 16:37:10 INFO  Controller:37 - Start session
+2017-06-06 16:37:39 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET FIRST = 20 WHERE FIRST = 2
+2017-06-06 16:37:41 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET FIRST = 10 WHERE FIRST = 3
+2017-06-07 13:18:14 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:18:15 INFO  Controller:37 - Start session
+2017-06-07 13:20:19 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:20:19 INFO  Controller:37 - Start session
+2017-06-07 13:23:58 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:23:59 INFO  Controller:37 - Start session
+2017-06-07 13:24:46 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:24:46 INFO  Controller:37 - Start session
+2017-06-07 13:25:49 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:25:50 INFO  Controller:37 - Start session
+2017-06-07 13:26:38 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:26:39 INFO  Controller:37 - Start session
+2017-06-07 13:26:48 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_FOREIGN_KEY" FOREIGN KEY ("FIRST") REFERENCES "DEPT" ("DEPTNO") ON DELETE NO ACTION ENABLE
+2017-06-07 13:26:48 ERROR SQLCommandExecuter:83 - ORA-00905: missing keyword
+
+2017-06-07 13:28:37 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-07 13:28:43 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_FOREIGN_KEY" FOREIGN KEY ("FIRST") REFERENCES "DEPT" ("DEPTNO") ON DELETE NO ACTION ENABLE
+2017-06-07 13:28:43 ERROR SQLCommandExecuter:83 - ORA-00905: missing keyword
+
+2017-06-07 13:29:09 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:29:10 INFO  Controller:37 - Start session
+2017-06-07 13:29:23 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_FOREIGN_KEY" FOREIGN KEY ("FIRST") REFERENCES "DEPT" ("DEPTNO") ON DELETE CASCADE ENABLE
+2017-06-07 13:29:47 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:29:47 INFO  Controller:37 - Start session
+2017-06-07 13:32:08 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:32:08 INFO  Controller:37 - Start session
+2017-06-07 13:33:35 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:33:35 INFO  Controller:37 - Start session
+2017-06-07 13:38:07 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:38:08 INFO  Controller:37 - Start session
+2017-06-07 13:39:42 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-07 13:43:19 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:43:19 INFO  Controller:37 - Start session
+2017-06-07 13:46:28 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:46:28 INFO  Controller:37 - Start session
+2017-06-07 13:46:32 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-07 13:46:36 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP  NEWTABLE_FIRST_FOREIGN_KEY
+2017-06-07 13:46:36 ERROR SQLCommandExecuter:83 - ORA-00905: missing keyword
+
+2017-06-07 13:53:51 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:53:52 INFO  Controller:37 - Start session
+2017-06-07 13:54:02 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-07 13:54:34 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:54:34 INFO  Controller:37 - Start session
+2017-06-07 13:55:06 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-07 13:55:06 ERROR SQLCommandExecuter:83 - ORA-02441: Cannot drop nonexistent primary key
+
+2017-06-07 13:55:11 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-07 13:55:15 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-07 13:55:54 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:55:54 INFO  Controller:37 - Start session
+2017-06-07 13:56:01 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-07 13:57:20 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   Primary Key 
+2017-06-07 13:57:59 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:57:59 INFO  Controller:37 - Start session
+2017-06-07 13:58:21 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-07 13:58:21 INFO  Controller:37 - Start session
+2017-06-07 13:58:44 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP   CONSTRAINT "NEWTABLE_FIRST_FOREIGN_KEY"

@@ -132,6 +132,36 @@ public class DBManager {
         }
     }
 
+    /*-----------------Columns edit----------------*/
+
+    public void addConstraint(Entity entity, Column column, Constraint constraint)
+            throws UserWrongActionException {
+        try {
+            constraint.name = entity.getName() + "_" + column.getName() + "_"
+                    + constraint.getTypeName().replace(' ', '_');
+
+            Constraint oldCon = column.getConstraint(constraint.getType());
+            if (oldCon != null) {
+                commander.dropConstraint(entity, column, oldCon);
+                entity.removeConstraint(column, constraint);
+            }
+            commander.addConstraint(entity, column, constraint);
+            entity.addConstraint(column, constraint);
+        } catch(UpdateException exp) {
+            throw new UserWrongActionException("Cannot add constraint");
+        }
+    }
+
+    public void removeConstraint(Entity entity, Column column, Constraint constraint)
+            throws UserWrongActionException {
+        try {
+            commander.dropConstraint(entity, column, constraint);
+            entity.removeConstraint(column, constraint);
+        } catch(UpdateException exp) {
+            throw new UserWrongActionException("Cannot remove constraint");
+        }
+    }
+
     public void setColumnName(Entity entity, Column column, String newName)
             throws UserWrongActionException {
         try {
@@ -167,6 +197,8 @@ public class DBManager {
     }
 
     /*-------------Getters----------------------------*/
+
+    public final Entity getEntity(String entityName) { return mapEntities.get(entityName.toUpperCase()); }
 
     public List<Entity> getEntities() { return entities; }
 

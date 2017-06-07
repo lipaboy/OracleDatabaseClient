@@ -161,7 +161,8 @@ public class SQLCommandExecuter implements SQLCommander {
     }
 
     @Override
-    public void addConstraint(Entity entity, Column column, Constraint constraint) {
+    public void addConstraint(Entity entity, Column column, Constraint constraint)
+            throws UpdateException {
         String query = "ALTER TABLE " + wrap(entity.getName())
                 + " ADD CONSTRAINT ";
         switch(constraint.getType()) {
@@ -171,17 +172,40 @@ public class SQLCommandExecuter implements SQLCommander {
                         + " FOREIGN KEY (" + wrap(column.getName())
                         + ") REFERENCES " + wrap(ref.getEntity().getName())
                         + " (" + wrap(ref.getColumn().getName())
-                        + ") ON DELETE NO ACTION ENABLE";
+                        + ") ON DELETE CASCADE ENABLE";
                 break;
             case PRIMARY_KEY:
                 if (constraint.getName() == null)
-                    query = query + " Primary Key ";
+                    query = query + " Primary Key (" + wrap(column.getName())
+                            + ")";
                 else
-                    query = query + wrap(constraint.getName());
+                    query = query + wrap(constraint.getName()) + " Primary Key ("
+                            + wrap(column.getName()) + ")";
         }
         executeUpdateQuery(query);
 //        ALTER TABLE  "DEMO_ORDER_ITEMS" ADD CONSTRAINT "DEMO_ORDER_ITEMS_FK" FOREIGN KEY ("ORDER_ID")
 //        REFERENCES  "DEMO_ORDERS" ("ORDER_ID") ON DELETE CASCADE ENABLE;
+    }
+
+    @Override
+    public void dropConstraint(Entity entity, Column column, Constraint constraint) throws UpdateException {
+        String query = "ALTER TABLE " + wrap(entity.getName())
+                + " DROP  ";
+        switch(constraint.getType()) {
+            case PRIMARY_KEY:
+                if (constraint.getName() != null)
+                    query = query + wrap(constraint.getName());
+                else
+                    query = query + " CONSTRAINT " + " Primary Key " ;
+                break;
+            case FOREIGN_KEY:
+                if (constraint.getName() != null)
+                    query = query + " CONSTRAINT " + wrap(constraint.getName());
+                else
+                    query = query + " FOREIGN KEY " ;
+                break;
+        }
+        executeUpdateQuery(query);
     }
 
     @Override
