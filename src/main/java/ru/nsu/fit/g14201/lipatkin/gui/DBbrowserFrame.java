@@ -1,5 +1,6 @@
 package ru.nsu.fit.g14201.lipatkin.gui;
 
+import com.sun.org.apache.bcel.internal.generic.Select;
 import ru.nsu.fit.g14201.lipatkin.core.BeforeQuitOperation;
 import ru.nsu.fit.g14201.lipatkin.model.DBManager;
 import ru.nsu.fit.g14201.lipatkin.presenter.DBPresenter;
@@ -32,8 +33,10 @@ public class DBbrowserFrame extends JFrame
     private JPanel TableConstuctPanel;
     private TableEditorState tableEditorState;
 
+    private SelectQueryFrame selectQueryFrame;
+
     public DBbrowserFrame(final DBManager dbManager, BeforeQuitOperation beforeQuitOperation) {
-        super("Object Browser");
+        super("Table Browser");
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -56,7 +59,7 @@ public class DBbrowserFrame extends JFrame
 
         /*---------------Panel components-------------------*/
 
-        tableView.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //tableView.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
                 /*----------State switch buttons-----------*/
         viewButton.addActionListener(new ActionListener() {
@@ -137,6 +140,19 @@ public class DBbrowserFrame extends JFrame
             }
         });
         fileMenu.add(quitItem);
+
+        JMenu execMenu = new JMenu("Execute");
+        menuBar.add(execMenu);
+
+        selectQueryFrame = new SelectQueryFrame(dbManager);
+        JMenuItem queryItem = new JMenuItem("Select Query");
+        queryItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectQueryFrame.setVisible(true);
+            }
+        });
+        execMenu.add(queryItem);
 
         this.setJMenuBar(menuBar);
 

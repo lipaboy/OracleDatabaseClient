@@ -396,3 +396,73 @@
 2017-06-08 18:09:15 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH = null WHERE FIRST = 20
 2017-06-08 18:09:16 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH = null WHERE FIRST = 10
 2017-06-08 18:09:35 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" MODIFY "TH" VARCHAR(10)
+2017-06-08 18:10:28 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:10:28 INFO  Controller:37 - Start session
+2017-06-08 18:10:37 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP COLUMN "TH"
+2017-06-08 18:10:50 INFO  SQLCommandExecuter:76 - Execs query: DROP TABLE DEMO_STATES
+2017-06-08 18:11:28 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:11:29 INFO  Controller:37 - Start session
+2017-06-08 18:14:23 INFO  SQLCommandExecuter:76 - Execs query: CREATE TABLE CUSTOMER(FIRST NUMBER)
+2017-06-08 18:14:30 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" RENAME COLUMN "FIRST" TO "customer_id"
+2017-06-08 18:15:12 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:15:12 INFO  Controller:37 - Start session
+2017-06-08 18:15:30 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" MODIFY "customer_id" NUMBER(6, 0)
+2017-06-08 18:15:35 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" ADD CONSTRAINT "CUSTOMER_customer_id_PRIMARY_KEY" Primary Key ("customer_id")
+2017-06-08 18:15:35 ERROR SQLCommandExecuter:83 - ORA-00972: identifier is too long
+
+2017-06-08 18:15:52 INFO  SQLCommandExecuter:76 - Execs query: INSERT INTO CUSTOMER VALUES (1)
+2017-06-08 18:15:54 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" ADD CONSTRAINT "CUSTOMER_customer_id_PRIMARY_KEY" Primary Key ("customer_id")
+2017-06-08 18:15:54 ERROR SQLCommandExecuter:83 - ORA-00972: identifier is too long
+
+2017-06-08 18:18:57 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:18:58 INFO  Controller:37 - Start session
+2017-06-08 18:19:05 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" ADD CONSTRAINT "CUSTOMER_customer_id_PK" Primary Key ("customer_id")
+2017-06-08 18:19:19 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" ADD "NAME" VARCHAR(45)
+2017-06-08 18:19:31 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" RENAME COLUMN "customer_id" TO "CUSTOMER_I"
+2017-06-08 18:19:32 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" RENAME COLUMN "CUSTOMER_I" TO "CUSTOMER_ID"
+2017-06-08 18:19:45 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "CUSTOMER" ADD "ADDRESS" VARCHAR(40)
+2017-06-08 18:20:02 INFO  SQLCommandExecuter:76 - Execs query: CREATE TABLE SALES_ORDER(FIRST NUMBER)
+2017-06-08 18:20:08 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" RENAME COLUMN "FIRST" TO "ORDER_ID"
+2017-06-08 18:20:11 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" MODIFY "ORDER_ID" NUMBER(4, 0)
+2017-06-08 18:20:14 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" ADD CONSTRAINT "SALES_ORDER_ORDER_ID_PK" Primary Key ("ORDER_ID")
+2017-06-08 18:20:43 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" ADD "CUSTOMER_ID" NUMBER(6, 0)
+2017-06-08 18:21:54 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:21:55 INFO  Controller:37 - Start session
+2017-06-08 18:23:48 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:23:48 INFO  Controller:37 - Start session
+2017-06-08 18:23:57 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:23:57 INFO  Controller:37 - Start session
+2017-06-08 18:24:10 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" ADD CONSTRAINT "SALES_ORDER_CUSTOMER_ID_FK" FOREIGN KEY ("CUSTOMER_ID") REFERENCES "CUSTOMER" ("CUSTOMER_ID") ON DELETE CASCADE ENABLE
+2017-06-08 18:24:18 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" DROP COLUMN "CUSTOMER_ID"
+2017-06-08 18:24:37 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" ADD "CUSTOMER_ID" NUMBER(6, 0)
+2017-06-08 18:26:11 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" ADD CONSTRAINT "SALES_ORDER_CUSTOMER_ID_FK" FOREIGN KEY ("CUSTOMER_ID") REFERENCES "CUSTOMER" ("CUSTOMER_ID") ON DELETE CASCADE ENABLE
+2017-06-08 18:27:08 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "SALES_ORDER" ADD "ORDER_DATE" DATE
+2017-06-08 18:27:18 INFO  SQLCommandExecuter:76 - Execs query: CREATE TABLE ITEM(FIRST NUMBER)
+2017-06-08 18:27:25 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "ITEM" RENAME COLUMN "FIRST" TO "ORDER_ID"
+2017-06-08 18:27:34 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "ITEM" ADD CONSTRAINT "ITEM_ORDER_ID_FK" FOREIGN KEY ("ORDER_ID") REFERENCES "SALES_ORDER" ("ORDER_ID") ON DELETE CASCADE ENABLE
+2017-06-08 18:27:51 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "ITEM" ADD CONSTRAINT "ITEM_ORDER_ID_PK" Primary Key ("ORDER_ID")
+2017-06-08 18:27:57 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "ITEM" ADD "ITEM_ID" NUMBER(4, 0)
+2017-06-08 18:27:57 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "ITEM" ADD CONSTRAINT "ITEM_ITEM_ID_PK" Primary Key ("ITEM_ID")
+2017-06-08 18:27:57 ERROR SQLCommandExecuter:83 - ORA-02260: table can have only one primary key
+
+2017-06-08 18:28:10 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "ITEM" ADD CONSTRAINT "ITEM_ITEM_ID_PK" Primary Key ("ITEM_ID")
+2017-06-08 18:28:10 ERROR SQLCommandExecuter:83 - ORA-02260: table can have only one primary key
+
+2017-06-08 18:56:24 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:56:24 INFO  Controller:37 - Start session
+2017-06-08 18:57:40 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:57:41 INFO  Controller:37 - Start session
+2017-06-08 18:59:56 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:59:56 INFO  Controller:37 - Start session
+2017-06-08 19:01:36 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 19:01:37 INFO  Controller:37 - Start session
+2017-06-08 19:02:14 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 19:02:15 INFO  Controller:37 - Start session
+2017-06-08 19:04:22 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 19:04:23 INFO  Controller:37 - Start session
+2017-06-08 19:04:43 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 19:04:44 INFO  Controller:37 - Start session
+2017-06-08 19:07:10 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 19:07:11 INFO  Controller:37 - Start session
+2017-06-08 19:11:25 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 19:11:25 INFO  Controller:37 - Start session

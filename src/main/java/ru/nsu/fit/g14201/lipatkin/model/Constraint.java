@@ -52,9 +52,11 @@ public class Constraint {
     public String getTypeName() {
         switch (type) {
             case PRIMARY_KEY:
-                return "PRIMARY KEY";
+                //return "PRIMARY KEY";
+                return "PK";
             case FOREIGN_KEY:
-                return "FOREIGN KEY";
+                //return "FOREIGN KEY";
+                return "FK";
         }
         return "";
     }

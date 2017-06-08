@@ -2,6 +2,7 @@ package ru.nsu.fit.g14201.lipatkin.presenter;
 
 import ru.nsu.fit.g14201.lipatkin.model.*;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,10 @@ import java.util.List;
 /**
  * Created by SPN on 08.05.2017.
  */
-class EntityPresenter implements EntityListener {
+public class EntityPresenter implements EntityListener {
     private Entity entity;
     private DBManager dbManager;
-    private DBPresenter dbPresenter;
+    private final JTable viewTable;
     private AbstractTableModel viewEntity;
     private AbstractTableModel dataEditor;
     private final int constructorCols = 4;
@@ -21,10 +22,11 @@ class EntityPresenter implements EntityListener {
     private List<String> newRowData;
     private List<String> newColumnRow;
 
-    public EntityPresenter(Entity en, DBManager manager, DBPresenter presenter) {
+    public EntityPresenter(Entity en, DBManager manager, JTable viewTable1) {
         entity = en;
         dbManager = manager;
-        dbPresenter = presenter;        //TODO: remove dependency
+        viewTable = viewTable1;
+        //dbPresenter = presenter;        //TODO: remove dependency
         newRowData = new ArrayList<>();
         newColumnRow = new ArrayList<>();
         en.addEntityListener(this);
@@ -40,7 +42,7 @@ class EntityPresenter implements EntityListener {
             @Override
             public int getRowCount() {
                 return entity.getColumnCount()
-                                + 1;        // new row for add column
+                        + 1;        // new row for add column
             }
 
             @Override
@@ -115,10 +117,10 @@ class EntityPresenter implements EntityListener {
 
                         switch (columnIndex) {
                             case 0:
-                                dbManager.setColumnName(entity, column, aValue.toString());
+                                dbManager.setColumnName(entity, column, aValue.toString().toUpperCase());
                                 break;
                             case 1:
-                                dbManager.setColumnType(entity, column, aValue.toString());
+                                dbManager.setColumnType(entity, column, aValue.toString().toUpperCase());
                                 break;
                             case 2:
                                 boolean isPrim = (boolean) aValue;
@@ -157,7 +159,8 @@ class EntityPresenter implements EntityListener {
                         }
                     }
                 } catch (UserWrongActionException exp) {
-                    dbPresenter.showErrorMessage(exp.getMessage());
+                    JOptionPane.showMessageDialog(viewTable, exp.getMessage(), "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -195,7 +198,8 @@ class EntityPresenter implements EntityListener {
                     else
                         newRowData.set(columnIndex, aValue.toString());
                 } catch (UserWrongActionException exp) {
-                    dbPresenter.showErrorMessage(exp.getMessage());
+                    JOptionPane.showMessageDialog(viewTable, exp.getMessage(), "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -235,6 +239,11 @@ class EntityPresenter implements EntityListener {
     void clearNewColumnRow() {
         for (int i = 0; i < newColumnRow.size(); i++)
             newColumnRow.set(i, "");
+    }
+
+    public void setEntity(final Entity entity1) {
+        entity = entity1;
+        dataChanged();
     }
 
     /*-------------------Getters--------------------------*/

@@ -11,6 +11,8 @@ import java.util.Set;
  */
 public interface SQLCommander {
 
+    public Entity executeQuery(String query) throws UpdateException;
+
     /*-----------------Entries edit----------------*/
 
     public void deleteRow(Entity entity, int rowIndex) throws UpdateException;

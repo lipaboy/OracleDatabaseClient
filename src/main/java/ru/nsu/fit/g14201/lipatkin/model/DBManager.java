@@ -72,6 +72,16 @@ public class DBManager {
         //FKTABLE_NAME FKCOLUMN_NAME <- FROM
     }
 
+
+
+    public final Entity executeSelectQuery(String query) throws UserWrongActionException {
+        try {
+            return commander.executeQuery(query);
+        } catch (SelectException exp) {
+            throw new UserWrongActionException("Cannot run query");
+        }
+    }
+
     /*-----------------Entries edit----------------*/
 
     public void setValueAt(Entity entity, int rowIndex, int columnIndex, String value)

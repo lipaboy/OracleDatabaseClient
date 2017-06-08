@@ -32,7 +32,7 @@ public class DBPresenter implements EditorStateChangedListener {
         //TODO: add listener to DBManager for entities
         entitiesPresenter = new ArrayList<>();
         for (Entity entity : dbManager.getEntities()) {
-            entitiesPresenter.add(new EntityPresenter(entity, manager, this));
+            entitiesPresenter.add(new EntityPresenter(entity, manager, tableView));
         }
 
         tableList.setModel(new AbstractListModel() {
@@ -64,7 +64,7 @@ public class DBPresenter implements EditorStateChangedListener {
             final String tableName = JOptionPane.showInputDialog("Enter the table name:");
             final Entity entity = dbManager.createEntity(tableName, "first", "number");
 
-            entitiesPresenter.add(new EntityPresenter(entity, dbManager, this));
+            entitiesPresenter.add(new EntityPresenter(entity, dbManager, tableView));
             tableList.updateUI();
             tableList.setSelectedIndex(entitiesPresenter.size() - 1);
 

@@ -1,6 +1,7 @@
 package ru.nsu.fit.g14201.lipatkin.model;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.org.apache.bcel.internal.generic.Select;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -85,7 +86,35 @@ public class SQLCommandExecuter implements SQLCommander {
         }
     }
 
+    final Entity executeSelectQuery(String selectQuery, String tableName) throws SelectException {
+        try {
+            Entity entity;
+            Statement statement = connection.createStatement();
+            //in your table (Oracle XE) can be russian entries
+            ResultSet entrySet = statement.executeQuery(selectQuery);
+
+            //TODO: difficult constructor (make easy)
+            entity = new Entity(tableName, entrySet.getMetaData(), connection.getMetaData());
+            entity.fill(entrySet);
+
+            statement.close();
+            return entity;
+        } catch(SQLException exp) {
+            log.error(exp.getMessage());     //TODO: throw another exception (business)
+            throw new SelectException(exp.getMessage());
+        }
+    }
+
     private String wrap(String str) { return "\"" + str + "\""; }
+
+
+    /*-----------------Query----------------*/
+
+    @Override
+    public Entity executeQuery(String query) throws UpdateException {
+        return executeSelectQuery(query, "Result Table");
+    }
+
 
     /*-----------------Entries edit----------------*/
 
@@ -278,26 +307,7 @@ public class SQLCommandExecuter implements SQLCommander {
 
     @Override
     public Entity getEntity(@NotNull String tableName) {
-        //Map<String, String[]> entries = new HashMap<>();
-        Entity entity = null;
-
-        try {
-            Statement statement = connection.createStatement();
-            //in your table (Oracle XE) can be russian entries
-            ResultSet entrySet = statement.executeQuery("SELECT * FROM " + tableName);
-
-            //TODO: difficult constructor (make easy)
-            entity = new Entity(tableName, entrySet.getMetaData(), connection.getMetaData());
-            entity.fill(entrySet);
-
-            //if (!statement.isClosed())
-                statement.close();      //why it is already closed
-            //TODO: I think that we need to throw exception up the method
-        } catch(SQLException exp) {
-            log.error(exp.getMessage());     //TODO: throw another exception (business)
-        }
-
-        return entity;
+        return executeSelectQuery("SELECT * FROM " + tableName, tableName);
     }
 
     @Override
