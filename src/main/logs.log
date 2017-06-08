@@ -243,3 +243,156 @@
 2017-06-07 16:40:19 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_T_PRIMARY_KEY" Primary Key ("T")
 2017-06-07 16:40:19 ERROR SQLCommandExecuter:83 - ORA-01449: column contains NULL values; cannot alter to NOT NULL
 
+2017-06-08 17:39:58 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 17:39:59 INFO  Controller:37 - Start session
+2017-06-08 17:41:22 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD "TH" NUMBER
+2017-06-08 17:45:32 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 17:45:32 INFO  Controller:37 - Start session
+2017-06-08 17:46:09 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD "FR" NUMBER
+2017-06-08 17:52:18 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 17:52:18 INFO  Controller:37 - Start session
+2017-06-08 17:52:36 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = null AND FR = null
+2017-06-08 17:52:36 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:37 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = null AND FR = null
+2017-06-08 17:52:37 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:37 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = null AND FR = null
+2017-06-08 17:52:37 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:38 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = null AND FR = null
+2017-06-08 17:52:38 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:38 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = null AND FR = null
+2017-06-08 17:52:38 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:38 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = null AND FR = null
+2017-06-08 17:52:38 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:39 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = null AND FR = null
+2017-06-08 17:52:39 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:43 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH = 1 WHERE FIRST = 20 AND S = null AND T = null AND TH = null AND FR = null
+2017-06-08 17:52:46 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET T =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:52:46 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:47 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET T =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:52:47 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:52:59 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:52:59 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:53:00 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:53:00 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:53:00 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:53:00 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:53:00 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:53:00 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:53:01 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:53:01 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:53:05 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:53:05 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:53:09 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:53:09 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:53:11 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:53:11 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:53:24 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH = 1 WHERE FIRST = 20 AND S = null AND T = null AND TH = 1 AND FR = null
+2017-06-08 17:53:32 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD "DSFJ" NUMBER
+2017-06-08 17:53:50 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP COLUMN "T"
+2017-06-08 17:53:51 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP COLUMN "FR"
+2017-06-08 17:54:08 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" DROP COLUMN "DSFJ"
+2017-06-08 17:56:29 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 17:56:29 INFO  Controller:37 - Start session
+2017-06-08 17:56:38 INFO  SQLCommandExecuter:76 - Execs query: UPDATE DEPT SET DNAME = '' WHERE DEPTNO = 10
+2017-06-08 17:57:03 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S =  WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:57:03 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:57:11 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S =  WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:57:11 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:57:12 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S =  WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:57:12 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:57:12 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S =  WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:57:12 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 17:58:06 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:06 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:58:07 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:07 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:58:07 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:07 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:58:08 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:08 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:58:08 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:08 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:58:08 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:08 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:58:09 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:09 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:58:13 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:13 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:58:13 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S = dd WHERE FIRST = 20 AND S = null AND TH = null
+2017-06-08 17:58:13 ERROR SQLCommandExecuter:83 - ORA-00904: "DD": invalid identifier
+
+2017-06-08 17:59:42 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 17:59:42 INFO  Controller:37 - Start session
+2017-06-08 18:00:03 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" ADD CONSTRAINT "NEWTABLE_FIRST_PRIMARY_KEY" Primary Key ("FIRST")
+2017-06-08 18:00:09 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET S =  WHERE FIRST = 20
+2017-06-08 18:00:09 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 18:00:18 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH = 2 WHERE FIRST = 20
+2017-06-08 18:01:13 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE MODIFY S VARCHAR(5, 0)
+2017-06-08 18:01:13 ERROR SQLCommandExecuter:83 - ORA-00907: missing right parenthesis
+
+2017-06-08 18:01:17 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE MODIFY S NUMBER
+2017-06-08 18:01:29 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE MODIFY S VARCHAR2(5, 0)
+2017-06-08 18:01:29 ERROR SQLCommandExecuter:83 - ORA-00907: missing right parenthesis
+
+2017-06-08 18:02:00 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE MODIFY TH NUMBER
+2017-06-08 18:02:27 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH = 3 WHERE FIRST = 10
+2017-06-08 18:02:36 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE MODIFY TH VARCHAR(20, 0)
+2017-06-08 18:02:36 ERROR SQLCommandExecuter:83 - ORA-00907: missing right parenthesis
+
+2017-06-08 18:02:45 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE NEWTABLE MODIFY TH VARCHAR2
+2017-06-08 18:02:45 ERROR SQLCommandExecuter:83 - ORA-00906: missing left parenthesis
+
+2017-06-08 18:05:15 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:05:15 INFO  Controller:37 - Start session
+2017-06-08 18:05:25 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" MODIFY "TH" VARCHAR2
+2017-06-08 18:05:25 ERROR SQLCommandExecuter:83 - ORA-00906: missing left parenthesis
+
+2017-06-08 18:05:33 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" MODIFY "TH" VARCHAR2(20)
+2017-06-08 18:05:33 ERROR SQLCommandExecuter:83 - ORA-01439: column to be modified must be empty to change datatype
+
+2017-06-08 18:05:59 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" MODIFY "S" VARCHAR2(20)
+2017-06-08 18:06:04 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" MODIFY "S" VARCHAR2(2)
+2017-06-08 18:06:14 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" MODIFY "S" VARCHAR2
+2017-06-08 18:06:14 ERROR SQLCommandExecuter:83 - ORA-00906: missing left parenthesis
+
+2017-06-08 18:06:29 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20
+2017-06-08 18:06:29 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 18:06:34 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH =  WHERE FIRST = 20
+2017-06-08 18:06:34 ERROR SQLCommandExecuter:83 - ORA-00936: missing expression
+
+2017-06-08 18:09:07 INFO  NetworkController:25 - Oracle JDBC Driver Registered!
+2017-06-08 18:09:08 INFO  Controller:37 - Start session
+2017-06-08 18:09:15 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH = null WHERE FIRST = 20
+2017-06-08 18:09:16 INFO  SQLCommandExecuter:76 - Execs query: UPDATE NEWTABLE SET TH = null WHERE FIRST = 10
+2017-06-08 18:09:35 INFO  SQLCommandExecuter:76 - Execs query: ALTER TABLE "NEWTABLE" MODIFY "TH" VARCHAR(10)

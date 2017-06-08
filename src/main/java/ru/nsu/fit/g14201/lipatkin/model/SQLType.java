@@ -58,6 +58,8 @@ public class SQLType {
     public String getSQLFormat() {
         if (precision <= 0 && scale <= 0)
             return typeName;
+        if (typeName.contains("VARCHAR"))
+            return typeName + "(" + Integer.toString(precision) + ")";
         return typeName + "(" + Integer.toString(precision) + ", " + Integer.toString(scale) + ")";
     }
 }

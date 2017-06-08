@@ -126,10 +126,12 @@ public class DBPresenter implements EditorStateChangedListener {
             if (tableEditorState.get() == CONSTRUCTOR) {
                 EntityPresenter entityPresenter = entitiesPresenter.get(selected);
                 int[] rowIndices = tableView.getSelectedRows();
+                int ind = tableView.getSelectedRow();
                 final Entity entity = entityPresenter.getEntity();
-                for (int i = 0; i < rowIndices.length; i++) {
-                    dbManager.removeColumn(entity, entity.getColumn(rowIndices[i]));
-                }
+                dbManager.removeColumn(entity, entity.getColumn(ind));
+//                for (int i = 0; i < rowIndices.length; i++) {
+//                    dbManager.removeColumn(entity, entity.getColumn(rowIndices[i]));
+//                }
             }
         } catch (UserWrongActionException exp) {
             showErrorMessage(exp.getMessage());

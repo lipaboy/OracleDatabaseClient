@@ -38,6 +38,8 @@ public class Entity {
     public Entity(String name1, Column column1) {
         this(name1);
         columns.add(column1);
+        if (null != column1.getConstraint(Constraint.Type.PRIMARY_KEY))
+            primaryKeys.add(column1);
     }
 
     public Entity(String name1, ResultSetMetaData tableMetaData, DatabaseMetaData dbMetaData)
@@ -90,8 +92,11 @@ public class Entity {
     /*------------------Columns-------------------------*/
 
     final Column add(String columnName, SQLType type) {
-        final Column column = new Column(columnName, type, columns.size() + 1);
+        final Column column = new Column(columnName, type, columns.size() + 1,
+                getRowCount());
         columns.add(column);
+        if (null != column.getConstraint(Constraint.Type.PRIMARY_KEY))
+            primaryKeys.add(column);
         notifyListeners();
         return column;
     }

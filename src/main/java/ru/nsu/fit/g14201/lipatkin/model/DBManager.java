@@ -110,7 +110,7 @@ public class DBManager {
     public final Entity createEntity(String entityName, String columnName, String typeName)
             throws UserWrongActionException {
         try {
-            final Column column = new Column(columnName, typeName, 1);
+            final Column column = new Column(columnName, typeName, 1, 1);
             final Entity entity = new Entity(entityName, column);
 
             commander.createEntity(entity);
@@ -136,7 +136,7 @@ public class DBManager {
 
     public final Column addColumn(Entity entity, String columnName, SQLType type) {
         try {
-            Column newColumn = new Column(columnName, type, 1);
+            Column newColumn = new Column(columnName, type, 1, 0);
             commander.addColumn(entity, newColumn);
             return entity.add(columnName, type);
         } catch(UpdateException exp) {

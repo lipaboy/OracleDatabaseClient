@@ -29,14 +29,16 @@ public class Column {
         constraintSet = new HashSet<>();
     }
 
-    public Column(String name1, SQLType type1, int columnNumber) {
+    public Column(String name1, SQLType type1, int columnNumber, int size) {
         number = columnNumber;
         name = name1.toUpperCase();
         type = type1;
+        for (int i = 0; i < size; i++)
+            elements.add("");
     }
 
-    public Column(String name1, String type1, int columnNumber) {
-        this(name1, new SQLType(type1), columnNumber);
+    public Column(String name1, String type1, int columnNumber, int size) {
+        this(name1, new SQLType(type1), columnNumber, size);
     }
 
     public Column(ResultSetMetaData rsmd, int columnNumber) throws SQLException {

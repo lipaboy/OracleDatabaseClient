@@ -175,7 +175,7 @@ class EntityPresenter implements EntityListener {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                return ((rowIndex == entity.getRowCount()) ? newRowData.get(columnIndex) :
+                return ((rowIndex >= entity.getRowCount()) ? newRowData.get(columnIndex) :
                         entity.get(rowIndex, columnIndex));
             }
 
@@ -194,8 +194,8 @@ class EntityPresenter implements EntityListener {
                         dbManager.setValueAt(entity, rowIndex, columnIndex, aValue.toString());
                     else
                         newRowData.set(columnIndex, aValue.toString());
-                } catch (UpdateException exp) {
-                    System.out.println(exp.getMessage());
+                } catch (UserWrongActionException exp) {
+                    dbPresenter.showErrorMessage(exp.getMessage());
                 }
             }
         };
@@ -265,5 +265,8 @@ class EntityPresenter implements EntityListener {
         viewEntity.fireTableDataChanged();
         dataEditor.fireTableDataChanged();
         constructor.fireTableDataChanged();
+        if (newRowData.size() < entity.getColumnCount())
+            for (int i = newRowData.size(); i < entity.getColumnCount(); i++)
+                newRowData.add("");
     }
 }

@@ -124,6 +124,8 @@ public class SQLCommandExecuter implements SQLCommander {
         String columnTypeName = entity.getColumn(columnName).getType().getTypeName();
         String wrappedValue = wrapBySingleQuotes(newValue, columnTypeName);
 
+        if (wrappedValue.equals(""))
+            wrappedValue = "null";
         String query =
                 "UPDATE " + entity.getName()
                         + " SET " + columnName + " = " + wrappedValue
@@ -230,9 +232,9 @@ public class SQLCommandExecuter implements SQLCommander {
         //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
         //TODO: calling this method (i.e. in constructor)
         String query =
-                "ALTER TABLE " + entity.getName()
-                    + " RENAME COLUMN " + column.getName() +        //unnecessary to wrap by quotes
-                        " TO " + newName;
+                "ALTER TABLE " + wrap(entity.getName())
+                    + " RENAME COLUMN " + wrap(column.getName()) +        //unnecessary to wrap by quotes
+                        " TO " + wrap(newName);
         executeUpdateQuery(query);
     }
 
@@ -241,8 +243,8 @@ public class SQLCommandExecuter implements SQLCommander {
         //TODO: may be need to use reqular expressions ("?") to init PreparedStatement before
         //TODO: calling this method (i.e. in constructor)
         String query =
-                "ALTER TABLE " + entity.getName()
-                        + " MODIFY " + column.getName()        //unnecessary to wrap by quotes
+                "ALTER TABLE " + wrap(entity.getName())
+                        + " MODIFY " + wrap(column.getName())        //unnecessary to wrap by quotes
                           + " " + newType.getSQLFormat();
 
         executeUpdateQuery(query);
